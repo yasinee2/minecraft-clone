@@ -1,7 +1,6 @@
 package com.minecraftclone;
 
 import GLOOP.*;
-import com.minecraftclone.entity.Player;
 import com.minecraftclone.render.Camera;
 
 public class App {
@@ -11,8 +10,7 @@ public class App {
     static String textureMarble = "lib/textures/marble.jpg";
 
     public static void main(String[] args) {
-        Camera cam = new Camera();
-        Player player = new Player(cam);
+        var cam = new Camera();
 
         new GLLicht();
         new GLBoden(textureGrass);

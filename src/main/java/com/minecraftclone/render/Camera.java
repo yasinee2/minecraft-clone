@@ -76,4 +76,8 @@ public class Camera {
         cam.setzeBlickpunkt(pos.x + dirX, pos.y + dirY, pos.z + dirZ);
         cam.setzeScheitelrichtung(0, 1, 0);
     }
+
+    public void setPos(double x, double y, double z) {
+        this.cam.setzePosition(x, y, z);
+    }
 }
