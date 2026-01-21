@@ -4,15 +4,11 @@ import GLOOP.*;
 
 public class App {
 
-    static String project = System.getProperty("user.dir");
-
-    static String textureGrass = project + "\\resources\\grass.png";
-    static String textureSky = project + "\\resources\\sky.jpg";
-    static String textureMarble = project + "\\resources\\marble.jpg";
+    static String textureGrass = "lib/textures/grass.png";
+    static String textureSky = "lib/textures/sky.jpg";
+    static String textureMarble = "lib/textures/marble.jpg";
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
-
         Camera cam = new Camera();
 
         new GLLicht();
@@ -20,7 +16,10 @@ public class App {
         new GLHimmel(textureSky);
 
         while (true) {
-            cam.mouseMovementListen();
+            cam.movement();
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {}
         }
     }
 }

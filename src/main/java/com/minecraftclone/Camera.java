@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 class Camera {
 
     private Point location;
+    //TODO: automatically center curosor with robot and hide it
     private Robot robot;
     private JFrame frame;
     private GLKamera cam;
@@ -18,16 +19,15 @@ class Camera {
     private int lastX;
     private int lastY;
 
-    int centerX;
-    int centerY;
+    private int windowCenterX;
+    private int windowCenterY;
 
-    private double sensitivity = 0.005;
+    private double sensitivity;
 
     private final double maxPitch = Math.toRadians(89);
 
     Camera() {
         cam = new GLKamera(1280, 720);
-        cam.zeigeAchsen(true);
 
         try {
             robot = new Robot();
@@ -38,8 +38,9 @@ class Camera {
         frame = cam.gibFrame();
         location = frame.getLocationOnScreen();
 
-        centerX = location.x + frame.getWidth() / 2;
-        centerY = location.y + frame.getHeight() / 2;
+        windowCenterX = location.x + frame.getWidth() / 2;
+        windowCenterY = location.y + frame.getHeight() / 2;
+        sensitivity = 0.005;
 
         mouse = new GLMaus();
 
@@ -48,7 +49,7 @@ class Camera {
         cam.setzePosition(0, 100, 0);
     }
 
-    void mouseMovementListen() {
+    void movement() {
         if (mouse.gibX() != lastX || mouse.gibY() != lastY) {
             int dx = mouse.gibX() - lastX;
             int dy = mouse.gibY() - lastY;
@@ -63,7 +64,6 @@ class Camera {
             lastX = mouse.gibX();
             lastY = mouse.gibY();
         }
-        System.out.println(lastX + ", " + lastY);
     }
 
     private void update() {
