@@ -20,8 +20,8 @@ public class FPSCamera {
 
     public FPSCamera(GLKamera cam) {
         this.cam = cam;
-
         JFrame frame = cam.gibFrame();
+
         frame.addMouseMotionListener(
             new MouseMotionAdapter() {
                 @Override
