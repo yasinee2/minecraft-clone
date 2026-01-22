@@ -7,8 +7,7 @@ import javax.swing.JFrame;
 public class Camera {
 
     private Point location;
-    //TODO: automatically center curosor with robot and hide it
-    private Robot robot;
+    private Robot robot; //TODO: automatically center curosor with robot and hide it
     private JFrame frame;
     private GLKamera cam;
     private GLMaus mouse;
