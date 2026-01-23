@@ -19,9 +19,9 @@
         },
         {
             "type": "java",
-            "name": "App",
+            "name": "Main",
             "request": "launch",
-            "mainClass": "com.minecraftclone.App",
+            "mainClass": "com.minecraftclone.Main",
             "projectName": "minecraft-clone",
             "vmArgs": [
                 "-Dnativewindow.debug.GraphicsConfiguration=true",
