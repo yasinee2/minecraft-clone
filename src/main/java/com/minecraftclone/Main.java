@@ -1,7 +1,7 @@
 package com.minecraftclone;
 
 import com.jme3.app.SimpleApplication;
-import com.minecraftclone.block.StoneBlock;
+import com.minecraftclone.block.Blocks;
 import com.minecraftclone.world.World;
 
 /** Sample 1 - how to get started with the most simple JME 3 application.
@@ -17,10 +17,15 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         World world = new World(rootNode, assetManager);
-        world.placeBlock(0, 0, 0, new StoneBlock());
-        world.placeBlock(1, 0, 0, new StoneBlock());
-        world.placeBlock(2, 0, 0, new StoneBlock());
-        world.placeBlock(1, 1, 0, new StoneBlock());
-        world.placeBlock(1, 2, 0, new StoneBlock());
+        world.placeBlock(0, 1, 0, Blocks.DIAMOND_BLOCK);
+        world.placeBlock(1, 1, 0, Blocks.DIAMOND_BLOCK);
+        world.placeBlock(2, 1, 0, Blocks.DIAMOND_BLOCK);
+        world.placeBlock(1, 2, 0, Blocks.DIAMOND_BLOCK);
+        world.placeBlock(1, 3, 0, Blocks.DIAMOND_BLOCK);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                world.placeBlock(i, 0, j, Blocks.DIRT);
+            }
+        }
     }
 }
