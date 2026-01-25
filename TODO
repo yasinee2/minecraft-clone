@@ -1,6 +1,8 @@
-movement
+improve movement (smoother)
+render faces instead of cubes (multi-textured blocks)
 separate rendering (visual blocks, RenderEngine class) from blocks in memory (Chunk class)
 chunk meshes & chunk collision
+ambient occlusion
 Move World to Main, RenderEngine only read
 Improve Player Control (put update() classs in simpleUpdate or some shit)
 Culling

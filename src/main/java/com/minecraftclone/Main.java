@@ -26,7 +26,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         var settings = new AppSettings(true);
         settings.setWindowSize(1920, 1080);
-        settings.setTitle("minecraft-clone v0.1 by Mats & Filip");
+        settings.setTitle("minecraft-clone v0.1.0-alpha    © Mats O. & Filip M");
 
         Main app = new Main();
         app.setSettings(settings);
@@ -42,24 +42,24 @@ public class Main extends SimpleApplication {
         guiNode.attachChild(tpsText);
         tpsText.setLocalTranslation(10, settings.getHeight() - 20, 0);
 
-        //INFO: Physics bulletAppState
+        //NOTE: Physics bulletAppState
         var bulletAppState = new BulletAppState();
         stateManager.attach(bulletAppState);
 
-        //INFO: Camera cam
+        //NOTE: Camera cam
         flyCam.setMoveSpeed(0);
         cam.setFrustumNear(0.2f);
         cam.setFov(70);
 
-        //INFO: Render engine
+        //NOTE: Render engine
         //INFO: renders the world and sets it up for now, setup will be moved later
         engine = new RenderEngine(rootNode, assetManager, bulletAppState);
 
-        //INFO: player is CharacterControl playerControl
+        //NOTE: player is CharacterControl playerControl
         playerCharacter = engine.getPlayerCharacter();
         playerControl = playerCharacter.getPlayerControl();
 
-        //INFO: actionInput
+        //NOTE: actionInput
         actionInput = new ActionInput(playerControl);
         new KeyMapping(inputManager, actionInput.getActionListener());
     }
