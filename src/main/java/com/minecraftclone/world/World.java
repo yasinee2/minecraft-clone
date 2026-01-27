@@ -1,5 +1,6 @@
 package com.minecraftclone.world;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;
 import com.jme3.scene.Node;
 import com.minecraftclone.block.Block;
@@ -10,12 +11,14 @@ public class World {
 
     private final Node rootNode;
     private final PhysicsSpace physicsSpace;
+    private final AssetManager assetManager;
 
     private final Map<String, Chunk> chunks = new HashMap<>();
 
-    public World(Node rootNode, PhysicsSpace physicsSpace) {
+    public World(Node rootNode, PhysicsSpace physicsSpace, AssetManager assetManager) {
         this.rootNode = rootNode;
         this.physicsSpace = physicsSpace;
+        this.assetManager = assetManager;
     }
 
     public void placeBlock(int wx, int wy, int wz, Block block) {
@@ -31,7 +34,7 @@ public class World {
 
         Chunk chunk = chunks.get(key);
         if (chunk == null) {
-            chunk = new Chunk(cx, cy, cz);
+            chunk = new Chunk(cx, cy, cz, assetManager);
             chunks.put(key, chunk);
             rootNode.attachChild(chunk.getNode());
         }

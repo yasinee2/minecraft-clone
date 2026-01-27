@@ -11,10 +11,6 @@ import com.minecraftclone.world.*;
 
 public class Main extends SimpleApplication {
 
-    private CharacterControl playerControl;
-    private PlayerCharacter playerCharacter;
-    private RenderEngine engine;
-    private ActionInput actionInput;
     private float timeAccumulator;
     private final float ticksPerSecond = 20f;
     private float tickTime;
@@ -53,7 +49,7 @@ public class Main extends SimpleApplication {
 
         //NOTE: Render engine
         //INFO: renders the world and sets it up for now, setup will be moved later
-        engine = new RenderEngine(rootNode, assetManager, bulletAppState);
+        new RenderEngine(rootNode, assetManager, bulletAppState);
 
         //NOTE: player is CharacterControl playerControl
         //playerCharacter = engine.getPlayerCharacter();
@@ -79,7 +75,6 @@ public class Main extends SimpleApplication {
     }
 
     private void tick() {
-        //engine.tick(actionInput, cam);
         totalTicks++;
     }
 

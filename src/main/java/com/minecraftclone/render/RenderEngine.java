@@ -4,19 +4,19 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.scene.Node;
 import com.minecraftclone.block.Blocks;
-import com.minecraftclone.world.ChunkMaterials;
 import com.minecraftclone.world.World;
 
 public class RenderEngine {
 
     private final World world;
+    private final AssetManager assetManager;
+    private final Node rootNode;
 
     public RenderEngine(Node rootNode, AssetManager assetManager, BulletAppState bulletAppState) {
-        // initialize shared chunk material
-        ChunkMaterials.init(assetManager);
-
         // world owns chunks + collision
-        world = new World(rootNode, bulletAppState.getPhysicsSpace());
+        world = new World(rootNode, bulletAppState.getPhysicsSpace(), assetManager);
+        this.rootNode = rootNode;
+        this.assetManager = assetManager;
 
         // test terrain
         testMap();
@@ -25,13 +25,17 @@ public class RenderEngine {
     private void testMap() {
         for (int x = 0; x < 10; x++) {
             for (int z = 0; z < 10; z++) {
-                world.placeBlock(x, 0, z, Blocks.DIRT);
+                world.placeBlock(x, 0, z, Blocks.GRASS_BLOCK);
             }
         }
 
         world.placeBlock(1, 1, 0, Blocks.STONE);
         world.placeBlock(1, 2, 0, Blocks.STONE);
         world.placeBlock(1, 3, 0, Blocks.STONE);
+        world.placeBlock(2, 1, 0, Blocks.STONE);
+        world.placeBlock(0, 1, 0, Blocks.STONE);
+
+        // Render the chunk at a specific location for testing
     }
 
     public World getWorld() {
