@@ -17,8 +17,13 @@ public class PlayerCharacter {
     private final float speed = 0.2f;
     private final boolean debugEnabled = false;
     private final Vector3f walkDir = new Vector3f();
+    private final ActionInput input;
+    private final Camera cam;
 
-    public PlayerCharacter(BulletAppState bulletAppState) {
+    public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, Camera cam) {
+        this.input = input;
+        this.cam = cam;
+
         bulletAppState.setDebugEnabled(debugEnabled);
 
         var shape = new CapsuleCollisionShape(0.5f, 1.8f);
@@ -35,7 +40,7 @@ public class PlayerCharacter {
         this.playerNode = playerNode;
     }
 
-    public void tick(ActionInput input, Camera cam) {
+    public void tick() {
         Vector3f forward = cam.getDirection().clone();
         forward.setY(0).normalizeLocal().multLocal(speed);
         Vector3f left = cam.getLeft().clone();

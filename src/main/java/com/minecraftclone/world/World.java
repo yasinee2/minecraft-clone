@@ -1,31 +1,39 @@
 package com.minecraftclone.world;
 
 import com.jme3.asset.AssetManager;
-import com.jme3.bullet.PhysicsSpace;
+import com.jme3.bullet.BulletAppState;
+import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.minecraftclone.block.Block;
+import com.minecraftclone.entitiy.EntityManager;
+import com.minecraftclone.entitiy.PlayerCharacter;
 import java.util.HashMap;
 import java.util.Map;
 
 public class World {
 
     private final Node rootNode;
-    private final PhysicsSpace physicsSpace;
+    private final BulletAppState bulletAppState;
     private final AssetManager assetManager;
+    private final EntityManager entityManager;
 
     private final Map<String, Chunk> chunks = new HashMap<>();
 
-    public World(Node rootNode, PhysicsSpace physicsSpace, AssetManager assetManager) {
+    public World(Node rootNode, AssetManager assetManager, BulletAppState bulletAppState, ActionInput actionInput, Camera cam) {
         this.rootNode = rootNode;
-        this.physicsSpace = physicsSpace;
         this.assetManager = assetManager;
+        this.bulletAppState = bulletAppState;
+
+        entityManager = new EntityManager(bulletAppState, rootNode, actionInput, cam);
+        entityManager.getPlayerCharacter();
+
         for (int x = -5; x < 5; x++) {
             for (int z = -5; z < 5; z++) {
                 Chunk chunk = new Chunk(x, 0, z, assetManager);
                 chunks.put("x,0,z", chunk);
                 rootNode.attachChild(chunk.getNode());
                 TerrainGenerator.generateChunk(chunk);
-                chunk.rebuild(physicsSpace);
+                chunk.rebuild(bulletAppState.getPhysicsSpace());
             }
         }
     }
@@ -49,6 +57,10 @@ public class World {
         }
 
         chunk.setBlock(lx, ly, lz, block);
-        chunk.rebuild(physicsSpace);
+        chunk.rebuild(bulletAppState.getPhysicsSpace());
+    }
+
+    public PlayerCharacter getPlayerCharacter() {
+        return entityManager.getPlayerCharacter();
     }
 }

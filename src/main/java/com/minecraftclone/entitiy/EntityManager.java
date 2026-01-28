@@ -9,13 +9,13 @@ public class EntityManager {
 
     private PlayerCharacter playerCharacter;
 
-    public EntityManager(BulletAppState bulletAppState, Node rootNode) {
-        playerCharacter = new PlayerCharacter(bulletAppState);
+    public EntityManager(BulletAppState bulletAppState, Node rootNode, ActionInput actionInput, Camera cam) {
+        playerCharacter = new PlayerCharacter(bulletAppState, actionInput, cam);
         rootNode.attachChild(playerCharacter.getNode());
     }
 
-    public void tick(ActionInput input, Camera cam) {
-        playerCharacter.tick(input, cam);
+    public void tick() {
+        playerCharacter.tick();
     }
 
     public PlayerCharacter getPlayerCharacter() {

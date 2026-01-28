@@ -18,6 +18,12 @@ public class Main extends SimpleApplication {
     private BitmapText tpsText;
     private long initialTime;
     private double timeActiveSeconds;
+    private PlayerCharacter playerCharacter;
+    private CharacterControl playerControl;
+    private ActionInput actionInput;
+
+    private RenderEngine engine;
+    private World world;
 
     public static void main(String[] args) {
         var settings = new AppSettings(true);
@@ -47,17 +53,21 @@ public class Main extends SimpleApplication {
         cam.setFrustumNear(0.2f);
         cam.setFov(70);
 
+        world = new World(rootNode, assetManager, bulletAppState, actionInput, cam);
+
+        actionInput = new ActionInput(playerControl);
+        new KeyMapping(inputManager, actionInput.getActionListener());
+
+        playerCharacter = world.getPlayerCharacter();
+        playerControl = playerCharacter.getPlayerControl();
+
         //NOTE: Render engine
         //INFO: renders the world and sets it up for now, setup will be moved later
-        new RenderEngine(rootNode, assetManager, bulletAppState);
+        //new RenderEngine(rootNode, assetManager, bulletAppState);
 
         //NOTE: player is CharacterControl playerControl
-        //playerCharacter = engine.getPlayerCharacter();
-        //playerControl = playerCharacter.getPlayerControl();
 
         //NOTE: actionInput
-        //actionInput = new ActionInput(playerControl);
-        //new KeyMapping(inputManager, actionInput.getActionListener());
     }
 
     @Override
@@ -65,7 +75,7 @@ public class Main extends SimpleApplication {
         tps();
         timeAccumulator += tpf;
 
-        //cam.setLocation(playerCharacter.getPlayerControl().getPhysicsLocation().add(0, 0.2f, 0));
+        cam.setLocation(playerCharacter.getPlayerControl().getPhysicsLocation().add(0, 0.2f, 0));
 
         //INFO: runs tick() until it's caught up
         while (timeAccumulator >= tickTime) {
@@ -76,6 +86,7 @@ public class Main extends SimpleApplication {
 
     private void tick() {
         totalTicks++;
+        playerCharacter.tick();
     }
 
     private void tps() {
