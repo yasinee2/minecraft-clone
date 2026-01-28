@@ -2,9 +2,12 @@ package com.minecraftclone.world;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.input.Input;
+import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.minecraftclone.block.Block;
+import com.minecraftclone.entitiy.ActionInput;
 import com.minecraftclone.entitiy.EntityManager;
 import com.minecraftclone.entitiy.PlayerCharacter;
 import java.util.HashMap;
@@ -19,12 +22,12 @@ public class World {
 
     private final Map<String, Chunk> chunks = new HashMap<>();
 
-    public World(Node rootNode, AssetManager assetManager, BulletAppState bulletAppState, ActionInput actionInput, Camera cam) {
+    public World(Node rootNode, AssetManager assetManager, BulletAppState bulletAppState, Camera cam, InputManager inputManager) {
         this.rootNode = rootNode;
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
 
-        entityManager = new EntityManager(bulletAppState, rootNode, actionInput, cam);
+        entityManager = new EntityManager(bulletAppState, rootNode, cam, inputManager);
         entityManager.getPlayerCharacter();
 
         for (int x = -5; x < 5; x++) {

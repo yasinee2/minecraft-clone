@@ -1,4 +1,4 @@
-package com.minecraftclone.world;
+package com.minecraftclone.entitiy;
 
 import com.jme3.input.InputManager;
 import com.jme3.input.KeyInput;

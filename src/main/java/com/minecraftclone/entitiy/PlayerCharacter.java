@@ -6,7 +6,6 @@ import com.jme3.bullet.control.CharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.minecraftclone.world.ActionInput;
 
 public class PlayerCharacter {
 
@@ -14,7 +13,7 @@ public class PlayerCharacter {
     private final Node playerNode;
 
     private final float stepHeight = 0.2f;
-    private final float speed = 0.2f;
+    private final float speed = 0.15f;
     private final boolean debugEnabled = false;
     private final Vector3f walkDir = new Vector3f();
     private final ActionInput input;
@@ -35,7 +34,7 @@ public class PlayerCharacter {
         Node playerNode = new Node("Player");
         playerNode.addControl(player);
         bulletAppState.getPhysicsSpace().add(player);
-        player.setPhysicsLocation(new Vector3f(5, 2, 2));
+        player.setPhysicsLocation(new Vector3f(5, 20, 2));
         this.playerControl = player;
         this.playerNode = playerNode;
     }
@@ -54,6 +53,8 @@ public class PlayerCharacter {
         if (input.isRight()) walkDir.addLocal(left.negate());
 
         playerControl.setWalkDirection(walkDir);
+
+        if (input.isJump() && playerControl.onGround()) playerControl.jump();
     }
 
     public Node getNode() {
