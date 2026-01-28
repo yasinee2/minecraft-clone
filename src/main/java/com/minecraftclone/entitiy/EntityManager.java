@@ -4,6 +4,8 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.minecraftclone.input.ActionInput;
+import com.minecraftclone.input.KeyMapping;
 
 public class EntityManager {
 

@@ -96,4 +96,8 @@ public class Chunk {
     public int getChunkZ() {
         return chunkZ;
     }
+
+    public int getChunkY() {
+        return chunkY;
+    }
 }

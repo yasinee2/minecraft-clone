@@ -15,7 +15,7 @@ public final class BlockMaterialCache {
             Material mat = new Material(assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
             Texture tex = assetManager.loadTexture("textures/blocks/" + name + ".png");
             tex.setMagFilter(Texture.MagFilter.Nearest);
-            tex.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
+            tex.setMinFilter(Texture.MinFilter.Trilinear);
             mat.setTexture("ColorMap", tex);
             return mat;
         });

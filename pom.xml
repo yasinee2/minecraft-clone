@@ -33,6 +33,11 @@
       <version>3.9.0-stable</version>
     </dependency>
     <dependency>
+      <groupId>org.jmonkeyengine</groupId>
+      <artifactId>jme3-effects</artifactId>
+      <version>3.9.0-stable</version>
+    </dependency>
+    <dependency>
         <groupId>com.github.stephengold</groupId>
         <artifactId>Minie</artifactId>
         <version>8.2.0</version>

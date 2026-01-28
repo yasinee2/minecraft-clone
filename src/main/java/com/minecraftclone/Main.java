@@ -2,10 +2,12 @@ package com.minecraftclone;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
-import com.jme3.bullet.control.CharacterControl;
 import com.jme3.font.BitmapText;
+import com.jme3.light.AmbientLight;
+import com.jme3.math.ColorRGBA;
+import com.jme3.post.FilterPostProcessor;
+import com.jme3.post.ssao.SSAOFilter;
 import com.jme3.system.AppSettings;
-import com.minecraftclone.entitiy.ActionInput;
 import com.minecraftclone.entitiy.PlayerCharacter;
 import com.minecraftclone.render.RenderEngine;
 import com.minecraftclone.world.*;
@@ -27,6 +29,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         var settings = new AppSettings(true);
         settings.setWindowSize(1920, 1080);
+        settings.setSamples(8);
         settings.setTitle("minecraft-clone v0.1.0-alpha    © Mats O. & Filip M");
 
         Main app = new Main();
@@ -48,21 +51,28 @@ public class Main extends SimpleApplication {
         stateManager.attach(bulletAppState);
 
         //NOTE: Camera cam
-        //flyCam.setMoveSpeed(0);
+        flyCam.setMoveSpeed(0);
         cam.setFrustumNear(0.2f);
+        cam.setFrustumFar(500f);
         cam.setFov(70);
 
+        //INFO: world owns all data
         world = new World(rootNode, assetManager, bulletAppState, cam, inputManager);
 
         playerCharacter = world.getPlayerCharacter();
 
         //NOTE: Render engine
-        //INFO: renders the world and sets it up for now, setup will be moved later
+        //INFO: will render the world eventually, does nothing rn
         //new RenderEngine(rootNode, assetManager, bulletAppState);
 
-        //NOTE: player is CharacterControl playerControl
+        AmbientLight ambient = new AmbientLight();
+        ambient.setColor(ColorRGBA.White.mult(0.25f));
+        rootNode.addLight(ambient);
+        FilterPostProcessor fpp = new FilterPostProcessor(assetManager);
 
-        //NOTE: actionInput
+        SSAOFilter ssao = new SSAOFilter(6.0f, 4.0f, 1.0f, 0.05f);
+        fpp.addFilter(ssao);
+        viewPort.addProcessor(fpp);
     }
 
     @Override
