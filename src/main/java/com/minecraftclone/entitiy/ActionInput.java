@@ -1,16 +1,10 @@
-package com.minecraftclone.world;
+package com.minecraftclone.entitiy;
 
-import com.jme3.bullet.control.CharacterControl;
 import com.jme3.input.controls.ActionListener;
 
 public class ActionInput implements ActionListener {
 
-    private boolean forward, backward, left, right;
-    private final CharacterControl player;
-
-    public ActionInput(CharacterControl player) {
-        this.player = player;
-    }
+    private boolean forward, backward, left, right, jump;
 
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
@@ -19,10 +13,12 @@ public class ActionInput implements ActionListener {
             case "back" -> backward = isPressed;
             case "left" -> left = isPressed;
             case "right" -> right = isPressed;
-            case "jump" -> {
-                if (player.onGround()) player.jump();
-            }
+            case "jump" -> jump = isPressed;
         }
+    }
+
+    public boolean isJump() {
+        return jump;
     }
 
     public boolean isForward() {

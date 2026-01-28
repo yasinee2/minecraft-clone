@@ -5,6 +5,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
+import com.minecraftclone.entitiy.ActionInput;
 import com.minecraftclone.entitiy.PlayerCharacter;
 import com.minecraftclone.render.RenderEngine;
 import com.minecraftclone.world.*;
@@ -19,8 +20,6 @@ public class Main extends SimpleApplication {
     private long initialTime;
     private double timeActiveSeconds;
     private PlayerCharacter playerCharacter;
-    private CharacterControl playerControl;
-    private ActionInput actionInput;
 
     private RenderEngine engine;
     private World world;
@@ -53,13 +52,9 @@ public class Main extends SimpleApplication {
         cam.setFrustumNear(0.2f);
         cam.setFov(70);
 
-        world = new World(rootNode, assetManager, bulletAppState, actionInput, cam);
-
-        actionInput = new ActionInput(playerControl);
-        new KeyMapping(inputManager, actionInput.getActionListener());
+        world = new World(rootNode, assetManager, bulletAppState, cam, inputManager);
 
         playerCharacter = world.getPlayerCharacter();
-        playerControl = playerCharacter.getPlayerControl();
 
         //NOTE: Render engine
         //INFO: renders the world and sets it up for now, setup will be moved later
