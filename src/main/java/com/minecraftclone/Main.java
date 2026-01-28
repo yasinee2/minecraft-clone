@@ -29,8 +29,8 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         var settings = new AppSettings(true);
         settings.setWindowSize(1920, 1080);
-        settings.setSamples(8);
-        settings.setTitle("minecraft-clone v0.1.0-alpha    © Mats O. & Filip M");
+        settings.setSamples(4);
+        settings.setTitle("minecraft-clone v0.2.0-alpha    © Mats O. & Filip M.");
 
         Main app = new Main();
         app.setSettings(settings);
