@@ -24,9 +24,9 @@ public class PlayerGUI {
     public PlayerGUI(AppSettings settings, Node guiNode, AssetManager assetManager) {
         windowWidth = settings.getWidth();
 
-        inventory = new Picture("inventory");
-        Texture2D inventoryTexture = new Texture2D();
-        inventory.setTexture(assetManager, inventoryTexture, true);
+        Picture inventory = new Picture("inventory");
+        inventory.setImage(assetManager, "resources/gui/", true);
+
         inventory.setWidth(182 * scale);
         inventory.setHeight(22 * scale);
         inventory.setPosition(windowWidth / 2 - (inventory.getWidth() / 2), 0);
