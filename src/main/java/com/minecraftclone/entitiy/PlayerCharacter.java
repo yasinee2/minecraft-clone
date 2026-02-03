@@ -1,11 +1,14 @@
 package com.minecraftclone.entitiy;
 
+import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
+import com.minecraftclone.gui.PlayerGUI;
 import com.minecraftclone.input.ActionInput;
 
 public class PlayerCharacter {
@@ -20,9 +23,18 @@ public class PlayerCharacter {
     private final ActionInput input;
     private final Camera cam;
 
-    public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, Camera cam) {
+    public PlayerCharacter(
+        BulletAppState bulletAppState,
+        ActionInput input,
+        Camera cam,
+        AppSettings settings,
+        Node guiNode,
+        AssetManager assetManager
+    ) {
         this.input = input;
         this.cam = cam;
+
+        PlayerGUI gui = new PlayerGUI(settings, guiNode, assetManager);
 
         bulletAppState.setDebugEnabled(debugEnabled);
 

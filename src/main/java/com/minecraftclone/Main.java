@@ -1,6 +1,7 @@
 package com.minecraftclone;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
@@ -52,7 +53,7 @@ public class Main extends SimpleApplication {
         cam.setFov(70);
 
         //INFO: world owns all data
-        world = new World(rootNode, assetManager, bulletAppState, cam, inputManager);
+        world = new World(rootNode, assetManager, bulletAppState, cam, inputManager, settings, guiNode);
 
         playerCharacter = world.getPlayerCharacter();
 

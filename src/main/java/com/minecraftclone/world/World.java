@@ -5,6 +5,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
+import com.jme3.system.AppSettings;
 import com.minecraftclone.block.Block;
 import com.minecraftclone.entitiy.EntityManager;
 import com.minecraftclone.entitiy.PlayerCharacter;
@@ -20,12 +21,20 @@ public class World {
 
     private final Map<String, Chunk> chunks = new HashMap<>();
 
-    public World(Node rootNode, AssetManager assetManager, BulletAppState bulletAppState, Camera cam, InputManager inputManager) {
+    public World(
+        Node rootNode,
+        AssetManager assetManager,
+        BulletAppState bulletAppState,
+        Camera cam,
+        InputManager inputManager,
+        AppSettings settings,
+        Node guiNode
+    ) {
         this.rootNode = rootNode;
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
 
-        entityManager = new EntityManager(bulletAppState, rootNode, cam, inputManager);
+        entityManager = new EntityManager(bulletAppState, rootNode, cam, inputManager, settings, guiNode, assetManager);
         entityManager.getPlayerCharacter();
 
         int generationDistance = 5;
