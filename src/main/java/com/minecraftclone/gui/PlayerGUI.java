@@ -26,12 +26,12 @@ public class PlayerGUI {
         windowWidth = settings.getWidth();
         ImageLoader imageLoader = new ImageLoader();
 
-        Texture2D hotbarTexture = new Texture2D(imageLoader.loadImage("src/main/resources/textures/gui/sprites/hud/hotbar.png"));
+        Texture2D hotbarTexture = new Texture2D(imageLoader.loadImage("src/main/resources/textures/gui/sprites/hud/hotbar.png")); //182x22
         hotbarTexture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
         hotbarTexture.setMagFilter(Texture.MagFilter.Nearest);
 
         Texture2D hotbarSelectorTexture = new Texture2D(
-            imageLoader.loadImage("src/main/resources/textures/gui/sprites/hud/hotbar_selection.png")
+            imageLoader.loadImage("src/main/resources/textures/gui/sprites/hud/hotbar_selection.png") //24x23
         );
         hotbarSelectorTexture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
         hotbarSelectorTexture.setMagFilter(Texture.MagFilter.Nearest);
