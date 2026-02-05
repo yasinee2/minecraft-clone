@@ -1,12 +1,10 @@
 package com.minecraftclone;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.entitiy.PlayerCharacter;
-import com.minecraftclone.render.RenderEngine;
 import com.minecraftclone.world.*;
 
 public class Main extends SimpleApplication {
@@ -19,8 +17,6 @@ public class Main extends SimpleApplication {
     private long initialTime;
     private double timeActiveSeconds;
     private PlayerCharacter playerCharacter;
-
-    private RenderEngine engine;
     private World world;
 
     public static void main(String[] args) {

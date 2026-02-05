@@ -10,6 +10,7 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.gui.PlayerGUI;
 import com.minecraftclone.input.ActionInput;
+import java.io.IOException;
 
 public class PlayerCharacter {
 
@@ -34,7 +35,11 @@ public class PlayerCharacter {
         this.input = input;
         this.cam = cam;
 
-        PlayerGUI gui = new PlayerGUI(settings, guiNode, assetManager);
+        try {
+            PlayerGUI gui = new PlayerGUI(settings, guiNode, assetManager);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         bulletAppState.setDebugEnabled(debugEnabled);
 
