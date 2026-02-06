@@ -4,7 +4,7 @@ import com.jme3.input.controls.ActionListener;
 
 public class ActionInput implements ActionListener {
 
-    private boolean w, s, a, d, e, q, space, one, two, three, four, five, six, seven, eight, nine, mouseWheel;
+    private boolean w, s, a, d, e, q, space, one, two, three, four, five, six, seven, eight, nine, mouseWheelUp, mouseWheelDown;
 
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
@@ -25,7 +25,8 @@ public class ActionInput implements ActionListener {
             case "7" -> seven = isPressed;
             case "8" -> eight = isPressed;
             case "9" -> nine = isPressed;
-            case "mouseWheel" -> mouseWheel = isPressed;
+            case "mouseWheelUp" -> mouseWheelUp = isPressed;
+            case "mouseWheelDown" -> mouseWheelDown = isPressed;
         }
     }
 
@@ -49,6 +50,14 @@ public class ActionInput implements ActionListener {
             case ' ' -> space;
             default -> false;
         };
+    }
+
+    public boolean getMouseWheelUp() {
+        return mouseWheelUp;
+    }
+
+    public boolean getMouseWheelUDown() {
+        return mouseWheelDown;
     }
 
     public ActionListener getActionListener() {
