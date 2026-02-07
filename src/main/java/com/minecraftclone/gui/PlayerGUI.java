@@ -19,7 +19,7 @@ public class PlayerGUI {
     private Picture hotbar, hotbarSelector, inventory, crosshair, experienceBarEmpty, heartContainer, fullHeart, halfHeart, hungerContainer, fullHunger, halfHunger;
     private int windowWidth, windowHeight;
     private ImageLoader imageLoader = new ImageLoader();
-    private Node guiNode;
+    private Node guiNode, hungerContainerNode, containerNode, heartContainerNode;
     private boolean inventoryShown;
     private AssetManager assetManager;
     private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture, fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
@@ -29,6 +29,14 @@ public class PlayerGUI {
     public PlayerGUI(AppSettings settings, Node guiNode, AssetManager assetManager) throws IOException {
         this.assetManager = assetManager;
         this.guiNode = guiNode;
+        heartContainerNode = new Node("heartcCntainerNode");
+        hungerContainerNode = new Node("hungerContainerNode");
+        guiNode.attachChild(containerNode);
+        hungerNode = new Node("hungerNode");
+        heartNode = new Node("heartNode");
+        containerNode.attachChild(hungerNode);
+        containerNode.attachChild(heartNode);
+
         windowWidth = settings.getWidth();
         windowHeight = settings.getHeight();
 
@@ -74,19 +82,7 @@ public class PlayerGUI {
                 windowWidth / 2 - ((hotbar.getWidth() / 2)) + 8 * scale * i,
                 experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
             );
-            guiNode.attachChild(heartContainer);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            fullHeart = new Picture("fullHeart");
-            fullHeart.setTexture(assetManager, fullHeartTexture, true);
-            fullHeart.setWidth(9 * scale);
-            fullHeart.setHeight(9 * scale);
-            fullHeart.setPosition(
-                windowWidth / 2 - ((hotbar.getWidth() / 2)) + 8 * scale * i,
-                experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
-            );
-            guiNode.attachChild(fullHeart);
+            containerNode.attachChild(heartContainer);
         }
 
         for (int i = 0; i < 10; i++) {
@@ -98,19 +94,7 @@ public class PlayerGUI {
                 windowWidth / 2 + 10 * scale + 8 * scale * i,
                 experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
             );
-            guiNode.attachChild(hungerContainer);
-        }
-
-        for (int i = 0; i < 10; i++) {
-            fullHunger = new Picture("fullHunger");
-            fullHunger.setTexture(assetManager, fullHungerTexture, true);
-            fullHunger.setWidth(9 * scale);
-            fullHunger.setHeight(9 * scale);
-            fullHunger.setPosition(
-                windowWidth / 2 + 10 * scale + 8 * scale * i,
-                experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
-            );
-            guiNode.attachChild(fullHunger);
+            containerNode.attachChild(hungerContainer);
         }
 
         crosshair = new Picture("crosshair");
@@ -176,18 +160,6 @@ public class PlayerGUI {
 
     public void setLife(int life) {
         for (int i = 0; i < 10; i++) {
-            heartContainer = new Picture("heartContainer");
-            heartContainer.setTexture(assetManager, heartContainerTexture, true);
-            heartContainer.setWidth(9 * scale);
-            heartContainer.setHeight(9 * scale);
-            heartContainer.setPosition(
-                windowWidth / 2 - ((hotbar.getWidth() / 2)) + 8 * scale * i,
-                experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
-            );
-            guiNode.attachChild(heartContainer);
-        }
-
-        for (int i = 0; i < 10; i++) {
             //TODO:
             fullHeart = new Picture("fullHeart");
             fullHeart.setTexture(assetManager, fullHeartTexture, true);
@@ -202,5 +174,30 @@ public class PlayerGUI {
     }
 
     //TODO:
-    public void setHunger(int life) {}
+    public void setHunger(int hunger) {
+        /*for (int i = 0; i < 10; i++) {
+            hungerContainer = new Picture("hungerContainer");
+            hungerContainer.setTexture(assetManager, hungerContainerTexture, true);
+            hungerContainer.setWidth(9 * scale);
+            hungerContainer.setHeight(9 * scale);
+            hungerContainer.setPosition(
+                windowWidth / 2 + 10 * scale + 8 * scale * i,
+                experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
+            );
+            guiNode.attachChild(hungerContainer);
+        }*/
+
+        for (int i = 0; i < 10; i++) {
+            fullHunger = new Picture("fullHunger");
+            fullHunger.setTexture(assetManager, fullHungerTexture, true);
+            fullHunger.setWidth(9 * scale);
+            fullHunger.setHeight(9 * scale);
+            fullHunger.setPosition(
+                windowWidth / 2 + 10 * scale + 8 * scale * i,
+                experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
+            );
+            hungerNode.attachChild(fullHunger);
+        }
+        //hungerNode.detachAllChildren();
+    }
 }

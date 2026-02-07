@@ -25,8 +25,8 @@ public class PlayerCharacter {
     private final Camera cam;
     private PlayerGUI gui;
     private boolean eWasUp;
-    private int lives;
-    private int hunger;
+    private int life = 10;
+    private int hunger = 10;
 
     public PlayerCharacter(
         BulletAppState bulletAppState,
@@ -46,6 +46,8 @@ public class PlayerCharacter {
             e.printStackTrace();
         }
 
+        gui.setLife(life);
+        gui.setHunger(20);
         bulletAppState.setDebugEnabled(debugEnabled);
 
         var shape = new CapsuleCollisionShape(0.5f, 1.8f);
