@@ -84,6 +84,8 @@ public class PlayerCharacter {
         if (input.keyDown('7')) gui.changeHotbarSlot(7);
         if (input.keyDown('8')) gui.changeHotbarSlot(8);
         if (input.keyDown('9')) gui.changeHotbarSlot(9);
+
+        if (input.keyDown('e')) gui.toggleInventory();
     }
 
     public Node getNode() {

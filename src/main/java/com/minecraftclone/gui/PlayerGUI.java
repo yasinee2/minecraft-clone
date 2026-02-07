@@ -15,26 +15,25 @@ import java.util.List;
 public class PlayerGUI {
 
     private int selectedSlot = 1;
-    private int scale = 3;
-    private Picture hotbar;
-    private Picture hotbarSelector;
-    private int windowWidth;
+    private int scale = 4; // nur glatte zahlen
+    private Picture hotbar, hotbarSelector, inventory, crosshair;
+    private int windowWidth, windowHeight;
+    private ImageLoader imageLoader;
+    private Node guiNode;
+    private boolean inventoryShown;
 
     List<ItemInstance> slots = new ArrayList<>(9);
 
     public PlayerGUI(AppSettings settings, Node guiNode, AssetManager assetManager) throws IOException {
+        this.guiNode = guiNode;
         windowWidth = settings.getWidth();
-        ImageLoader imageLoader = new ImageLoader();
+        windowHeight = settings.getHeight();
+        imageLoader = new ImageLoader();
 
-        Texture2D hotbarTexture = new Texture2D(imageLoader.loadImage("src/main/resources/textures/gui/sprites/hud/hotbar.png")); //182x22
-        hotbarTexture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
-        hotbarTexture.setMagFilter(Texture.MagFilter.Nearest);
-
-        Texture2D hotbarSelectorTexture = new Texture2D(
-            imageLoader.loadImage("src/main/resources/textures/gui/sprites/hud/hotbar_selection.png") //24x23
-        );
-        hotbarSelectorTexture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
-        hotbarSelectorTexture.setMagFilter(Texture.MagFilter.Nearest);
+        Texture2D hotbarTexture = loadTexture("src/main/resources/textures/gui/sprites/hud/hotbar.png");
+        Texture2D hotbarSelectorTexture = loadTexture("src/main/resources/textures/gui/sprites/hud/hotbar_selection.png");
+        Texture2D inventoryTexture = loadTexture("src/main/resources/textures/gui/container/inventory.png");
+        Texture2D crosshairTexture = loadTexture("src/main/resources/textures/gui/sprites/hud/crosshair.png");
 
         hotbar = new Picture("hotbar");
         hotbar.setTexture(assetManager, hotbarTexture, true);
@@ -47,10 +46,27 @@ public class PlayerGUI {
         hotbarSelector.setTexture(assetManager, hotbarSelectorTexture, true);
         hotbarSelector.setWidth(24 * scale);
         hotbarSelector.setHeight(23 * scale);
-        hotbarSelector.setPosition(windowWidth / 2 - ((hotbar.getWidth() / 2) + 1 * scale), 0);
+        hotbarSelector.setPosition(windowWidth / 2 - ((hotbarSelector.getWidth() / 2)), 0);
         guiNode.attachChild(hotbarSelector);
 
+        crosshair = new Picture("crosshair");
+        crosshair.setTexture(assetManager, crosshairTexture, true);
+        crosshair.setWidth(15 * scale);
+        crosshair.setHeight(15 * scale);
+        crosshair.setPosition(windowWidth / 2 - ((crosshair.getWidth() / 2)), windowHeight / 2 - ((crosshair.getHeight() / 2)));
+        guiNode.attachChild(crosshair);
+
+        inventory = new Picture("inventory");
+        inventory.setTexture(assetManager, inventoryTexture, true);
+        inventory.setWidth(256 * scale);
+        inventory.setHeight(256 * scale);
+        inventory.setPosition(
+            windowWidth / 2 - (((inventory.getWidth() - (80 * scale)) / 2)),
+            windowHeight / 2 - (inventory.getHeight() - (90 * scale))
+        );
+
         changeHotbarSlot(selectedSlot);
+        inventoryShown = false;
     }
 
     public void changeHotbarSlot(int slot) {
@@ -73,5 +89,22 @@ public class PlayerGUI {
 
     public void hotbarSlotDown() {
         changeHotbarSlot(selectedSlot - 1);
+    }
+
+    public void toggleInventory() {
+        if (!inventoryShown) {
+            guiNode.attachChild(inventory);
+            inventoryShown = true;
+        } else {
+            inventory.removeFromParent();
+            inventoryShown = false;
+        }
+    }
+
+    private Texture2D loadTexture(String path) throws IOException {
+        Texture2D texture = new Texture2D(imageLoader.loadImage(path));
+        texture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
+        texture.setMagFilter(Texture.MagFilter.Nearest);
+        return texture;
     }
 }

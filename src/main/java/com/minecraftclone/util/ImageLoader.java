@@ -19,13 +19,13 @@ public class ImageLoader {
 
         ByteBuffer buffer = ByteBuffer.allocateDirect(width * height * 4);
 
-        for (int y = 0; y < height; y++) {
+        for (int y = height - 1; y >= 0; y--) {
             for (int x = 0; x < width; x++) {
                 int pixel = bufferedImage.getRGB(x, y);
-                buffer.put((byte) ((pixel >> 16) & 0xFF)); // Red
-                buffer.put((byte) ((pixel >> 8) & 0xFF)); // Green
-                buffer.put((byte) (pixel & 0xFF)); // Blue
-                buffer.put((byte) ((pixel >> 24) & 0xFF)); // Alpha
+                buffer.put((byte) ((pixel >> 16) & 0xFF)); // R
+                buffer.put((byte) ((pixel >> 8) & 0xFF)); // G
+                buffer.put((byte) (pixel & 0xFF)); // B
+                buffer.put((byte) ((pixel >> 24) & 0xFF)); // A
             }
         }
 
