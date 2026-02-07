@@ -72,7 +72,7 @@ public class Main extends SimpleApplication {
         // BLOCK INTERACTION
         // =========================
 
-        blockInteraction = new BlockInteractionSystem(world, rootNode, cam, actionInput);
+        blockInteraction = new BlockInteractionSystem(world, cam, actionInput);
 
         // Example: selected block (later this comes from hotbar)
         blockInteraction.setSelectedBlock(Blocks.DIRT);

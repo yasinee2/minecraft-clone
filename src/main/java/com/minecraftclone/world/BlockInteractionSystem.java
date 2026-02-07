@@ -1,67 +1,35 @@
 package com.minecraftclone.world;
 
 import com.jme3.bullet.control.CharacterControl;
-import com.jme3.collision.CollisionResult;
-import com.jme3.collision.CollisionResults;
-import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
-import com.jme3.scene.Node;
 import com.minecraftclone.block.Block;
 import com.minecraftclone.entitiy.PlayerCharacter;
 import com.minecraftclone.input.ActionInput;
 
 public final class BlockInteractionSystem {
 
-    // =========================
-    // CONFIG
-    // =========================
-
     private static final float DEFAULT_REACH = 5.0f;
-
-    // =========================
-    // DEPENDENCIES
-    // =========================
+    private static final float EPSILON = 0.001f;
 
     private final World world;
-    private final Node collisionRoot;
     private final Camera camera;
     private final ActionInput input;
 
-    // =========================
-    // STATE
-    // =========================
-
     private Block selectedBlock;
     private float reachDistance = DEFAULT_REACH;
-
     private boolean allowBreaking = true;
     private boolean allowPlacing = true;
 
-    // =========================
-    // CONSTRUCTOR
-    // =========================
-
-    public BlockInteractionSystem(World world, Node collisionRoot, Camera camera, ActionInput input) {
+    public BlockInteractionSystem(World world, Camera camera, ActionInput input) {
         this.world = world;
-        this.collisionRoot = collisionRoot;
         this.camera = camera;
         this.input = input;
     }
 
-    // =========================
-    // EXTERNAL API
-    // =========================
-
     public void update() {
-        boolean breakNow = input.breakBlock();
-
-        if (breakNow && allowBreaking) {
-            tryBreak();
-        }
-        if (input.placeBlock() && allowPlacing) {
-            tryPlace();
-        }
+        if (input.breakBlock() && allowBreaking) tryBreak();
+        if (input.placeBlock() && allowPlacing) tryPlace();
     }
 
     public void setSelectedBlock(Block block) {
@@ -81,135 +49,125 @@ public final class BlockInteractionSystem {
     }
 
     // =========================
-    // CORE LOGIC
+    // BLOCK INTERACTION
     // =========================
 
     private void tryBreak() {
         System.out.println("Attempting to break block...");
-        RayHit hit = raycast();
+        long startTime = System.nanoTime();
+
+        RaycastResult hit = raycastBlocks();
         if (hit == null) {
-            System.out.println("Raycast did not hit any block.");
+            System.out.println("No block in reach to break.");
             return;
         }
-        System.out.println("Raycast hit a block at: " + hit.x + ", " + hit.y + ", " + hit.z);
 
         if (!world.isBlockLoaded(hit.x, hit.y, hit.z)) {
-            System.out.println("Block is not loaded in the world.");
+            System.out.println("Block is not loaded.");
             return;
         }
-        System.out.println("Block is loaded.");
 
-        Block b = world.getBlock(hit.x, hit.y, hit.z);
-        if (b == null) {
-            System.out.println("No block found at the hit location.");
-            return;
-        }
-        System.out.println("Block found: " + b);
-
-        if (!b.isBreakable()) {
-            System.out.println("Block is not breakable.");
-            return;
-        }
-        System.out.println("Block is breakable.");
+        Block block = world.getBlock(hit.x, hit.y, hit.z);
+        if (block == null) return;
+        if (!block.isBreakable()) return;
 
         world.setBlock(hit.x, hit.y, hit.z, null);
-        System.out.println("Block broken successfully.");
+
+        long endTime = System.nanoTime();
+        System.out.println("Block broken successfully in " + ((endTime - startTime) / 1_000_000.0) + " ms");
     }
 
     private void tryPlace() {
-        System.out.println("Attempting to place block...");
-        if (selectedBlock == null) {
-            System.out.println("No block selected to place.");
-            return;
-        }
-        System.out.println("Selected block: " + selectedBlock);
+        if (selectedBlock == null) return;
 
-        RayHit hit = raycast();
-        if (hit == null) {
-            System.out.println("Raycast did not hit any block.");
-            return;
-        }
-        System.out.println("Raycast hit a block at: " + hit.x + ", " + hit.y + ", " + hit.z);
+        RaycastResult hit = raycastBlocks();
+        if (hit == null) return;
 
         int px = hit.x + hit.nx;
         int py = hit.y + hit.ny;
         int pz = hit.z + hit.nz;
-        System.out.println("Calculated placement position: " + px + ", " + py + ", " + pz);
 
-        if (!world.isBlockLoaded(px, py, pz)) {
-            System.out.println("Placement location is not loaded.");
-            return;
-        }
-        System.out.println("Placement location is loaded.");
-
-        if (world.getBlock(px, py, pz) != null) {
-            System.out.println("A block already exists at the placement location.");
-            return;
-        }
-        System.out.println("Placement location is empty.");
-
-        if (!selectedBlock.canBePlacedAt(world, px, py, pz)) {
-            System.out.println("Block cannot be placed at the location.");
-            return;
-        }
-        System.out.println("Block can be placed at the location.");
-
+        if (!world.isBlockLoaded(px, py, pz)) return;
+        if (world.getBlock(px, py, pz) != null) return;
+        if (!selectedBlock.canBePlacedAt(world, px, py, pz)) return;
         if (collidesWithPlayer(px, py, pz)) return;
 
         world.setBlock(px, py, pz, selectedBlock);
-        System.out.println("Block placed successfully.");
     }
 
     // =========================
-    // RAYCASTING
+    // FAST AABB BLOCK RAYCAST
     // =========================
 
-    private RayHit raycast() {
-        CollisionResults results = new CollisionResults();
+    private RaycastResult raycastBlocks() {
+        Vector3f origin = camera.getLocation();
+        Vector3f dir = camera.getDirection().normalize();
 
-        Ray ray = new Ray(camera.getLocation(), camera.getDirection());
-        ray.setLimit(reachDistance);
+        float step = 0.1f; // step size along ray
+        float maxDistance = reachDistance;
 
-        collisionRoot.collideWith(ray, results);
+        for (float t = 0; t <= maxDistance; t += step) {
+            Vector3f pos = origin.add(dir.mult(t));
 
-        if (results.size() == 0) return null;
+            int bx = (int) Math.floor(pos.x);
+            int by = (int) Math.floor(pos.y);
+            int bz = (int) Math.floor(pos.z);
 
-        CollisionResult hit = results.getClosestCollision();
+            if (!world.isBlockLoaded(bx, by, bz)) continue;
 
-        Vector3f p = hit.getContactPoint();
-        Vector3f n = hit.getContactNormal();
+            Block b = world.getBlock(bx, by, bz);
+            if (b != null) {
+                // Determine which face was hit for placement
+                int nx = 0,
+                    ny = 0,
+                    nz = 0;
 
-        final float EPSILON = 0.001f;
+                float fx = pos.x - bx;
+                float fy = pos.y - by;
+                float fz = pos.z - bz;
 
-        Vector3f biasedPoint = p.subtract(n.mult(EPSILON));
+                if (fx < EPSILON) nx = -1;
+                else if (fx > 1 - EPSILON) nx = 1;
+                if (fy < EPSILON) ny = -1;
+                else if (fy > 1 - EPSILON) ny = 1;
+                if (fz < EPSILON) nz = -1;
+                else if (fz > 1 - EPSILON) nz = 1;
 
-        int x = (int) Math.floor(biasedPoint.x);
-        int y = (int) Math.floor(biasedPoint.y);
-        int z = (int) Math.floor(biasedPoint.z);
-
-        int nx = normalToAxis(n.x);
-        int ny = normalToAxis(n.y);
-        int nz = normalToAxis(n.z);
-
-        return new RayHit(x, y, z, nx, ny, nz);
+                return new RaycastResult(bx, by, bz, nx, ny, nz);
+            }
+        }
+        return null;
     }
 
-    private int normalToAxis(float v) {
-        if (v > 0.5f) return 1;
-        if (v < -0.5f) return -1;
-        return 0;
+    private boolean collidesWithPlayer(int x, int y, int z) {
+        CharacterControl player = world.getPlayerCharacter().getPlayerControl();
+
+        Vector3f blockMin = new Vector3f(x, y, z);
+        Vector3f blockMax = blockMin.add(1, 1, 1);
+
+        Vector3f playerPos = player.getPhysicsLocation();
+        float radius = PlayerCharacter.RADIUS;
+        float height = PlayerCharacter.HEIGHT;
+        Vector3f playerMin = playerPos.add(-radius, -0.5f * height, -radius);
+        Vector3f playerMax = playerPos.add(radius, 0.5f * height, radius);
+
+        boolean overlapX = blockMin.x < playerMax.x && blockMax.x > playerMin.x;
+        boolean overlapY = blockMin.y < playerMax.y && blockMax.y > playerMin.y;
+        boolean overlapZ = blockMin.z < playerMax.z && blockMax.z > playerMin.z;
+
+        return overlapX && overlapY && overlapZ;
     }
 
     // =========================
-    // INTERNAL DATA STRUCT
+    // INTERNAL STRUCT
     // =========================
 
-    private static final class RayHit {
+    private static final class RaycastResult {
 
         final int x, y, z;
         final int nx, ny, nz;
 
-        RayHit(int x, int y, int z, int nx, int ny, int nz) {
+        RaycastResult(int x, int y, int z, int nx, int ny, int nz) {
             this.x = x;
             this.y = y;
             this.z = z;
@@ -217,35 +175,5 @@ public final class BlockInteractionSystem {
             this.ny = ny;
             this.nz = nz;
         }
-    }
-
-    private boolean collidesWithPlayer(int x, int y, int z) {
-        CharacterControl player = world.getPlayerCharacter().getPlayerControl();
-
-        // Block AABB
-        Vector3f blockMin = new Vector3f(x, y, z);
-        Vector3f blockMax = blockMin.add(1, 1, 1);
-
-        // Player capsule
-        Vector3f playerPos = player.getPhysicsLocation(); // bottom center of capsule
-        float radius = PlayerCharacter.RADIUS;
-        float height = PlayerCharacter.HEIGHT;
-
-        // Convert capsule to AABB
-        Vector3f playerMin = playerPos.add(-radius, -0.5f * height, -radius);
-        Vector3f playerMax = playerPos.add(radius, 0.5f * height, radius);
-
-        // Check overlap (AABB vs AABB)
-        boolean overlapX = blockMin.x < playerMax.x && blockMax.x > playerMin.x;
-        boolean overlapY = blockMin.y < playerMax.y && blockMax.y > playerMin.y;
-        boolean overlapZ = blockMin.z < playerMax.z && blockMax.z > playerMin.z;
-
-        boolean collision = overlapX && overlapY && overlapZ;
-
-        if (collision) {
-            System.out.println("Block at " + x + "," + y + "," + z + " collides with player.");
-        }
-
-        return collision;
     }
 }
