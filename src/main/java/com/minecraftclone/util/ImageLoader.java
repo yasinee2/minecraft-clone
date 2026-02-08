@@ -2,6 +2,8 @@ package com.minecraftclone.util;
 
 import com.jme3.texture.Image;
 import com.jme3.texture.Image.Format;
+import com.jme3.texture.Texture;
+import com.jme3.texture.Texture2D;
 import com.jme3.texture.image.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,7 +13,7 @@ import javax.imageio.ImageIO;
 
 public class ImageLoader {
 
-    public Image loadImage(String path) throws IOException {
+    private Image loadImage(String path) throws IOException {
         BufferedImage bufferedImage = ImageIO.read(new File(path));
 
         int width = bufferedImage.getWidth();
@@ -32,5 +34,12 @@ public class ImageLoader {
         buffer.flip();
 
         return new Image(Format.RGBA8, width, height, buffer, ColorSpace.sRGB);
+    }
+
+    public Texture2D loadTexture(String path) throws IOException {
+        Texture2D texture = new Texture2D(loadImage(path));
+        texture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
+        texture.setMagFilter(Texture.MagFilter.Nearest);
+        return texture;
     }
 }

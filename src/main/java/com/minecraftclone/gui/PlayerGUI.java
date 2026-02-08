@@ -3,7 +3,6 @@ package com.minecraftclone.gui;
 import com.jme3.asset.AssetManager;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
-import com.jme3.texture.Texture;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
 import com.minecraftclone.item.ItemInstance;
@@ -19,7 +18,7 @@ public class PlayerGUI {
     private Picture hotbar, hotbarSelector, inventory, crosshair, experienceBarEmpty, heartContainer, fullHeart, halfHeart, hungerContainer, fullHunger, halfHunger;
     private int windowWidth, windowHeight;
     private ImageLoader imageLoader = new ImageLoader();
-    private Node guiNode, hungerContainerNode, containerNode, heartContainerNode;
+    private Node guiNode, hungerContainerNode, heartContainerNode;
     private boolean inventoryShown;
     private AssetManager assetManager;
     private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture, fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
@@ -44,17 +43,17 @@ public class PlayerGUI {
         windowWidth = settings.getWidth();
         windowHeight = settings.getHeight();
 
-        hotbarTexture = loadTexture(hudPath("hotbar.png")); //182x22
-        hotbarSelectorTexture = loadTexture(hudPath("hotbar_selection.png")); //24x23
-        crosshairTexture = loadTexture(hudPath("crosshair.png")); //15x15
-        inventoryTexture = loadTexture("src/main/resources/textures/gui/container/inventory.png"); //256x256
-        experienceBarEmptyTexture = loadTexture(hudPath("experience_bar_background.png")); //182x5
-        heartContainerTexture = loadTexture(hudPath("heart/container.png")); //9x9
-        fullHeartTexture = loadTexture(hudPath("heart/full.png")); //9x9
-        halfHeartTexture = loadTexture(hudPath("heart/half.png")); //9x9
-        hungerContainerTexture = loadTexture(hudPath("food_empty.png")); //9x9
-        fullHungerTexture = loadTexture(hudPath("food_full.png")); //9x9
-        halfHungerTexture = loadTexture(hudPath("food_half.png")); //9x9
+        hotbarTexture = imageLoader.loadTexture(guiPath("sprites/hud/hotbar.png")); //182x22
+        hotbarSelectorTexture = imageLoader.loadTexture(guiPath("sprites/hud/hotbar_selection.png")); //24x23
+        crosshairTexture = imageLoader.loadTexture(guiPath("sprites/hud/crosshair.png")); //15x15
+        inventoryTexture = imageLoader.loadTexture("src/main/resources/textures/gui/container/inventory.png"); //256x256
+        experienceBarEmptyTexture = imageLoader.loadTexture(guiPath("sprites/hud/experience_bar_background.png")); //182x5
+        heartContainerTexture = imageLoader.loadTexture(guiPath("sprites/hud/heart/container.png")); //9x9
+        fullHeartTexture = imageLoader.loadTexture(guiPath("sprites/hud/heart/full.png")); //9x9
+        halfHeartTexture = imageLoader.loadTexture(guiPath("sprites/hud/heart/half.png")); //9x9
+        hungerContainerTexture = imageLoader.loadTexture(guiPath("sprites/hud/food_empty.png")); //9x9
+        fullHungerTexture = imageLoader.loadTexture(guiPath("sprites/hud/food_full.png")); //9x9
+        halfHungerTexture = imageLoader.loadTexture(guiPath("sprites/hud/food_half.png")); //9x9
 
         hotbar = new Picture("hotbar");
         hotbar.setTexture(assetManager, hotbarTexture, true);
@@ -155,16 +154,9 @@ public class PlayerGUI {
         }
     }
 
-    private Texture2D loadTexture(String path) throws IOException {
-        Texture2D texture = new Texture2D(imageLoader.loadImage(path));
-        texture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
-        texture.setMagFilter(Texture.MagFilter.Nearest);
-        return texture;
-    }
-
     public void setLife(int life) {
+        //TODO:
         for (int i = 0; i < 10; i++) {
-            //TODO:
             fullHeart = new Picture("fullHeart");
             fullHeart.setTexture(assetManager, fullHeartTexture, true);
             fullHeart.setWidth(9 * scale);
@@ -177,20 +169,8 @@ public class PlayerGUI {
         }
     }
 
-    //TODO:
     public void setHunger(int hunger) {
-        /*for (int i = 0; i < 10; i++) {
-            hungerContainer = new Picture("hungerContainer");
-            hungerContainer.setTexture(assetManager, hungerContainerTexture, true);
-            hungerContainer.setWidth(9 * scale);
-            hungerContainer.setHeight(9 * scale);
-            hungerContainer.setPosition(
-                windowWidth / 2 + 10 * scale + 8 * scale * i,
-                experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
-            );
-            guiNode.attachChild(hungerContainer);
-        }*/
-
+        //TODO:
         for (int i = 0; i < 10; i++) {
             fullHunger = new Picture("fullHunger");
             fullHunger.setTexture(assetManager, fullHungerTexture, true);
@@ -205,7 +185,7 @@ public class PlayerGUI {
         //hungerNode.detachAllChildren();
     }
 
-    private String hudPath(String path) {
-        return "src/main/resources/textures/gui/sprites/hud/" + path;
+    private String guiPath(String path) {
+        return "src/main/resources/textures/gui/" + path;
     }
 }
