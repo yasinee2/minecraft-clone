@@ -1,4 +1,5 @@
-add limiting block placing speed
+only create meshes for chunks around Player
+dont render invisible chunks (data more separate from rendering)
 add block hardness, mining tool capability for future
 add selected block border
 improve movement (smoother)
