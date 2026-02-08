@@ -1,4 +1,4 @@
-package com.minecraftclone.world;
+package com.minecraftclone.world.chunks;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.PhysicsSpace;

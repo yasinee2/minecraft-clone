@@ -1,4 +1,4 @@
-package com.minecraftclone.entitiy;
+package com.minecraftclone.entity;
 
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;

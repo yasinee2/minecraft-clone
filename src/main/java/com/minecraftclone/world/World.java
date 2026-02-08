@@ -3,9 +3,12 @@ package com.minecraftclone.world;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.minecraftclone.block.Block;
-import com.minecraftclone.entitiy.EntityManager;
-import com.minecraftclone.entitiy.PlayerCharacter;
+import com.minecraftclone.entity.EntityManager;
+import com.minecraftclone.entity.PlayerCharacter;
 import com.minecraftclone.input.ActionInput;
+import com.minecraftclone.world.chunks.Chunk;
+import com.minecraftclone.world.chunks.ChunkManager;
+import com.minecraftclone.world.chunks.ChunkPos;
 import java.util.HashMap;
 import java.util.Map;
 

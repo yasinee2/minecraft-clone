@@ -5,7 +5,7 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.block.Blocks;
-import com.minecraftclone.entitiy.PlayerCharacter;
+import com.minecraftclone.entity.PlayerCharacter;
 import com.minecraftclone.input.ActionInput;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
@@ -55,9 +55,10 @@ public class Main extends SimpleApplication {
         stateManager.attach(bulletAppState);
 
         //NOTE: Camera cam
-        flyCam.setMoveSpeed(0);
-        cam.setFrustumNear(0.2f);
-        cam.setFov(70);
+        flyCam.setEnabled(false);
+        //cam.setFrustumNear(0.2f);
+        //cam.setFov(70);
+        getRenderer().setDefaultAnisotropicFilter(4);
 
         //INFO: world owns all data
         actionInput = new ActionInput();

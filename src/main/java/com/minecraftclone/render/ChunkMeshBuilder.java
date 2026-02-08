@@ -6,7 +6,7 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.VertexBuffer;
 import com.jme3.util.BufferUtils;
 import com.minecraftclone.block.Block;
-import com.minecraftclone.world.Chunk;
+import com.minecraftclone.world.chunks.Chunk;
 import java.util.*;
 
 public final class ChunkMeshBuilder {

@@ -1,4 +1,4 @@
-package com.minecraftclone.world;
+package com.minecraftclone.world.chunks;
 
 import com.minecraftclone.block.Block;
 import com.minecraftclone.block.Blocks;

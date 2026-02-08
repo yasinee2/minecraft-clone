@@ -4,7 +4,7 @@ import com.jme3.bullet.control.CharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.minecraftclone.block.Block;
-import com.minecraftclone.entitiy.PlayerCharacter;
+import com.minecraftclone.entity.PlayerCharacter;
 import com.minecraftclone.input.ActionInput;
 
 public final class BlockInteractionSystem {

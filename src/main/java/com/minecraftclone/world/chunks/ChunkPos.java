@@ -1,4 +1,4 @@
-package com.minecraftclone.world;
+package com.minecraftclone.world.chunks;
 
 public final class ChunkPos {
 
