@@ -7,6 +7,7 @@ import com.jme3.system.AppSettings;
 import com.minecraftclone.block.Blocks;
 import com.minecraftclone.player.PlayerCharacter;
 import com.minecraftclone.player.input.ActionInput;
+import com.minecraftclone.player.input.AnalogInput;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
 
@@ -28,6 +29,7 @@ public class Main extends SimpleApplication {
     // =========================
 
     private ActionInput actionInput;
+    private AnalogInput analogInput;
     private BlockInteractionSystem blockInteraction;
 
     public static void main(String[] args) {
@@ -55,14 +57,15 @@ public class Main extends SimpleApplication {
         stateManager.attach(bulletAppState);
 
         //NOTE: Camera cam
-        flyCam.setEnabled(false);
-        //cam.setFrustumNear(0.2f);
-        //cam.setFov(70);
+        flyCam.setEnabled(true);
+        cam.setFrustumNear(0.2f);
+        cam.setFov(70);
         getRenderer().setDefaultAnisotropicFilter(4);
 
         //INFO: world owns all data
         actionInput = new ActionInput();
-        world = new World(this, actionInput);
+        analogInput = new AnalogInput();
+        world = new World(this, actionInput, analogInput);
         playerCharacter = world.getPlayerCharacter();
 
         //NOTE: Render engine
