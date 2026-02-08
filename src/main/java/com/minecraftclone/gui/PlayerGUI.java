@@ -18,7 +18,7 @@ public class PlayerGUI {
     private Picture hotbar, hotbarSelector, inventory, crosshair, experienceBarEmpty, heartContainer, fullHeart, halfHeart, hungerContainer, fullHunger, halfHunger;
     private int windowWidth, windowHeight;
     private ImageLoader imageLoader = new ImageLoader();
-    private Node guiNode, hungerContainerNode, heartContainerNode;
+    private Node guiNode, inventoryNode, containerNode;
     private boolean inventoryShown;
     private AssetManager assetManager;
     private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture, fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
@@ -30,15 +30,14 @@ public class PlayerGUI {
     public PlayerGUI(AppSettings settings, Node guiNode, AssetManager assetManager) throws IOException {
         this.assetManager = assetManager;
         this.guiNode = guiNode;
+        inventoryNode = new Node("inventoryNode");
+        guiNode.attachChild(inventoryNode);
+        containerNode = new Node("contaierNode");
+        inventoryNode.attachChild(containerNode);
         hungerNode = new Node("hungerNode");
         heartNode = new Node("heartNode");
         guiNode.attachChild(hungerNode);
         guiNode.attachChild(heartNode);
-
-        heartContainerNode = new Node("heartContainerNode");
-        heartNode.attachChild(heartContainerNode);
-        hungerContainerNode = new Node("hungerContainerNode");
-        hungerNode.attachChild(hungerContainerNode);
 
         windowWidth = settings.getWidth();
         windowHeight = settings.getHeight();
@@ -46,7 +45,7 @@ public class PlayerGUI {
         hotbarTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/hotbar.png")); //182x22
         hotbarSelectorTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/hotbar_selection.png")); //24x23
         crosshairTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/crosshair.png")); //15x15
-        inventoryTexture = imageLoader.loadTexture2D("src/main/resources/textures/gui/container/inventory.png"); //256x256
+        inventoryTexture = imageLoader.loadTexture2D(guiPath("container/inventory.png")); //256x256
         experienceBarEmptyTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/experience_bar_background.png")); //182x5
         heartContainerTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/heart/container.png")); //9x9
         fullHeartTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/heart/full.png")); //9x9
@@ -60,21 +59,21 @@ public class PlayerGUI {
         hotbar.setWidth(182 * scale);
         hotbar.setHeight(22 * scale);
         hotbar.setPosition(windowWidth / 2 - (hotbar.getWidth() / 2), 0);
-        guiNode.attachChild(hotbar);
+        inventoryNode.attachChild(hotbar);
 
         hotbarSelector = new Picture("hotbarSelector");
         hotbarSelector.setTexture(assetManager, hotbarSelectorTexture, true);
         hotbarSelector.setWidth(24 * scale);
         hotbarSelector.setHeight(23 * scale);
         hotbarSelector.setPosition(windowWidth / 2 - ((hotbarSelector.getWidth() / 2)), 0);
-        guiNode.attachChild(hotbarSelector);
+        inventoryNode.attachChild(hotbarSelector);
 
         experienceBarEmpty = new Picture("experienceBarEmpty");
         experienceBarEmpty.setTexture(assetManager, experienceBarEmptyTexture, true);
         experienceBarEmpty.setWidth(182 * scale);
         experienceBarEmpty.setHeight(5 * scale);
         experienceBarEmpty.setPosition(windowWidth / 2 - ((experienceBarEmpty.getWidth() / 2)), hotbar.getHeight() + scale * 2);
-        guiNode.attachChild(experienceBarEmpty);
+        inventoryNode.attachChild(experienceBarEmpty);
 
         for (int i = 0; i < 10; i++) {
             heartContainer = new Picture("heartContainer");
@@ -85,7 +84,7 @@ public class PlayerGUI {
                 windowWidth / 2 - ((hotbar.getWidth() / 2)) + 8 * scale * i,
                 experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
             );
-            heartContainerNode.attachChild(heartContainer);
+            containerNode.attachChild(heartContainer);
         }
 
         for (int i = 0; i < 10; i++) {
@@ -97,7 +96,7 @@ public class PlayerGUI {
                 windowWidth / 2 + 10 * scale + 8 * scale * i,
                 experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
             );
-            hungerContainerNode.attachChild(hungerContainer);
+            containerNode.attachChild(hungerContainer);
         }
 
         crosshair = new Picture("crosshair");
@@ -105,7 +104,7 @@ public class PlayerGUI {
         crosshair.setWidth(15 * scale);
         crosshair.setHeight(15 * scale);
         crosshair.setPosition(windowWidth / 2 - ((crosshair.getWidth() / 2)), windowHeight / 2 - ((crosshair.getHeight() / 2)));
-        guiNode.attachChild(crosshair);
+        inventoryNode.attachChild(crosshair);
 
         inventory = new Picture("inventory");
         inventory.setTexture(assetManager, inventoryTexture, true);
@@ -144,7 +143,7 @@ public class PlayerGUI {
     } 
     */
 
-    public void toggleInventory() {
+    public boolean toggleInventory() {
         if (!inventoryShown) {
             guiNode.attachChild(inventory);
             inventoryShown = true;
@@ -152,37 +151,85 @@ public class PlayerGUI {
             inventory.removeFromParent();
             inventoryShown = false;
         }
+        return inventoryShown;
     }
 
     public void setLife(int life) {
-        //TODO:
-        for (int i = 0; i < 10; i++) {
-            fullHeart = new Picture("fullHeart");
-            fullHeart.setTexture(assetManager, fullHeartTexture, true);
-            fullHeart.setWidth(9 * scale);
-            fullHeart.setHeight(9 * scale);
-            fullHeart.setPosition(
-                windowWidth / 2 - ((hotbar.getWidth() / 2)) + 8 * scale * i,
+        heartNode.detachAllChildren();
+        if (life % 2 == 0) {
+            for (int i = 0; i < life / 2; i++) {
+                fullHeart = new Picture("fullHeart");
+                fullHeart.setTexture(assetManager, fullHeartTexture, true);
+                fullHeart.setWidth(9 * scale);
+                fullHeart.setHeight(9 * scale);
+                fullHeart.setPosition(
+                    windowWidth / 2 + 8 * scale * i - hotbar.getWidth() / 2,
+                    experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
+                );
+                heartNode.attachChild(fullHeart);
+            }
+        } else {
+            int i;
+            for (i = 0; i < (life - 1) / 2; i++) {
+                fullHeart = new Picture("fullHeart");
+                fullHeart.setTexture(assetManager, fullHeartTexture, true);
+                fullHeart.setWidth(9 * scale);
+                fullHeart.setHeight(9 * scale);
+                fullHeart.setPosition(
+                    windowWidth / 2 + 8 * scale * i - hotbar.getWidth() / 2,
+                    experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
+                );
+                heartNode.attachChild(fullHeart);
+            }
+            halfHeart = new Picture("halfHeart");
+            halfHeart.setTexture(assetManager, halfHeartTexture, true);
+            halfHeart.setWidth(9 * scale);
+            halfHeart.setHeight(9 * scale);
+            halfHeart.setPosition(
+                windowWidth / 2 + 8 * scale * i - hotbar.getWidth() / 2,
                 experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
             );
-            heartNode.attachChild(fullHeart);
+            heartNode.attachChild(halfHeart);
         }
     }
 
     public void setHunger(int hunger) {
-        //TODO:
-        for (int i = 0; i < 10; i++) {
-            fullHunger = new Picture("fullHunger");
-            fullHunger.setTexture(assetManager, fullHungerTexture, true);
-            fullHunger.setWidth(9 * scale);
-            fullHunger.setHeight(9 * scale);
-            fullHunger.setPosition(
-                windowWidth / 2 + 10 * scale + 8 * scale * i,
+        hungerNode.detachAllChildren();
+        if (hunger % 2 == 0) {
+            for (int i = 0; i < hunger / 2; i++) {
+                fullHunger = new Picture("fullHunger");
+                fullHunger.setTexture(assetManager, fullHungerTexture, true);
+                fullHunger.setWidth(9 * scale);
+                fullHunger.setHeight(9 * scale);
+                fullHunger.setPosition(
+                    windowWidth / 2 + hotbar.getWidth() / 2 - 8 * scale * i - 9 * scale,
+                    experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
+                );
+                hungerNode.attachChild(fullHunger);
+            }
+        } else {
+            int i;
+            for (i = 0; i < (hunger - 1) / 2; i++) {
+                fullHunger = new Picture("fullHunger");
+                fullHunger.setTexture(assetManager, fullHungerTexture, true);
+                fullHunger.setWidth(9 * scale);
+                fullHunger.setHeight(9 * scale);
+                fullHunger.setPosition(
+                    windowWidth / 2 + hotbar.getWidth() / 2 - 8 * scale * i - 9 * scale,
+                    experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
+                );
+                hungerNode.attachChild(fullHunger);
+            }
+            halfHunger = new Picture("halfHunger");
+            halfHunger.setTexture(assetManager, halfHungerTexture, true);
+            halfHunger.setWidth(9 * scale);
+            halfHunger.setHeight(9 * scale);
+            halfHunger.setPosition(
+                windowWidth / 2 + hotbar.getWidth() / 2 - 8 * scale * i - 9 * scale,
                 experienceBarEmpty.getHeight() + scale * 4 + hotbar.getHeight()
             );
-            hungerNode.attachChild(fullHunger);
+            hungerNode.attachChild(halfHunger);
         }
-        //hungerNode.detachAllChildren();
     }
 
     private String guiPath(String path) {
