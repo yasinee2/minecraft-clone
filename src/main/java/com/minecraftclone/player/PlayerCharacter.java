@@ -1,4 +1,4 @@
-package com.minecraftclone.entity;
+package com.minecraftclone.player;
 
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
@@ -6,7 +6,7 @@ import com.jme3.bullet.control.CharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.minecraftclone.input.ActionInput;
+import com.minecraftclone.player.input.ActionInput;
 
 public class PlayerCharacter {
 

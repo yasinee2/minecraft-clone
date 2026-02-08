@@ -5,8 +5,8 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.block.Blocks;
-import com.minecraftclone.entity.PlayerCharacter;
-import com.minecraftclone.input.ActionInput;
+import com.minecraftclone.player.PlayerCharacter;
+import com.minecraftclone.player.input.ActionInput;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
 
@@ -98,6 +98,7 @@ public class Main extends SimpleApplication {
         totalTicks++;
 
         playerCharacter.tick();
+        //entityManager.tick();
 
         // =========================
         // BLOCK INTERACTION TICK

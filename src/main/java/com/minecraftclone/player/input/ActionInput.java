@@ -1,4 +1,4 @@
-package com.minecraftclone.input;
+package com.minecraftclone.player.input;
 
 import com.jme3.input.controls.ActionListener;
 

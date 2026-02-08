@@ -3,9 +3,9 @@ package com.minecraftclone.world;
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.minecraftclone.block.Block;
-import com.minecraftclone.entity.EntityManager;
-import com.minecraftclone.entity.PlayerCharacter;
-import com.minecraftclone.input.ActionInput;
+import com.minecraftclone.player.PlayerCharacter;
+import com.minecraftclone.player.input.ActionInput;
+import com.minecraftclone.player.input.KeyMapping;
 import com.minecraftclone.world.chunks.Chunk;
 import com.minecraftclone.world.chunks.ChunkManager;
 import com.minecraftclone.world.chunks.ChunkPos;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class World {
 
     private final SimpleApplication app;
-    private final EntityManager entityManager;
+    private final PlayerCharacter playerCharacter;
     private final BulletAppState bulletAppState;
     private final ChunkManager chunkManager;
 
@@ -29,8 +29,9 @@ public class World {
         this.app = app;
         bulletAppState = app.getStateManager().getState(BulletAppState.class);
 
-        entityManager = new EntityManager(app, bulletAppState, actionInput);
-        entityManager.getPlayerCharacter();
+        new KeyMapping(app.getInputManager(), actionInput.getActionListener());
+        playerCharacter = new PlayerCharacter(bulletAppState, actionInput, app.getCamera());
+        app.getRootNode().attachChild(playerCharacter.getNode());
         chunkManager = new ChunkManager(app, this, 20); // render distance
     }
 
@@ -102,11 +103,11 @@ public class World {
     }
 
     public PlayerCharacter getPlayerCharacter() {
-        return entityManager.getPlayerCharacter();
+        return playerCharacter;
     }
 
     public void update() {
-        chunkManager.update(entityManager.getPlayerCharacter().getPlayerControl().getPhysicsLocation());
+        chunkManager.update(playerCharacter.getPlayerControl().getPhysicsLocation());
     }
 
     public boolean hasChunk(ChunkPos pos) {
