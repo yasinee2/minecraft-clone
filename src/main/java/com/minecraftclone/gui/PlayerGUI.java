@@ -43,17 +43,17 @@ public class PlayerGUI {
         windowWidth = settings.getWidth();
         windowHeight = settings.getHeight();
 
-        hotbarTexture = imageLoader.loadTexture(guiPath("sprites/hud/hotbar.png")); //182x22
-        hotbarSelectorTexture = imageLoader.loadTexture(guiPath("sprites/hud/hotbar_selection.png")); //24x23
-        crosshairTexture = imageLoader.loadTexture(guiPath("sprites/hud/crosshair.png")); //15x15
-        inventoryTexture = imageLoader.loadTexture("src/main/resources/textures/gui/container/inventory.png"); //256x256
-        experienceBarEmptyTexture = imageLoader.loadTexture(guiPath("sprites/hud/experience_bar_background.png")); //182x5
-        heartContainerTexture = imageLoader.loadTexture(guiPath("sprites/hud/heart/container.png")); //9x9
-        fullHeartTexture = imageLoader.loadTexture(guiPath("sprites/hud/heart/full.png")); //9x9
-        halfHeartTexture = imageLoader.loadTexture(guiPath("sprites/hud/heart/half.png")); //9x9
-        hungerContainerTexture = imageLoader.loadTexture(guiPath("sprites/hud/food_empty.png")); //9x9
-        fullHungerTexture = imageLoader.loadTexture(guiPath("sprites/hud/food_full.png")); //9x9
-        halfHungerTexture = imageLoader.loadTexture(guiPath("sprites/hud/food_half.png")); //9x9
+        hotbarTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/hotbar.png")); //182x22
+        hotbarSelectorTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/hotbar_selection.png")); //24x23
+        crosshairTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/crosshair.png")); //15x15
+        inventoryTexture = imageLoader.loadTexture2D("src/main/resources/textures/gui/container/inventory.png"); //256x256
+        experienceBarEmptyTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/experience_bar_background.png")); //182x5
+        heartContainerTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/heart/container.png")); //9x9
+        fullHeartTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/heart/full.png")); //9x9
+        halfHeartTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/heart/half.png")); //9x9
+        hungerContainerTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/food_empty.png")); //9x9
+        fullHungerTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/food_full.png")); //9x9
+        halfHungerTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/food_half.png")); //9x9
 
         hotbar = new Picture("hotbar");
         hotbar.setTexture(assetManager, hotbarTexture, true);

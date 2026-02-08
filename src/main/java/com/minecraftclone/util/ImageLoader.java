@@ -36,7 +36,7 @@ public class ImageLoader {
         return new Image(Format.RGBA8, width, height, buffer, ColorSpace.sRGB);
     }
 
-    public Texture2D loadTexture(String path) throws IOException {
+    public Texture2D loadTexture2D(String path) throws IOException {
         Texture2D texture = new Texture2D(loadImage(path));
         texture.setMinFilter(Texture.MinFilter.NearestNoMipMaps);
         texture.setMagFilter(Texture.MagFilter.Nearest);
