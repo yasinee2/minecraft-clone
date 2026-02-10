@@ -8,6 +8,7 @@ import com.minecraftclone.block.Blocks;
 import com.minecraftclone.player.PlayerCharacter;
 import com.minecraftclone.player.input.ActionInput;
 import com.minecraftclone.player.input.AnalogInput;
+import com.minecraftclone.player.input.KeyMapping;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
 
@@ -65,7 +66,8 @@ public class Main extends SimpleApplication {
         //INFO: world owns all data
         actionInput = new ActionInput();
         analogInput = new AnalogInput();
-        world = new World(this, actionInput, analogInput);
+        new KeyMapping(inputManager, actionInput, flyCam);
+        world = new World(this, actionInput, analogInput, bulletAppState);
         playerCharacter = world.getPlayerCharacter();
 
         //NOTE: Render engine
