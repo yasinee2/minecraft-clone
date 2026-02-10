@@ -5,11 +5,8 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
-import com.minecraftclone.item.ItemInstance;
 import com.minecraftclone.util.ImageLoader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlayerGUI {
 
@@ -22,8 +19,6 @@ public class PlayerGUI {
     private AssetManager assetManager;
     private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture, fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
     private Node hungerNode, heartNode;
-
-    List<ItemInstance> slots = new ArrayList<>(9);
 
     public PlayerGUI(AppSettings settings, Node guiNode, AssetManager assetManager) throws IOException {
         this.assetManager = assetManager;
@@ -129,16 +124,6 @@ public class PlayerGUI {
             );
         }
     }
-
-    /*
-    public void hotbarSlotUp() {
-        changeHotbarSlot(selectedSlot + 1);
-    }
-
-    public void hotbarSlotDown() {
-        changeHotbarSlot(selectedSlot - 1);
-    } 
-    */
 
     public void setInventory(boolean enabled) {
         if (enabled) {
