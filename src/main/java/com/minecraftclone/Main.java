@@ -37,7 +37,7 @@ public class Main extends SimpleApplication {
         settings.setSamples(4);
         settings.setTitle("minecraft-clone v0.2.0-alpha    © Mats O. & Filip M.");
 
-        app = new Main();
+        Main app = new Main();
         app.setSettings(settings);
         app.start();
     }

@@ -6,7 +6,6 @@ import com.minecraftclone.block.Block;
 import com.minecraftclone.player.PlayerCharacter;
 import com.minecraftclone.player.input.ActionInput;
 import com.minecraftclone.player.input.AnalogInput;
-import com.minecraftclone.player.input.KeyMapping;
 import com.minecraftclone.world.chunks.Chunk;
 import com.minecraftclone.world.chunks.ChunkManager;
 import com.minecraftclone.world.chunks.ChunkPos;

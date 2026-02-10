@@ -11,7 +11,7 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.Main;
 import com.minecraftclone.gui.PlayerGUI;
-import com.minecraftclone.input.ActionInput;
+import com.minecraftclone.player.input.ActionInput;
 import java.io.IOException;
 
 public class PlayerCharacter {
@@ -25,7 +25,6 @@ public class PlayerCharacter {
     private final ActionInput input;
     private final Camera cam;
     private PlayerGUI gui;
-    private boolean eWasUp;
     private boolean inventoryShown;
     private int life = 13;
     private int hunger = 13;
@@ -46,7 +45,6 @@ public class PlayerCharacter {
         this.inputManager = inputManager;
         PlayerCharacter.app = app;
         this.cam = cam;
-        eWasUp = true;
         inventoryShown = false;
 
         try {
@@ -81,32 +79,24 @@ public class PlayerCharacter {
 
         walkDir.set(0, 0, 0);
 
-        if (input.keyDown('w')) walkDir.addLocal(forward);
-        if (input.keyDown('a')) walkDir.addLocal(left);
-        if (input.keyDown('s')) walkDir.addLocal(forward.negate());
-        if (input.keyDown('d')) walkDir.addLocal(left.negate());
+        if (input.isForward()) walkDir.addLocal(forward);
+        if (input.isLeft()) walkDir.addLocal(left);
+        if (input.isBackward()) walkDir.addLocal(forward.negate());
+        if (input.isRight()) walkDir.addLocal(left.negate());
 
         playerControl.setWalkDirection(walkDir);
-        if (input.keyDown(' ') && playerControl.onGround()) playerControl.jump();
+        if (input.isJump() && playerControl.onGround()) playerControl.jump();
 
-        if (input.keyDown('1')) gui.changeHotbarSlot(1);
-        if (input.keyDown('2')) gui.changeHotbarSlot(2);
-        if (input.keyDown('3')) gui.changeHotbarSlot(3);
-        if (input.keyDown('4')) gui.changeHotbarSlot(4);
-        if (input.keyDown('5')) gui.changeHotbarSlot(5);
-        if (input.keyDown('6')) gui.changeHotbarSlot(6);
-        if (input.keyDown('7')) gui.changeHotbarSlot(7);
-        if (input.keyDown('8')) gui.changeHotbarSlot(8);
-        if (input.keyDown('9')) gui.changeHotbarSlot(9);
+        for (int i = 0; i < 10; i++) {
+            if (input.isHotkey(i)) gui.changeHotbarSlot(i);
+        }
 
-        if (eWasUp && input.keyDown('e')) {
+        if (input.isFunctionKey("openInventory")) {
             gui.setInventoryVisible(!inventoryShown);
             inputManager.setCursorVisible(!inventoryShown);
             app.getFlyByCamera().setEnabled(inventoryShown);
             inventoryShown = !inventoryShown;
-            eWasUp = false;
         }
-        if (input.keyUp('e')) eWasUp = true;
     }
 
     public Node getNode() {

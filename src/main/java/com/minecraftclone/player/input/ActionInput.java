@@ -1,6 +1,8 @@
 package com.minecraftclone.player.input;
 
 import com.jme3.input.controls.ActionListener;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ActionInput implements ActionListener {
 
@@ -15,6 +17,8 @@ public class ActionInput implements ActionListener {
 
     private boolean breakBlockTapped;
     private boolean placeBlockTapped;
+
+    private Map<String, Boolean> functionKeys = new HashMap<>();
 
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
@@ -36,6 +40,7 @@ public class ActionInput implements ActionListener {
                 }
                 placeBlockHeld = isPressed;
             }
+            default -> functionKeys.put(name, isPressed);
         }
     }
 
@@ -77,5 +82,24 @@ public class ActionInput implements ActionListener {
         boolean tapped = placeBlockTapped;
         placeBlockTapped = false;
         return tapped;
+    }
+
+    /**
+     * returns the boolean value of isPressed for the given key
+     * @param key
+     * @return
+     */
+    public boolean isHotkey(int key) {
+        return functionKeys.getOrDefault("hotkey" + key, false);
+    }
+
+    /**
+     * returns the boolean value of isPressed
+     * defaults to false
+     * @param key
+     * @return
+     */
+    public boolean isFunctionKey(String key) {
+        return functionKeys.getOrDefault(key, false);
     }
 }
