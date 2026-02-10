@@ -18,6 +18,7 @@ public class Main extends SimpleApplication {
     private double timeActiveSeconds;
     private PlayerCharacter playerCharacter;
     private World world;
+    private static Main app;
 
     public static void main(String[] args) {
         var settings = new AppSettings(true);
@@ -25,7 +26,7 @@ public class Main extends SimpleApplication {
         settings.setSamples(4);
         settings.setTitle("minecraft-clone v0.2.0-alpha    © Mats O. & Filip M.");
 
-        Main app = new Main();
+        app = new Main();
         app.setSettings(settings);
         app.start();
     }
@@ -49,7 +50,7 @@ public class Main extends SimpleApplication {
         cam.setFov(70);
 
         //INFO: world owns all data
-        world = new World(rootNode, assetManager, bulletAppState, cam, inputManager, settings, guiNode);
+        world = new World(rootNode, assetManager, bulletAppState, cam, inputManager, settings, guiNode, app);
 
         playerCharacter = world.getPlayerCharacter();
 

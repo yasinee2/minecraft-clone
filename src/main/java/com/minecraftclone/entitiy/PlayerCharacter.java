@@ -4,10 +4,12 @@ import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
+import com.jme3.input.InputManager;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
+import com.minecraftclone.Main;
 import com.minecraftclone.gui.PlayerGUI;
 import com.minecraftclone.input.ActionInput;
 import java.io.IOException;
@@ -16,7 +18,6 @@ public class PlayerCharacter {
 
     private final CharacterControl playerControl;
     private final Node playerNode;
-
     private final float stepHeight = 0.2f;
     private final float speed = 0.15f;
     private final boolean debugEnabled = false;
@@ -25,20 +26,28 @@ public class PlayerCharacter {
     private final Camera cam;
     private PlayerGUI gui;
     private boolean eWasUp;
+    private boolean inventoryShown;
     private int life = 13;
     private int hunger = 13;
+    private InputManager inputManager;
+    private static Main app;
 
     public PlayerCharacter(
         BulletAppState bulletAppState,
         ActionInput input,
+        InputManager inputManager,
         Camera cam,
         AppSettings settings,
         Node guiNode,
-        AssetManager assetManager
+        AssetManager assetManager,
+        Main app
     ) {
         this.input = input;
+        this.inputManager = inputManager;
+        PlayerCharacter.app = app;
         this.cam = cam;
         eWasUp = true;
+        inventoryShown = false;
 
         try {
             gui = new PlayerGUI(settings, guiNode, assetManager);
@@ -91,7 +100,10 @@ public class PlayerCharacter {
         if (input.keyDown('9')) gui.changeHotbarSlot(9);
 
         if (eWasUp && input.keyDown('e')) {
-            gui.toggleInventory();
+            gui.setInventory(!inventoryShown);
+            inputManager.setCursorVisible(!inventoryShown);
+            app.getFlyByCamera().setEnabled(inventoryShown);
+            inventoryShown = !inventoryShown;
             eWasUp = false;
         }
         if (input.keyUp('e')) eWasUp = true;

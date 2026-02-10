@@ -6,6 +6,7 @@ import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
+import com.minecraftclone.Main;
 import com.minecraftclone.input.ActionInput;
 import com.minecraftclone.input.AnalogInput;
 import com.minecraftclone.input.KeyMapping;
@@ -21,12 +22,13 @@ public class EntityManager {
         InputManager inputManager,
         AppSettings settings,
         Node guiNode,
-        AssetManager assetManager
+        AssetManager assetManager,
+        Main app
     ) {
         ActionInput actionInput = new ActionInput();
         AnalogInput analogInput = new AnalogInput();
         new KeyMapping(inputManager, actionInput, analogInput);
-        playerCharacter = new PlayerCharacter(bulletAppState, actionInput, cam, settings, guiNode, assetManager);
+        playerCharacter = new PlayerCharacter(bulletAppState, actionInput, inputManager, cam, settings, guiNode, assetManager, app);
         rootNode.attachChild(playerCharacter.getNode());
     }
 

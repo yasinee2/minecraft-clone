@@ -2,10 +2,12 @@ package com.minecraftclone.world;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.input.FlyByCamera;
 import com.jme3.input.InputManager;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
+import com.minecraftclone.Main;
 import com.minecraftclone.block.Block;
 import com.minecraftclone.entitiy.EntityManager;
 import com.minecraftclone.entitiy.PlayerCharacter;
@@ -28,13 +30,14 @@ public class World {
         Camera cam,
         InputManager inputManager,
         AppSettings settings,
-        Node guiNode
+        Node guiNode,
+        Main app
     ) {
         this.rootNode = rootNode;
         this.assetManager = assetManager;
         this.bulletAppState = bulletAppState;
 
-        entityManager = new EntityManager(bulletAppState, rootNode, cam, inputManager, settings, guiNode, assetManager);
+        entityManager = new EntityManager(bulletAppState, rootNode, cam, inputManager, settings, guiNode, assetManager, app);
         entityManager.getPlayerCharacter();
 
         int generationDistance = 5;

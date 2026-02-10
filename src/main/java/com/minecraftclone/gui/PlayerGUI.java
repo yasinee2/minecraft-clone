@@ -19,7 +19,6 @@ public class PlayerGUI {
     private int windowWidth, windowHeight;
     private ImageLoader imageLoader = new ImageLoader();
     private Node guiNode, inventoryNode, containerNode;
-    private boolean inventoryShown;
     private AssetManager assetManager;
     private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture, fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
     private Node hungerNode, heartNode;
@@ -115,7 +114,6 @@ public class PlayerGUI {
         );
 
         changeHotbarSlot(selectedSlot);
-        inventoryShown = false;
     }
 
     public void changeHotbarSlot(int slot) {
@@ -142,15 +140,12 @@ public class PlayerGUI {
     } 
     */
 
-    public boolean toggleInventory() {
-        if (!inventoryShown) {
+    public void setInventory(boolean enabled) {
+        if (enabled) {
             guiNode.attachChild(inventory);
-            inventoryShown = true;
         } else {
             inventory.removeFromParent();
-            inventoryShown = false;
         }
-        return inventoryShown;
     }
 
     public void setLife(int life) {
