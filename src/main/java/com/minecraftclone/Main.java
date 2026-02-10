@@ -4,14 +4,18 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
-import com.minecraftclone.entitiy.PlayerCharacter;
-import com.minecraftclone.render.RenderEngine;
-import com.minecraftclone.world.*;
+import com.minecraftclone.block.Blocks;
+import com.minecraftclone.player.PlayerCharacter;
+import com.minecraftclone.player.input.ActionInput;
+import com.minecraftclone.player.input.AnalogInput;
+import com.minecraftclone.player.input.KeyMapping;
+import com.minecraftclone.world.BlockInteractionSystem;
+import com.minecraftclone.world.World;
 
 public class Main extends SimpleApplication {
 
     private float timeAccumulator;
-    private final float ticksPerSecond = 20f;
+    private final float ticksPerSecond = 40f;
     private float tickTime;
     private int totalTicks;
     private BitmapText tpsText;
@@ -19,8 +23,15 @@ public class Main extends SimpleApplication {
     private double timeActiveSeconds;
     private PlayerCharacter playerCharacter;
 
-    private RenderEngine engine;
     private World world;
+
+    // =========================
+    // NEW
+    // =========================
+
+    private ActionInput actionInput;
+    private AnalogInput analogInput;
+    private BlockInteractionSystem blockInteraction;
 
     public static void main(String[] args) {
         var settings = new AppSettings(true);
@@ -36,7 +47,7 @@ public class Main extends SimpleApplication {
     @Override
     public void simpleInitApp() {
         initialTime = System.nanoTime();
-        tickTime = 1 / ticksPerSecond;
+        tickTime = 1f / ticksPerSecond;
 
         tpsText = new BitmapText(guiFont);
         guiNode.attachChild(tpsText);
@@ -47,18 +58,30 @@ public class Main extends SimpleApplication {
         stateManager.attach(bulletAppState);
 
         //NOTE: Camera cam
-        flyCam.setMoveSpeed(0);
+        flyCam.setEnabled(true);
         cam.setFrustumNear(0.2f);
         cam.setFov(70);
+        getRenderer().setDefaultAnisotropicFilter(4);
 
         //INFO: world owns all data
-        world = new World(rootNode, assetManager, bulletAppState, cam, inputManager);
-
+        actionInput = new ActionInput();
+        analogInput = new AnalogInput();
+        new KeyMapping(inputManager, actionInput, flyCam);
+        world = new World(this, actionInput, analogInput, bulletAppState);
         playerCharacter = world.getPlayerCharacter();
 
         //NOTE: Render engine
         //INFO: will render the world eventually, does nothing rn
         //new RenderEngine(rootNode, assetManager, bulletAppState);
+
+        // =========================
+        // BLOCK INTERACTION
+        // =========================
+
+        blockInteraction = new BlockInteractionSystem(world, cam, actionInput);
+
+        // Example: selected block (later this comes from hotbar)
+        blockInteraction.setSelectedBlock(Blocks.DIAMOND_BLOCK);
     }
 
     @Override
@@ -66,9 +89,10 @@ public class Main extends SimpleApplication {
         tps();
         timeAccumulator += tpf;
 
-        cam.setLocation(playerCharacter.getPlayerControl().getPhysicsLocation().add(0, 0.2f, 0));
+        cam.setLocation(playerCharacter.getPlayerControl().getPhysicsLocation().add(0, 0.6f, 0));
 
-        //INFO: runs tick() until it's caught up
+        world.update();
+
         while (timeAccumulator >= tickTime) {
             tick();
             timeAccumulator -= tickTime;
@@ -77,14 +101,22 @@ public class Main extends SimpleApplication {
 
     private void tick() {
         totalTicks++;
+
         playerCharacter.tick();
+        //entityManager.tick();
+
+        // =========================
+        // BLOCK INTERACTION TICK
+        // =========================
+
+        blockInteraction.update();
     }
 
     private void tps() {
         //INFO: ticks are inaccurate with small timeActive, clamped at 20 for the first 10 seconds
-        timeActiveSeconds = (System.nanoTime() - initialTime) / 1000000000.0;
+        timeActiveSeconds = (System.nanoTime() - initialTime) / 1_000_000_000.0;
         double tps = (Math.floor((10 * totalTicks) / timeActiveSeconds)) / 10;
-        if (timeActiveSeconds < 10) tps = Math.clamp(tps, 0, 20);
+        if (timeActiveSeconds < 20) tps = Math.clamp(tps, 0, 40);
         tpsText.setText("TPS: " + tps);
     }
 }

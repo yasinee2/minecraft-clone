@@ -1,24 +1,32 @@
+only create meshes for chunks around Player
+dont render invisible chunks (data more separate from rendering)
+add block hardness, mining tool capability for future
+add selected block border
 improve movement (smoother)
-implement render distance
-compact blocks.java (json, hashmap, etc?), merge with block cache (hashmap with loaded blocks)
-separate rendering (visual blocks, RenderEngine class) from blocks in memory (Chunk class)
+fix non-solid blocks breaking the game (mesh)
+figure out stepHeight
+add gui (crosshair)
+add proper comments
+generalize block actions (using, hitting, etc)
+add lower and upper camera bound (so no camera backflips)
+clear blockMaterialCache items
+compact blocks.java (json, hashmap, etc?), merge with block cache ? (hashmap with loaded blocks)
+separate rendering (visual blocks, chunk meshes, RenderEngine class) from blocks in memory (Chunk class)
+multithread chunk generation (rendering on main thread)
 ambient occlusion
 fix slight noise on block sides (taa?)
-Block placing and breaking
-Saving
-Items
-Entities
-
+saving
+items
+entities
+lod
 greedy meshing?
-Multiplayer?
+multiplayer?
 
 App (SimpleApplication)
 │
-├─ GameLoop
-│   └─ TickManager
-│       └─ Tickables
-│            ├─ World
-│            └─ (later: systems)
+├─ tick()
+│   ├─ EntityManager.tick()
+│   └─ Player.tick()
 │
 ├─ World   ← OWNS ALL GAME STATE
 │   │
