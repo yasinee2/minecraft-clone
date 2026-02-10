@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 public class Main extends SimpleApplication {
 
+    public static AppSettings settings;
+
     //DOES: tps stuff
     private static final float TICKS_PER_SECOND = 40f;
     private float timeAccumulator;
@@ -34,7 +36,7 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         disableWarnings();
-        var settings = new AppSettings(true);
+        settings = new AppSettings(true);
         settings.setWindowSize(1920, 1080);
         settings.setSamples(4);
         settings.setTitle("minecraft-clone v0.2.0-alpha    © Mats O. & Filip M.");
@@ -138,5 +140,9 @@ public class Main extends SimpleApplication {
     private static void disableWarnings() {
         Logger.getLogger("").setLevel(Level.SEVERE);
         Logger.getLogger("").setLevel(Level.WARNING);
+    }
+
+    public static AppSettings getSettings() {
+        return settings;
     }
 }

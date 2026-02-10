@@ -1,14 +1,11 @@
 package com.minecraftclone.entitiy.player;
 
-import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
-import com.jme3.input.InputManager;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.jme3.system.AppSettings;
 import com.minecraftclone.Main;
 import com.minecraftclone.gui.PlayerGUI;
 import com.minecraftclone.player.input.ActionInput;
@@ -28,31 +25,20 @@ public class PlayerCharacter {
     private boolean inventoryShown;
     private int life = 13;
     private int hunger = 13;
-    private InputManager inputManager;
-    private static Main app;
+    private Main app;
 
-    public PlayerCharacter(
-        BulletAppState bulletAppState,
-        ActionInput input,
-        InputManager inputManager,
-        Camera cam,
-        AppSettings settings,
-        Node guiNode,
-        AssetManager assetManager,
-        Main app
-    ) {
+    public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, Camera cam, Node guiNode, Main app) {
         this.input = input;
-        this.inputManager = inputManager;
-        PlayerCharacter.app = app;
+        this.app = app;
         this.cam = cam;
         inventoryShown = false;
 
         try {
-            gui = new PlayerGUI(settings, guiNode, assetManager);
+            gui = new PlayerGUI();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        System.out.println("sdghfiousjhnf");
         gui.setLife(life);
         gui.setHunger(hunger);
         bulletAppState.setDebugEnabled(debugEnabled);
@@ -93,7 +79,7 @@ public class PlayerCharacter {
 
         if (input.isFunctionKey("openInventory")) {
             gui.setInventoryVisible(!inventoryShown);
-            inputManager.setCursorVisible(!inventoryShown);
+            app.getInputManager().setCursorVisible(!inventoryShown);
             app.getFlyByCamera().setEnabled(inventoryShown);
             inventoryShown = !inventoryShown;
         }
