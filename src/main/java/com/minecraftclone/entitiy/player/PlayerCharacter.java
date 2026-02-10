@@ -100,7 +100,7 @@ public class PlayerCharacter {
         if (input.keyDown('9')) gui.changeHotbarSlot(9);
 
         if (eWasUp && input.keyDown('e')) {
-            gui.setInventory(!inventoryShown);
+            gui.setInventoryVisible(!inventoryShown);
             inputManager.setCursorVisible(!inventoryShown);
             app.getFlyByCamera().setEnabled(inventoryShown);
             inventoryShown = !inventoryShown;
