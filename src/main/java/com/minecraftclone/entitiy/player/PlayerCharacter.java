@@ -1,4 +1,4 @@
-package com.minecraftclone.entitiy;
+package com.minecraftclone.entitiy.player;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.bullet.BulletAppState;

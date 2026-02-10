@@ -7,6 +7,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.Main;
+import com.minecraftclone.entitiy.player.PlayerCharacter;
 import com.minecraftclone.input.ActionInput;
 import com.minecraftclone.input.AnalogInput;
 import com.minecraftclone.input.KeyMapping;

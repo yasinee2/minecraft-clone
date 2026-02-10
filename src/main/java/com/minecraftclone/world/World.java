@@ -9,7 +9,7 @@ import com.jme3.system.AppSettings;
 import com.minecraftclone.Main;
 import com.minecraftclone.block.Block;
 import com.minecraftclone.entitiy.EntityManager;
-import com.minecraftclone.entitiy.PlayerCharacter;
+import com.minecraftclone.entitiy.player.PlayerCharacter;
 import java.util.HashMap;
 import java.util.Map;
 

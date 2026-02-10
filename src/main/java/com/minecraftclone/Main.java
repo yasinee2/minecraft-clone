@@ -4,7 +4,7 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
-import com.minecraftclone.entitiy.PlayerCharacter;
+import com.minecraftclone.entitiy.player.PlayerCharacter;
 import com.minecraftclone.world.*;
 
 public class Main extends SimpleApplication {
