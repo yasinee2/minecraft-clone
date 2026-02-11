@@ -1,12 +1,12 @@
 package com.minecraftclone.player;
 
+import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.CapsuleCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
-import com.minecraftclone.Main;
 import com.minecraftclone.gui.PlayerGUI;
 import com.minecraftclone.player.input.ActionInput;
 import java.io.IOException;
@@ -28,20 +28,20 @@ public class PlayerCharacter {
     private boolean inventoryShown;
     private int life = 13;
     private int hunger = 13;
-    private Main app;
+    private SimpleApplication app;
 
-    public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, Camera cam, Node guiNode, Main app) {
+    public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, SimpleApplication app) {
         this.input = input;
         this.app = app;
-        this.cam = cam;
+        cam = app.getCamera();
         inventoryShown = false;
 
+        //TODO: move gui to RenderEngine
         try {
-            gui = new PlayerGUI();
+            gui = new PlayerGUI(app, 1920, 1080);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("sdghfiousjhnf");
         gui.setLife(life);
         gui.setHunger(hunger);
         bulletAppState.setDebugEnabled(debugEnabled);
