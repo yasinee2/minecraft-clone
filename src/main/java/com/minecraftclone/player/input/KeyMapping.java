@@ -22,28 +22,29 @@ public class KeyMapping {
 
         //TODO: add all bindings in Analog - and ActionInput
 
-        bindKeyAction("jump", KeyInput.KEY_SPACE);
-        bindKeyAction("forward", KeyInput.KEY_W);
-        bindKeyAction("backward", KeyInput.KEY_S);
-        bindKeyAction("left", KeyInput.KEY_A);
-        bindKeyAction("right", KeyInput.KEY_D);
-        bindKeyAction("toggle_Inventory", KeyInput.KEY_E);
-        bindKeyAction("drop", KeyInput.KEY_Q);
-        bindKeyAction("sneak", KeyInput.KEY_LSHIFT);
-        bindKeyAction("pause", KeyInput.KEY_ESCAPE);
+        bindKeyAction("FORWARD", KeyInput.KEY_W);
+        bindKeyAction("BACKWARD", KeyInput.KEY_S);
+        bindKeyAction("LEFT", KeyInput.KEY_A);
+        bindKeyAction("RIGHT", KeyInput.KEY_D);
+        bindKeyAction("JUMP", KeyInput.KEY_SPACE);
 
-        bindKeyAction("hotbar_1", KeyInput.KEY_1);
-        bindKeyAction("hotbar_2", KeyInput.KEY_2);
-        bindKeyAction("hotbar_3", KeyInput.KEY_3);
-        bindKeyAction("hotbar_4", KeyInput.KEY_4);
-        bindKeyAction("hotbar_5", KeyInput.KEY_5);
-        bindKeyAction("hotbar_6", KeyInput.KEY_6);
-        bindKeyAction("hotbar_7", KeyInput.KEY_7);
-        bindKeyAction("hotbar_8", KeyInput.KEY_8);
-        bindKeyAction("hotbar_9", KeyInput.KEY_9);
+        bindKeyAction("TOGGLE_INVENTORY", KeyInput.KEY_E);
+        bindKeyAction("DROP", KeyInput.KEY_Q);
+        bindKeyAction("SNEAK", KeyInput.KEY_LSHIFT);
+        bindKeyAction("PAUSE", KeyInput.KEY_ESCAPE);
 
-        bindMouseAction("place_block", MouseInput.BUTTON_RIGHT);
-        bindMouseAction("break_block", MouseInput.BUTTON_LEFT);
+        bindKeyAction("HOTBAR_1", KeyInput.KEY_1);
+        bindKeyAction("HOTBAR_2", KeyInput.KEY_2);
+        bindKeyAction("HOTBAR_3", KeyInput.KEY_3);
+        bindKeyAction("HOTBAR_4", KeyInput.KEY_4);
+        bindKeyAction("HOTBAR_5", KeyInput.KEY_5);
+        bindKeyAction("HOTBAR_6", KeyInput.KEY_6);
+        bindKeyAction("HOTBAR_7", KeyInput.KEY_7);
+        bindKeyAction("HOTBAR_8", KeyInput.KEY_8);
+        bindKeyAction("HOTBAR_9", KeyInput.KEY_9);
+
+        bindMouseAction("PLACE_BLOCK", MouseInput.BUTTON_RIGHT);
+        bindMouseAction("BREAK_BLOCK", MouseInput.BUTTON_LEFT);
 
         bindMouseAxis("MouseX+", MouseInput.AXIS_X, false);
         bindMouseAxis("MouseX-", MouseInput.AXIS_X, true);

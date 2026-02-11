@@ -8,6 +8,7 @@ public class ActionInput implements ActionListener {
 
     private final Map<Action, InputState> actions = new HashMap<>();
 
+    //DOES: Puts every Playerinput into the Hashmap actions
     public ActionInput() {
         for (Action action : Action.values()) {
             actions.put(action, new InputState());
@@ -16,7 +17,7 @@ public class ActionInput implements ActionListener {
 
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
-        Action action = Action.valueOf(name.toUpperCase());
+        Action action = Action.valueOf(name);
         actions.get(action).update(isPressed);
     }
 

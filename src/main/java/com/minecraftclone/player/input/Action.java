@@ -6,8 +6,10 @@ public enum Action {
     LEFT,
     RIGHT,
     JUMP,
+
     PLACE_BLOCK,
     BREAK_BLOCK,
+
     TOGGLE_INVENTORY,
     DROP,
     SNEAK,

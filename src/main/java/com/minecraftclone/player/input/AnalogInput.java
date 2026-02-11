@@ -19,7 +19,6 @@ public class AnalogInput implements AnalogListener {
             case "mouseWheelUp" -> mouseWheelUp = value;
             case "mouseWheelDown" -> mouseWheelDown = value;
         }
-        //System.out.println(value);
     }
 
     public float consumeMouseDX() {
