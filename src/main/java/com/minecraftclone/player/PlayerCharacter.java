@@ -26,16 +26,12 @@ public class PlayerCharacter {
     private final ActionInput input;
     private final Camera cam;
     private PlayerGUI gui;
-    private boolean inventoryShown;
     private int life = 13;
     private int hunger = 13;
-    private SimpleApplication app;
 
     public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, SimpleApplication app) {
         this.input = input;
-        this.app = app;
         cam = app.getCamera();
-        inventoryShown = false;
 
         //TODO: move gui to RenderEngine
         try {
@@ -88,12 +84,7 @@ public class PlayerCharacter {
         if (input.isTapped(Action.HOTBAR_8)) gui.changeHotbarSlot(8);
         if (input.isTapped(Action.HOTBAR_9)) gui.changeHotbarSlot(9);
 
-        if (input.isTapped(Action.TOGGLE_INVENTORY)) {
-            gui.setInventoryVisible(!inventoryShown);
-            app.getInputManager().setCursorVisible(!inventoryShown);
-            app.getFlyByCamera().setEnabled(inventoryShown);
-            inventoryShown = !inventoryShown;
-        }
+        if (input.isTapped(Action.TOGGLE_INVENTORY)) gui.toggleInventory();
     }
 
     public Node getNode() {

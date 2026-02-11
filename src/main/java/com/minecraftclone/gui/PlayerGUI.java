@@ -12,18 +12,25 @@ public class PlayerGUI {
 
     private int selectedSlot = 1;
     private int scale; //Info: only even numbers
-    private Picture hotbar, hotbarSelector, inventory, crosshair, experienceBarEmpty, heartContainer, fullHeart, halfHeart, hungerContainer, fullHunger, halfHunger;
+    private Picture hotbar, hotbarSelector, inventory, crosshair, experienceBarEmpty, heartContainer, fullHeart, halfHeart, hungerContainer;
+    private Picture fullHunger, halfHunger;
     private int windowWidth, windowHeight;
     private ImageLoader imageLoader = new ImageLoader();
     private Node guiNode, inventoryNode, containerNode;
     private AssetManager assetManager;
-    private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture, fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
-    private Node hungerNode, heartNode;
+    private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture;
+    private Texture2D fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
+    private Node hungerNode, heartNode, hotbarNode;
+    private boolean inventoryOpen = false;
+    private boolean hotbarOpen = true;
+    private SimpleApplication app;
 
     public PlayerGUI(SimpleApplication app) throws IOException {
         this.windowWidth = app.getViewPort().getCamera().getWidth();
         this.windowHeight = app.getViewPort().getCamera().getHeight();
-        //DOES: Autoscaling
+        this.app = app;
+
+        //DOES: Autoscale
         int scaleWidth = Math.round(windowWidth / 480);
         int scaleHeight = Math.round(windowHeight / 270);
         scale = (scaleWidth + scaleHeight) / 2;
@@ -34,12 +41,15 @@ public class PlayerGUI {
         //Does: Create different Nodes for different parts of the HUD
         inventoryNode = new Node("inventoryNode");
         guiNode.attachChild(inventoryNode);
-        containerNode = new Node("contaierNode");
-        inventoryNode.attachChild(containerNode);
+        hotbarNode = new Node("hotbarNode");
+        guiNode.attachChild(hotbarNode);
+        containerNode = new Node("containerNode");
+        hotbarNode.attachChild(containerNode);
+
         hungerNode = new Node("hungerNode");
         heartNode = new Node("heartNode");
-        guiNode.attachChild(hungerNode);
-        guiNode.attachChild(heartNode);
+        hotbarNode.attachChild(hungerNode);
+        hotbarNode.attachChild(heartNode);
 
         //Does: Create Texture Variables
         hotbarTexture = imageLoader.loadTexture2D(guiPath("sprites/hud/hotbar.png")); //182x22
@@ -57,11 +67,11 @@ public class PlayerGUI {
         //Does: Create different Elements of the HUD
         inventory = new Picture("inventory");
         inventory.setTexture(assetManager, inventoryTexture, true);
-        inventory.setWidth(256 * scale);
-        inventory.setHeight(256 * scale);
+        inventory.setWidth(290 * scale);
+        inventory.setHeight(290 * scale);
         inventory.setPosition(
-            windowWidth / 2 - (((inventory.getWidth() - (80 * scale)) / 2)),
-            windowHeight / 2 - (inventory.getHeight() - (90 * scale))
+            windowWidth / 2 - (((inventory.getWidth() - (90 * scale)) / 2)),
+            windowHeight / 2 - (inventory.getHeight() - (100 * scale))
         ); //Info: Inventory not attached so not visible
 
         hotbar = new Picture("hotbar");
@@ -69,21 +79,21 @@ public class PlayerGUI {
         hotbar.setWidth(182 * scale);
         hotbar.setHeight(22 * scale);
         hotbar.setPosition(windowWidth / 2 - (hotbar.getWidth() / 2), 0);
-        inventoryNode.attachChild(hotbar);
+        hotbarNode.attachChild(hotbar);
 
         hotbarSelector = new Picture("hotbarSelector");
         hotbarSelector.setTexture(assetManager, hotbarSelectorTexture, true);
         hotbarSelector.setWidth(24 * scale);
         hotbarSelector.setHeight(23 * scale);
         hotbarSelector.setPosition(windowWidth / 2 - ((hotbarSelector.getWidth() / 2)), 0);
-        inventoryNode.attachChild(hotbarSelector);
+        hotbarNode.attachChild(hotbarSelector);
 
         experienceBarEmpty = new Picture("experienceBarEmpty");
         experienceBarEmpty.setTexture(assetManager, experienceBarEmptyTexture, true);
         experienceBarEmpty.setWidth(182 * scale);
         experienceBarEmpty.setHeight(5 * scale);
         experienceBarEmpty.setPosition(windowWidth / 2 - ((experienceBarEmpty.getWidth() / 2)), hotbar.getHeight() + scale * 2);
-        inventoryNode.attachChild(experienceBarEmpty);
+        hotbarNode.attachChild(experienceBarEmpty);
 
         //Does: Create Crosshair and inventory
         crosshair = new Picture("crosshair");
@@ -91,9 +101,9 @@ public class PlayerGUI {
         crosshair.setWidth(15 * scale);
         crosshair.setHeight(15 * scale);
         crosshair.setPosition(windowWidth / 2 - ((crosshair.getWidth() / 2)), windowHeight / 2 - ((crosshair.getHeight() / 2)));
-        inventoryNode.attachChild(crosshair);
+        hotbarNode.attachChild(crosshair);
 
-        //Does: Creating Containers for Life and Hunger
+        //Does: Create Containers for Life and Hunger
         for (int i = 0; i < 10; i++) {
             heartContainer = new Picture("heartContainer");
             heartContainer.setTexture(assetManager, heartContainerTexture, true);
@@ -119,10 +129,13 @@ public class PlayerGUI {
         }
 
         changeHotbarSlot(selectedSlot);
+
+        //INFO: no idea why, but this is necessary to do once in init
+        toggleInventory();
     }
 
     public void changeHotbarSlot(int slot) {
-        //Does: Changes the Hotbarslot based of the int slot
+        //Does: Change the Hotbarslot based of the int slot
         if (slot <= 9 && slot >= 1) {
             selectedSlot = slot;
             hotbarSelector.setPosition(
@@ -135,17 +148,21 @@ public class PlayerGUI {
         }
     }
 
-    public void setInventoryVisible(boolean enabled) {
-        //Does: set the Visibility of the Inventory (triggered by pressing e)
-        if (enabled) {
+    public void toggleInventory() {
+        //Does: set the Visibility of the Inventory
+        if (inventoryOpen) {
             guiNode.attachChild(inventory);
         } else {
             inventory.removeFromParent();
         }
+        app.getInputManager().setCursorVisible(inventoryOpen);
+        app.getFlyByCamera().setEnabled(!inventoryOpen);
+        toggleHotbar();
+        inventoryOpen = !inventoryOpen;
     }
 
     public void setLife(int life) {
-        //Does: Creates Heart Textures on top of the Heart Container (2= full heart, 1 = half heart)
+        //Does: Create Heart Textures on top of the Heart Container (2= full heart, 1 = half heart)
         heartNode.detachAllChildren();
         if (life % 2 == 0) {
             for (int i = 0; i < life / 2; i++) {
@@ -226,5 +243,14 @@ public class PlayerGUI {
 
     private String guiPath(String path) {
         return "src/main/resources/textures/gui/" + path;
+    }
+
+    private void toggleHotbar() {
+        if (hotbarOpen) {
+            guiNode.attachChild(hotbarNode);
+        } else {
+            hotbarNode.removeFromParent();
+        }
+        hotbarOpen = !hotbarOpen;
     }
 }

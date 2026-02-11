@@ -11,12 +11,24 @@ import com.minecraftclone.player.input.AnalogInput;
 import com.minecraftclone.player.input.KeyMapping;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Main extends SimpleApplication {
 
+    //INFO: update with new versions
+    public static final String VERSION = "v0.3.0-alpha";
+
+    //INFO: disable when debugging
+    public static boolean disableWarnings = true;
+
+    //DOES: settings
     public static AppSettings settings;
+    public static boolean fullscreen = true;
+    public static int screen_width = 1280;
+    public static int screen_height = 720;
 
     //DOES: tps stuff
     private static final float TICKS_PER_SECOND = 40f;
@@ -35,12 +47,7 @@ public class Main extends SimpleApplication {
     private BlockInteractionSystem blockInteraction;
 
     public static void main(String[] args) {
-        disableWarnings();
-        settings = new AppSettings(true);
-        settings.setWindowSize(1280, 720); //TODO: Needs to automatically get the resolution of the monitor otherwise it is upscaled when in full screen mode and the resolution does not fit the monitor (looks ugly)
-        settings.setSamples(4);
-        settings.setTitle("minecraft-clone v0.2.0-alpha    © Mats O. & Filip M.");
-        //settings.setFullscreen(true);
+        setDefaultSettings();
 
         Main app = new Main();
         app.setSettings(settings);
@@ -138,8 +145,26 @@ public class Main extends SimpleApplication {
         tpsText.setText("TPS: " + tps);
     }
 
-    private static void disableWarnings() {
-        Logger.getLogger("").setLevel(Level.SEVERE);
-        Logger.getLogger("").setLevel(Level.WARNING);
+    private static void setDefaultSettings() {
+        //INFO: jmonkeyengine spams warnings for missing optional modules
+        //INFO: this disables all warnings that are not critical, disable for debugging
+        if (disableWarnings) {
+            Logger.getLogger("").setLevel(Level.SEVERE);
+        }
+
+        settings = new AppSettings(true);
+        settings.setTitle("minecraft-clone " + VERSION + "                  © Mats O. & Filip M.");
+
+        //DOES: set anti aliasing
+        settings.setSamples(4);
+
+        //DOES: set resolution automatically if fullscreen
+        if (fullscreen) {
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+            settings.setWindowSize((int) screenSize.getWidth(), (int) screenSize.getHeight());
+            settings.setFullscreen(true);
+        } else {
+            settings.setWindowSize(screen_width, screen_height);
+        }
     }
 }

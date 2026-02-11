@@ -1,6 +1,7 @@
 move GUI to RenderEngine
-add bindings to KeyMapping, test
+add hotbar scrolling
 only create meshes for chunks around Player
+unload chunks
 set initial player pos to top coordinate of chunk
 dont render invisible chunks (data more separate from rendering)
 add block hardness, mining tool capability for future
@@ -9,7 +10,7 @@ improve movement (smoother)
 fix non-solid blocks breaking the game (mesh)
 figure out stepHeight
 add proper comments
-generalize block actions (using, hitting, etc)
+add other block actions (using, etc.)
 clear blockMaterialCache items
 compact blocks.java (json, hashmap, etc?), merge with block cache ? (hashmap with loaded blocks)
 separate rendering (visual blocks, chunk meshes, RenderEngine class) from blocks in memory (Chunk class)
