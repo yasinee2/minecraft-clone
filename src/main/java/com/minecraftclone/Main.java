@@ -9,6 +9,7 @@ import com.minecraftclone.player.PlayerCharacter;
 import com.minecraftclone.player.input.ActionInput;
 import com.minecraftclone.player.input.AnalogInput;
 import com.minecraftclone.player.input.KeyMapping;
+import com.minecraftclone.render.ClampedFlyByCamera;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
 import java.awt.Dimension;
@@ -71,7 +72,18 @@ public class Main extends SimpleApplication {
         //DOES: set up camera and anisotropic filter
         //NOTE:  had to implement completely custom camera movement for vertical and horizontal clamping
         //NOTE:  which was be much worse so sticking with flyCam for now
+        flyCam.setEnabled(false);
+        flyCam.unregisterInput();
+
+        flyCam = new ClampedFlyByCamera(cam);
+        flyCam.registerWithInput(inputManager);
+
+        // Enable mouse look (this also hides + locks cursor correctly)
         flyCam.setEnabled(true);
+        flyCam.setDragToRotate(false);
+        flyCam.setMoveSpeed(10f); // optional, same as normal FlyCam
+        flyCam.setRotationSpeed(1f); // optional
+
         cam.setFrustumNear(0.2f);
         cam.setFov(70);
         getRenderer().setDefaultAnisotropicFilter(4);
