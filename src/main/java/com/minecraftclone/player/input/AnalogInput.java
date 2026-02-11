@@ -7,6 +7,8 @@ public class AnalogInput implements AnalogListener {
     private float mouseDX;
     private float mouseDY;
 
+    float mouseWheelUp, mouseWheelDown;
+
     @Override
     public void onAnalog(String name, float value, float tpf) {
         switch (name) {
@@ -14,6 +16,8 @@ public class AnalogInput implements AnalogListener {
             case "MouseX-" -> mouseDX = -value;
             case "MouseY+" -> mouseDY = value;
             case "MouseY-" -> mouseDY = -value;
+            case "mouseWheelUp" -> mouseWheelUp = value;
+            case "mouseWheelDown" -> mouseWheelDown = value;
         }
         //System.out.println(value);
     }

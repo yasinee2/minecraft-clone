@@ -1,4 +1,4 @@
-package com.minecraftclone.entitiy.player;
+package com.minecraftclone.player;
 
 import com.minecraftclone.item.ItemInstance;
 import java.util.ArrayList;
