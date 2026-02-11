@@ -5,6 +5,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.minecraftclone.block.Block;
 import com.minecraftclone.player.PlayerCharacter;
+import com.minecraftclone.player.input.Action;
 import com.minecraftclone.player.input.ActionInput;
 
 public final class BlockInteractionSystem {
@@ -35,17 +36,17 @@ public final class BlockInteractionSystem {
         ticksSinceBreak += 1;
         ticksSincePlace += 1;
 
-        if (input.breakBlock() && allowBreaking) {
+        if (input.isTapped(Action.BREAK_BLOCK) && allowBreaking) {
             tryBreak();
             return;
         }
-        if (input.placeBlock() && allowPlacing) {
+        if (input.isTapped(Action.PLACE_BLOCK) && allowPlacing) {
             tryPlace();
             return;
         }
 
-        if (input.breakBlockHeld() && allowBreaking && ticksSinceBreak > breakDelay) tryBreak();
-        if (input.placeBlockHeld() && allowPlacing && ticksSincePlace > placeDelay) tryPlace();
+        if (input.isHeld(Action.BREAK_BLOCK) && allowBreaking && ticksSinceBreak > breakDelay) tryBreak();
+        if (input.isHeld(Action.PLACE_BLOCK) && allowPlacing && ticksSincePlace > placeDelay) tryPlace();
     }
 
     public void setSelectedBlock(Block block) {

@@ -24,11 +24,26 @@ public class KeyMapping {
 
         bindKeyAction("jump", KeyInput.KEY_SPACE);
         bindKeyAction("forward", KeyInput.KEY_W);
-        bindKeyAction("back", KeyInput.KEY_S);
+        bindKeyAction("backward", KeyInput.KEY_S);
         bindKeyAction("left", KeyInput.KEY_A);
         bindKeyAction("right", KeyInput.KEY_D);
-        bindMouseAction("right-click", MouseInput.BUTTON_RIGHT);
-        bindMouseAction("left-click", MouseInput.BUTTON_LEFT);
+        bindKeyAction("toggle_Inventory", KeyInput.KEY_E);
+        bindKeyAction("drop", KeyInput.KEY_Q);
+        bindKeyAction("sneak", KeyInput.KEY_LSHIFT);
+        bindKeyAction("pause", KeyInput.KEY_ESCAPE);
+
+        bindKeyAction("hotbar_1", KeyInput.KEY_1);
+        bindKeyAction("hotbar_2", KeyInput.KEY_2);
+        bindKeyAction("hotbar_3", KeyInput.KEY_3);
+        bindKeyAction("hotbar_4", KeyInput.KEY_4);
+        bindKeyAction("hotbar_5", KeyInput.KEY_5);
+        bindKeyAction("hotbar_6", KeyInput.KEY_6);
+        bindKeyAction("hotbar_7", KeyInput.KEY_7);
+        bindKeyAction("hotbar_8", KeyInput.KEY_8);
+        bindKeyAction("hotbar_9", KeyInput.KEY_9);
+
+        bindMouseAction("place_block", MouseInput.BUTTON_RIGHT);
+        bindMouseAction("break_block", MouseInput.BUTTON_LEFT);
 
         bindMouseAxis("MouseX+", MouseInput.AXIS_X, false);
         bindMouseAxis("MouseX-", MouseInput.AXIS_X, true);

@@ -6,100 +6,35 @@ import java.util.Map;
 
 public class ActionInput implements ActionListener {
 
-    private boolean forward;
-    private boolean backward;
-    private boolean left;
-    private boolean right;
-    private boolean jump;
+    private final Map<Action, InputState> actions = new HashMap<>();
 
-    private boolean breakBlockHeld;
-    private boolean placeBlockHeld;
-
-    private boolean breakBlockTapped;
-    private boolean placeBlockTapped;
-
-    private Map<String, Boolean> functionKeys = new HashMap<>();
-
-    @Override
-    public void onAction(String name, boolean isPressed, float tpf) {
-        switch (name) {
-            case "forward" -> forward = isPressed;
-            case "back" -> backward = isPressed;
-            case "left" -> left = isPressed;
-            case "right" -> right = isPressed;
-            case "jump" -> jump = isPressed;
-            case "left-click" -> {
-                if (isPressed && !breakBlockHeld) {
-                    breakBlockTapped = true; // Only true on the frame it was pressed
-                }
-                breakBlockHeld = isPressed;
-            }
-            case "right-click" -> {
-                if (isPressed && !placeBlockHeld) {
-                    placeBlockTapped = true;
-                }
-                placeBlockHeld = isPressed;
-            }
-            default -> functionKeys.put(name, isPressed);
+    public ActionInput() {
+        for (Action action : Action.values()) {
+            actions.put(action, new InputState());
         }
     }
 
-    public boolean isForward() {
-        return forward;
-    }
-
-    public boolean isBackward() {
-        return backward;
-    }
-
-    public boolean isLeft() {
-        return left;
-    }
-
-    public boolean isRight() {
-        return right;
-    }
-
-    public boolean isJump() {
-        return jump;
-    }
-
-    public boolean breakBlockHeld() {
-        return breakBlockHeld;
-    }
-
-    public boolean placeBlockHeld() {
-        return placeBlockHeld;
-    }
-
-    public boolean breakBlock() {
-        boolean tapped = breakBlockTapped;
-        breakBlockTapped = false; //INFO: reset after reading
-        return tapped;
-    }
-
-    public boolean placeBlock() {
-        boolean tapped = placeBlockTapped;
-        placeBlockTapped = false;
-        return tapped;
+    @Override
+    public void onAction(String name, boolean isPressed, float tpf) {
+        Action action = Action.valueOf(name.toUpperCase());
+        actions.get(action).update(isPressed);
     }
 
     /**
-     * returns the boolean value of isPressed for the given key
-     * @param key
+     * Returns if the Specified Keybinding is held
+     * @param action
      * @return
      */
-    public boolean isHotkey(int key) {
-        return functionKeys.getOrDefault("hotkey" + key, false);
+    public boolean isHeld(Action action) {
+        return actions.get(action).isHeld();
     }
 
     /**
-     * returns the boolean value of isPressed
-     * defaults to false
-     * @param key
+     * Returns if the Specified Keybinding is tapped
+     * @param action
      * @return
      */
-    public boolean isFunctionKey(String key) {
-        return functionKeys.getOrDefault(key, false);
+    public boolean isTapped(Action action) {
+        return actions.get(action).consumeTap();
     }
 }
