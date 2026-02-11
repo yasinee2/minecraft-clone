@@ -37,7 +37,7 @@ public class Main extends SimpleApplication {
     public static void main(String[] args) {
         disableWarnings();
         settings = new AppSettings(true);
-        settings.setWindowSize(1280, 720); //TODO: Needs to automatically get the resolution of the monitor otherwise it is upscaled when in full screen mode and the resolution does not fit the monitor
+        settings.setWindowSize(1280, 720); //TODO: Needs to automatically get the resolution of the monitor otherwise it is upscaled when in full screen mode and the resolution does not fit the monitor (looks ugly)
         settings.setSamples(4);
         settings.setTitle("minecraft-clone v0.2.0-alpha    © Mats O. & Filip M.");
         //settings.setFullscreen(true);
