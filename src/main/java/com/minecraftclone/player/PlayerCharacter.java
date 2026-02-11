@@ -8,6 +8,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.minecraftclone.gui.PlayerGUI;
+import com.minecraftclone.player.input.Action;
 import com.minecraftclone.player.input.ActionInput;
 import java.io.IOException;
 
@@ -38,7 +39,7 @@ public class PlayerCharacter {
 
         //TODO: move gui to RenderEngine
         try {
-            gui = new PlayerGUI(app, 1920, 1080);
+            gui = new PlayerGUI(app);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,19 +70,25 @@ public class PlayerCharacter {
 
         walkDir.set(0, 0, 0);
 
-        if (input.isForward()) walkDir.addLocal(forward);
-        if (input.isLeft()) walkDir.addLocal(left);
-        if (input.isBackward()) walkDir.addLocal(forward.negate());
-        if (input.isRight()) walkDir.addLocal(left.negate());
+        if (input.isHeld(Action.FORWARD)) walkDir.addLocal(forward);
+        if (input.isHeld(Action.LEFT)) walkDir.addLocal(left);
+        if (input.isHeld(Action.BACKWARD)) walkDir.addLocal(forward.negate());
+        if (input.isHeld(Action.RIGHT)) walkDir.addLocal(left.negate());
 
         playerControl.setWalkDirection(walkDir);
-        if (input.isJump() && playerControl.onGround()) playerControl.jump();
+        if (input.isHeld(Action.JUMP) && playerControl.onGround()) playerControl.jump();
 
-        for (int i = 0; i < 10; i++) {
-            if (input.isHotkey(i)) gui.changeHotbarSlot(i);
-        }
+        if (input.isTapped(Action.HOTBAR_1)) gui.changeHotbarSlot(1);
+        if (input.isTapped(Action.HOTBAR_2)) gui.changeHotbarSlot(2);
+        if (input.isTapped(Action.HOTBAR_3)) gui.changeHotbarSlot(3);
+        if (input.isTapped(Action.HOTBAR_4)) gui.changeHotbarSlot(4);
+        if (input.isTapped(Action.HOTBAR_5)) gui.changeHotbarSlot(5);
+        if (input.isTapped(Action.HOTBAR_6)) gui.changeHotbarSlot(6);
+        if (input.isTapped(Action.HOTBAR_7)) gui.changeHotbarSlot(7);
+        if (input.isTapped(Action.HOTBAR_8)) gui.changeHotbarSlot(8);
+        if (input.isTapped(Action.HOTBAR_9)) gui.changeHotbarSlot(9);
 
-        if (input.isFunctionKey("openInventory")) {
+        if (input.isTapped(Action.TOGGLE_INVENTORY)) {
             gui.setInventoryVisible(!inventoryShown);
             app.getInputManager().setCursorVisible(!inventoryShown);
             app.getFlyByCamera().setEnabled(inventoryShown);
