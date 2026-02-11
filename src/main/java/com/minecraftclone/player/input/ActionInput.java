@@ -17,8 +17,7 @@ public class ActionInput implements ActionListener {
 
     @Override
     public void onAction(String name, boolean isPressed, float tpf) {
-        Action action = Action.valueOf(name);
-        actions.get(action).update(isPressed);
+        actions.get(Action.valueOf(name)).update(isPressed);
     }
 
     /**
