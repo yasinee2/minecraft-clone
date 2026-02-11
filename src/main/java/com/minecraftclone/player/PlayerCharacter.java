@@ -13,12 +13,12 @@ import java.io.IOException;
 
 public class PlayerCharacter {
 
-    public static final float STEP_HEIGHT = 1f;
+    public static final float STEP_HEIGHT = 0.1f;
     public static final float RADIUS = 0.4f;
+    public static final float HEIGHT = 1.2f;
     private final CharacterControl playerControl;
     private final Node playerNode;
 
-    private final float stepHeight = 0.1f;
     private final float speed = 0.15f;
     private final boolean debugEnabled = false;
     private final Vector3f walkDir = new Vector3f();
@@ -46,15 +46,16 @@ public class PlayerCharacter {
         gui.setHunger(hunger);
         bulletAppState.setDebugEnabled(debugEnabled);
 
-        var shape = new CapsuleCollisionShape(RADIUS, STEP_HEIGHT);
-        var player = new CharacterControl(shape, stepHeight);
+        var shape = new CapsuleCollisionShape(RADIUS, HEIGHT);
+        var player = new CharacterControl(shape, STEP_HEIGHT);
         player.setJumpSpeed(10f);
-        player.setFallSpeed(20f);
+        player.setFallSpeed(40f);
         player.setGravity(30f);
 
         Node playerNode = new Node("Player");
         playerNode.addControl(player);
         bulletAppState.getPhysicsSpace().add(player);
+
         player.setPhysicsLocation(new Vector3f(5, 20, 2));
         this.playerControl = player;
         this.playerNode = playerNode;

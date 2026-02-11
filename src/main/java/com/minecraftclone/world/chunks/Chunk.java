@@ -16,11 +16,14 @@ import java.util.Map;
 
 public class Chunk {
 
+    //NOTE: chunk size
     public static final int SIZE = 32;
 
     private final int chunkX, chunkY, chunkZ;
 
+    //NOTE: block object stored in triple array of ints (local pos)
     private final Block[][][] blocks = new Block[SIZE][SIZE][SIZE];
+
     private final Node chunkNode = new Node("Chunk");
     private final AssetManager assetManager;
 
@@ -34,6 +37,7 @@ public class Chunk {
         this.chunkZ = chunkZ;
         this.assetManager = assetManager;
 
+        //DOES: set location of the chunk node
         chunkNode.setLocalTranslation(chunkX * SIZE, chunkY * SIZE, chunkZ * SIZE);
     }
 
@@ -41,17 +45,31 @@ public class Chunk {
         return chunkNode;
     }
 
+    /**
+     * saves block into blocks array & dirties chunk to reload mesh
+     * @param x
+     * @param y
+     * @param z
+     * @param block
+     */
     public void setBlock(int x, int y, int z, Block block) {
         blocks[x][y][z] = block;
         dirty = true;
     }
 
+    /**
+     * returns the block object at local pos
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
     public Block getBlock(int x, int y, int z) {
         return blocks[x][y][z];
     }
 
     /**
-     * Rebuilds the chunk mesh if not dirty.
+     * rebuilds the chunk mesh if not dirty
      * <p>
      */
     public void rebuild(PhysicsSpace physicsSpace) {
@@ -59,18 +77,20 @@ public class Chunk {
 
         Map<String, Mesh> meshes = ChunkMeshBuilder.build(blocks);
 
-        // remove old geometries
+        //DOES: remove old geometries
         for (Geometry g : geometries.values()) {
             g.removeFromParent();
         }
         geometries.clear();
 
+        //DOES: if exists, remove collision body
         if (collisionBody != null) {
             physicsSpace.remove(collisionBody);
         }
 
         Node collisionNode = new Node("CollisionNode");
 
+        //TODO: comment ts
         for (Map.Entry<String, Mesh> e : meshes.entrySet()) {
             Geometry g = new Geometry("chunk_" + e.getKey(), e.getValue());
             g.setMaterial(BlockMaterialCache.get(e.getKey(), assetManager));
@@ -86,9 +106,14 @@ public class Chunk {
             physicsSpace.add(collisionBody);
         }
 
+        //DOES: set chunk to clean to indicate completion of rebuild
         dirty = false;
     }
 
+    /**
+     * returns the array of block objects
+     * @return
+     */
     public Block[][][] getBlocks() {
         return blocks;
     }

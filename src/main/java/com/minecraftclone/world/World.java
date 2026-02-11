@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class World {
 
-    private static final int RENDER_DISTANCE = 50;
+    private static final int RENDER_DISTANCE = 30;
     private final SimpleApplication app;
     private final PlayerCharacter playerCharacter;
     private final BulletAppState bulletAppState;
@@ -30,7 +30,7 @@ public class World {
         playerCharacter = new PlayerCharacter(bulletAppState, actionInput, app);
         app.getRootNode().attachChild(playerCharacter.getNode());
 
-        chunkManager = new ChunkManager(app, this, RENDER_DISTANCE); // render distance
+        chunkManager = new ChunkManager(app, this, RENDER_DISTANCE);
     }
 
     public Block getBlock(int worldX, int worldY, int worldZ) {
@@ -41,9 +41,9 @@ public class World {
         return chunk.getBlock(Math.floorMod(worldX, Chunk.SIZE), Math.floorMod(worldY, Chunk.SIZE), Math.floorMod(worldZ, Chunk.SIZE));
     }
 
-    public boolean isBlockLoaded(int wx, int wy, int wz) {
+    public boolean isBlockLoaded(int worldX, int worldY, int worldZ) {
         //DOES: return bool if chunk can be gotten
-        return getChunk(wx, wy, wz) != null;
+        return getChunk(worldX, worldY, worldZ) != null;
     }
 
     /**Sets block at world coordinates
@@ -89,19 +89,28 @@ public class World {
         return chunks.get(key(chunkX, chunkY, chunkZ));
     }
 
-    private void rebuildNeighborsIfNeeded(int cx, int cy, int cz, int lx, int ly, int lz) {
-        if (lx == 0) rebuild(cx - 1, cy, cz);
-        if (lx == Chunk.SIZE - 1) rebuild(cx + 1, cy, cz);
-        if (lz == 0) rebuild(cx, cy, cz - 1);
-        if (lz == Chunk.SIZE - 1) rebuild(cx, cy, cz + 1);
-        if (ly == 0) rebuild(cx, cy - 1, cz);
-        if (ly == Chunk.SIZE - 1) rebuild(cx, cy + 1, cz);
+    /**
+     * checks if block is bordering another chunk and rebuilds
+     * @param chunkX
+     * @param chunkY
+     * @param chunkZ
+     * @param localX
+     * @param localY
+     * @param localZ
+     */
+    private void rebuildNeighborsIfNeeded(int chunkX, int chunkY, int chunkZ, int localX, int localY, int localZ) {
+        if (localX == 0) rebuild(chunkX - 1, chunkY, chunkZ);
+        if (localX == Chunk.SIZE - 1) rebuild(chunkX + 1, chunkY, chunkZ);
+        if (localZ == 0) rebuild(chunkX, chunkY, chunkZ - 1);
+        if (localZ == Chunk.SIZE - 1) rebuild(chunkX, chunkY, chunkZ + 1);
+        if (localY == 0) rebuild(chunkX, chunkY - 1, chunkZ);
+        if (localY == Chunk.SIZE - 1) rebuild(chunkX, chunkY + 1, chunkZ);
     }
 
-    private void rebuild(int cx, int cy, int cz) {
-        Chunk c = chunks.get(key(cx, cy, cz));
-        if (c != null) {
-            c.rebuild(bulletAppState.getPhysicsSpace());
+    private void rebuild(int chunkX, int chunkY, int chunkZ) {
+        Chunk chunk = chunks.get(key(chunkX, chunkY, chunkZ));
+        if (chunk != null) {
+            chunk.rebuild(bulletAppState.getPhysicsSpace());
         }
     }
 
@@ -121,6 +130,10 @@ public class World {
         return chunks.containsKey(key(pos.x, pos.y, pos.z));
     }
 
+    /**
+     * adds chunk to hashMap
+     * @param chunk
+     */
     public void addChunk(Chunk chunk) {
         chunks.put(key(chunk.getChunkX(), chunk.getChunkY(), chunk.getChunkZ()), chunk);
     }

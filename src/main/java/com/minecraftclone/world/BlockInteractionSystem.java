@@ -155,6 +155,7 @@ public final class BlockInteractionSystem {
     }
 
     private boolean collidesWithPlayer(int x, int y, int z) {
+        //FIXME: player can't build up & can glitch
         CharacterControl player = world.getPlayerCharacter().getPlayerControl();
 
         Vector3f blockMin = new Vector3f(x, y, z);
