@@ -30,6 +30,7 @@ public class Main extends SimpleApplication {
     public static boolean fullscreen = true;
     public static int screen_width = 1280;
     public static int screen_height = 720;
+    private boolean initialized = false;
 
     //DOES: tps stuff
     private static final float TICKS_PER_SECOND = 40f;
@@ -115,6 +116,11 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleUpdate(float tpf) {
+        //DOES: run once and set cursor visibility
+        //INFO: is necessary to skip simpleInit because something fucks cursor visibility up there
+        //NOTE: can be removed later when starting menu is added
+        init();
+
         //NOTE: update() methods are bound by fps, tick() by tps
 
         //DOES: calculate & update tps
@@ -179,6 +185,13 @@ public class Main extends SimpleApplication {
             settings.setFullscreen(true);
         } else {
             settings.setWindowSize(screen_width, screen_height);
+        }
+    }
+
+    private void init() {
+        if (!initialized) {
+            inputManager.setCursorVisible(false);
+            initialized = true;
         }
     }
 }
