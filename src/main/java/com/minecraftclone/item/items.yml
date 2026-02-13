@@ -1,27 +1,27 @@
 items:
     #Swords
-    - wooden_sword:
+    wooden_sword:
         type: SWORD
         maxStack: 1
         name: "Wooden Sword"
         baseDurability: 50
         baseDamage: 4
         miningEfficiency: 1
-    - stone_sword:
+    stone_sword:
         type: SWORD
         maxStack: 1
         name: "Stone Sword"
         baseDurability: 100
         baseDamage: 5
         miningEfficiency: 1
-    - iron_sword:
+    iron_sword:
         type: SWORD
         maxStack: 1
         name: "Iron Sword"
         baseDurability: 250
         baseDamage: 6
         miningEfficiency: 1
-    - diamond_sword:
+    diamond_sword:
         type: SWORD
         maxStack: 1
         name: "Diamond Sword"
@@ -29,28 +29,28 @@ items:
         baseDamage: 7
         miningEfficiency: 1
     #Pickaxe
-    - wooden_pickaxe:
+    wooden_pickaxe:
         type: PICKAXE
         maxStack: 1
         name: "Wooden Pickaxe"
         baseDurability: 50
         baseDamage: 2
         miningEfficiency: 2
-    - stone_pickaxe:
+    stone_pickaxe:
         type: PICKAXE
         maxStack: 1
         name: "Stone Pickaxe"
         baseDurability: 100
         baseDamage: 3
         miningEfficiency: 4
-    - iron_pickaxe:
+    iron_pickaxe:
         type: PICKAXE
         maxStack: 1
         name: "Iron Pickaxe"
         baseDurability: 250
         baseDamage: 4
         miningEfficiency: 6
-    - diamond_pickaxe:
+    diamond_pickaxe:
         type: PICKAXE
         maxStack: 1
         name: "Diamond Pickaxe"
@@ -58,28 +58,28 @@ items:
         baseDamage: 5
         miningEfficiency: 8
     #Axe
-    - wooden_axe:
+    wooden_axe:
         type: AXE
         maxStack: 1
         name: "Wooden Axe"
         baseDurability: 50
         baseDamage: 2
         miningEfficiency: 2
-    - stone_axe:
+    stone_axe:
         type: AXE
         maxStack: 1
         name: "Stone Axe"
         baseDurability: 100
         baseDamage: 3
         miningEfficiency: 4
-    - iron_axe:
+    iron_axe:
         type: AXE
         maxStack: 1
         name: "Iron Axe"
         baseDurability: 250
         baseDamage: 4
         miningEfficiency: 6
-    - diamond_axe:
+    diamond_axe:
         type: AXE
         maxStack: 1
         name: "Diamond Axe"

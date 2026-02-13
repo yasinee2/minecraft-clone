@@ -3,14 +3,14 @@ package com.minecraftclone.item;
 public class Item {
 
     private String id;
-    private String type;
+    private ItemType type;
     private int maxStack;
     private String name;
     private int baseDamage;
     private int durability;
     private int miningEfficiency;
 
-    public Item(String id, String type, int maxStack, String name, int baseDamage, int durability, int miningEfficiency) {
+    public Item(String id, ItemType type, int maxStack, String name, int baseDamage, int durability, int miningEfficiency) {
         this.id = id;
         this.type = type;
         this.maxStack = maxStack;
@@ -24,7 +24,7 @@ public class Item {
         return id;
     }
 
-    public String getType() {
+    public ItemType getType() {
         return type;
     }
 
