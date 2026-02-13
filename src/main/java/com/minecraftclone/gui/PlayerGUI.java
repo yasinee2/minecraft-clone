@@ -222,8 +222,4 @@ public class PlayerGUI {
             hungerNode.attachChild(halfHunger);
         }
     }
-
-    private String guiPath(String path) {
-        return "src/main/resources/textures/gui/" + path;
-    }
 }
