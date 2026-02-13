@@ -118,16 +118,15 @@ public class Main extends SimpleApplication {
     public void simpleUpdate(float tpf) {
         //DOES: run once and set cursor visibility
         //INFO: is necessary to skip simpleInit because something fucks cursor visibility up there
-        //NOTE: can be removed later when starting menu is added
+        //INFO: can be removed later when starting screen is added
         init();
 
-        //NOTE: update() methods are bound by fps, tick() by tps
-
         //DOES: calculate & update tps
+        //INFO: update() methods are bound by fps, tick() by tps
         tps();
 
-        //DOES: set the camera to the player's pos
-        cam.setLocation(playerCharacter.getPlayerControl().getPhysicsLocation().add(0, 0.6f, 0));
+        //DOES: set the camera to the eye height of player's pos
+        cam.setLocation(playerCharacter.getPlayerControl().getPhysicsLocation().add(0, PlayerCharacter.EYE_OFFSET, 0));
 
         //DOES: queue & process missing chunks
         world.update();
@@ -174,6 +173,10 @@ public class Main extends SimpleApplication {
 
         settings = new AppSettings(true);
         settings.setTitle("minecraft-clone " + VERSION + "                  © Mats O. & Filip M.");
+        settings.setVSync(true);
+
+        //DOES: set max frame rate (vsync caps at 60 by default)
+        settings.setFrequency(100000);
 
         //DOES: set anti aliasing
         settings.setSamples(4);
