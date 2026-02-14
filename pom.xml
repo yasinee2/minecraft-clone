@@ -2,24 +2,39 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>com.minecraftclone</groupId>
   <artifactId>minecraft-clone</artifactId>
   <version>v0.3.0-alpha</version>
-
   <name>minecraft-clone</name>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>21</maven.compiler.release>
+    <lwjgl.version>3.3.6</lwjgl.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- DOES: Force LWJGL version to 3.3.6 across all modules -->
+      <dependency>
+        <groupId>org.lwjgl</groupId>
+        <artifactId>lwjgl-bom</artifactId>
+        <version>${lwjgl.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
       <groupId>org.jmonkeyengine</groupId>
       <artifactId>jme3-core</artifactId>
+      <version>3.9.0-stable</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jmonkeyengine</groupId>
+      <artifactId>jme3-terrain</artifactId>
       <version>3.9.0-stable</version>
     </dependency>
     <dependency>
@@ -36,14 +51,23 @@
       <groupId>com.github.stephengold</groupId>
       <artifactId>Minie</artifactId>
       <version>8.2.0</version>
+      <exclusions>
+        <exclusion>
+          <groupId>org.jmonkeyengine</groupId>
+          <artifactId>jme3-core</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.jmonkeyengine</groupId>
+          <artifactId>jme3-terrain</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
-      <version>6.0.2</version>
+      <version>5.11.4</version>
       <scope>test</scope>
     </dependency>
-
     <dependency>
       <groupId>com.esotericsoftware</groupId>
       <artifactId>kryo</artifactId>
@@ -54,14 +78,7 @@
       <artifactId>snakeyaml</artifactId>
       <version>2.5</version>
     </dependency>
-
-    <dependency>
-      <groupId>us.ihmc</groupId>
-      <artifactId>jme3-jbullet</artifactId>
-      <version>3.2.0-171209</version>
-    </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>

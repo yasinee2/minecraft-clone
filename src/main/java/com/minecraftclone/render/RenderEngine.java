@@ -2,7 +2,6 @@ package com.minecraftclone.render;
 
 import com.minecraftclone.Main;
 import com.minecraftclone.gui.PlayerGUI;
-import com.minecraftclone.item.ItemRegistry;
 import com.minecraftclone.player.PlayerCharacter;
 import java.io.IOException;
 
@@ -27,7 +26,5 @@ public class RenderEngine {
         gui.setHunger(player.getHunger());
         gui.changeHotbarSlot(player.getHotbarSlot());
         gui.setInventoryVisibility(player.getinventoryVisible());
-
-        System.out.println(ItemRegistry.getAll());
     }
 }

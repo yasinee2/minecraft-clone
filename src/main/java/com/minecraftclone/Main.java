@@ -9,7 +9,7 @@ import com.minecraftclone.player.PlayerCharacter;
 import com.minecraftclone.player.input.ActionInput;
 import com.minecraftclone.player.input.AnalogInput;
 import com.minecraftclone.player.input.KeyMapping;
-import com.minecraftclone.render.ClampedFlyByCamera;
+import com.minecraftclone.render.CustomCam;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
 import java.awt.Dimension;
@@ -58,7 +58,6 @@ public class Main extends SimpleApplication {
 
     @Override
     public void simpleInitApp() {
-        System.out.println(getContext().getClass().getName());
 
         initialTime = System.nanoTime();
         tickTime = 1f / TICKS_PER_SECOND;
@@ -78,7 +77,7 @@ public class Main extends SimpleApplication {
         flyCam.setEnabled(false);
         flyCam.unregisterInput();
 
-        flyCam = new ClampedFlyByCamera(cam);
+        flyCam = new CustomCam(cam);
         flyCam.registerWithInput(inputManager);
 
         // Enable mouse look (this also hides + locks cursor correctly)

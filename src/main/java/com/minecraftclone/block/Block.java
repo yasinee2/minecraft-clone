@@ -23,10 +23,6 @@ public class Block {
         this.bottom = texture;
     }
 
-    // =========================
-    // PROPERTIES
-    // =========================
-
     public boolean isSolid() {
         return solid;
     }

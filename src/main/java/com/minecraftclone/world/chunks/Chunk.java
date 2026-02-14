@@ -90,16 +90,25 @@ public class Chunk {
 
         Node collisionNode = new Node("CollisionNode");
 
-        //TODO: comment ts
-        for (Map.Entry<String, Mesh> e : meshes.entrySet()) {
-            Geometry g = new Geometry("chunk_" + e.getKey(), e.getValue());
-            g.setMaterial(BlockMaterialCache.get(e.getKey(), assetManager));
-            geometries.put(e.getKey(), g);
-            chunkNode.attachChild(g);
-            collisionNode.attachChild(g.clone());
+        //DOES: iterate over meshes hashmap & create and add geometries
+        for (Map.Entry<String, Mesh> meshEntry : meshes.entrySet()) {
+            //DOES: create geometry with chunk_<coords> as name and mesh hashmap value as mesh
+            var geometry = new Geometry("chunk_" + meshEntry.getKey(), meshEntry.getValue());
+
+            //DOES: set material of geometry by taking it out of BlockMaterialCashe
+            geometry.setMaterial(BlockMaterialCache.get(meshEntry.getKey(), assetManager));
+
+            //DOES: add geometry to geometries hashmap
+            geometries.put(meshEntry.getKey(), geometry);
+
+            //DOES: attatch geometry to chunkNode and collisionNode
+            chunkNode.attachChild(geometry);
+            collisionNode.attachChild(geometry.clone());
         }
 
+        //CASE: when chunk has geometry at collision node
         if (collisionNode.getQuantity() > 0) {
+            //DOES: create collision body
             CollisionShape shape = CollisionShapeFactory.createMeshShape(collisionNode);
             collisionBody = new RigidBodyControl(shape, 0f);
             chunkNode.addControl(collisionBody);

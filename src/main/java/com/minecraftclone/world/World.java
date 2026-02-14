@@ -80,11 +80,11 @@ public class World {
         rebuildNeighborsIfNeeded(chunkX, chunkY, chunkZ, localX, localY, localZ);
     }
 
-    /**Returns chunk at world coordinates
+    /**returns chunk at world coordinates
      * @param worldX
      * @param worldY
      * @param worldZ
-     * @return
+     * @return Chunk, null if doesn't exist
      */
     private Chunk getChunk(int worldX, int worldY, int worldZ) {
         int chunkX = Math.floorDiv(worldX, Chunk.SIZE);
@@ -94,7 +94,7 @@ public class World {
     }
 
     /**
-     * checks if block is bordering another chunk and rebuilds
+     * checks if position is bordering another chunk and rebuilds
      * @param chunkX
      * @param chunkY
      * @param chunkZ
@@ -111,6 +111,12 @@ public class World {
         if (localY == Chunk.SIZE - 1) rebuild(chunkX, chunkY + 1, chunkZ);
     }
 
+    /**
+     * rebuilds chunk if exists
+     * @param chunkX
+     * @param chunkY
+     * @param chunkZ
+     */
     private void rebuild(int chunkX, int chunkY, int chunkZ) {
         Chunk chunk = chunks.get(key(chunkX, chunkY, chunkZ));
         if (chunk != null) {
@@ -131,12 +137,17 @@ public class World {
         render.guiUpdate();
     }
 
+    /**
+     * checks if chunk is in hashmap (exists)
+     * @param pos
+     * @return
+     */
     public boolean hasChunk(ChunkPos pos) {
         return chunks.containsKey(key(pos.x, pos.y, pos.z));
     }
 
     /**
-     * adds chunk to hashMap
+     * adds chunk to hashmap
      * @param chunk
      */
     public void addChunk(Chunk chunk) {
