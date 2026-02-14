@@ -1,18 +1,19 @@
 package com.minecraftclone.util;
 
-import com.minecraftclone.item.Item;
-import com.minecraftclone.item.ItemType;
+//import com.minecraftclone.item.Item;
+//import com.minecraftclone.item.ItemType;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RegistryHelper {
 
+    //Info: Ich habe keine möglichkeit gefunden diese funktion so anzupassen, dass sie auch für eine Blockregistry funktionieren würde
+    /*
     public static void loadFromSection(Map<String, Object> section, Map<String, Item> target) {
         for (String key : section.keySet()) {
-            //INFO: For each String in items (each item) this code runs once
+
             Map<String, Object> itemData = asStringMap(section.get(key));
 
-            //DOES: creates an item object for each item in the yaml, with the data provided in the yaml
             Item item = new Item(
                 key,
                 ItemType.valueOf((String) itemData.get("type")),
@@ -22,9 +23,10 @@ public class RegistryHelper {
                 (Integer) itemData.get("baseDamage"),
                 (Integer) itemData.get("miningEfficiency")
             );
-            target.put(key, item); //DOES: puts the item into a hashmap to be used
+            target.put(key, item);
         }
     }
+    */
 
     public static Map<String, Object> asStringMap(Object object) {
         //DOES: Fix trust me basis

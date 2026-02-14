@@ -20,8 +20,6 @@ public class PlayerGUI {
     private Texture2D hotbarTexture, hotbarSelectorTexture, crosshairTexture, inventoryTexture, experienceBarEmptyTexture, heartContainerTexture;
     private Texture2D fullHeartTexture, halfHeartTexture, hungerContainerTexture, fullHungerTexture, halfHungerTexture;
     private Node hungerNode, heartNode, hotbarNode;
-    private boolean hotbarVisible = true;
-    private boolean inventoryVisible = false;
     private SimpleApplication app;
 
     public PlayerGUI(SimpleApplication app) throws IOException {
@@ -153,7 +151,7 @@ public class PlayerGUI {
         }
         app.getInputManager().setCursorVisible(visibility);
         app.getFlyByCamera().setEnabled(!visibility);
-        setHotbarVisibility(!visibility);
+        //setHotbarVisibility(!visibility);
     }
 
     public void setLife(int life) {
@@ -242,6 +240,5 @@ public class PlayerGUI {
         } else {
             hotbarNode.removeFromParent();
         }
-        hotbarVisible = visibility;
     }
 }
