@@ -3,5 +3,5 @@
     "tabWidth": 4,
     "useTabs": false,
     "endOfLine": "auto",
-    "prettier.trailingComma": "none"
+    "prettier.trailingComma": "es5"
 }

@@ -8,7 +8,7 @@ import com.jme3.util.BufferUtils;
 import com.minecraftclone.block.Block;
 import com.minecraftclone.block.MeshLibrary.BlockGeometry;
 import com.minecraftclone.block.MeshLibrary.Face;
-import com.minecraftclone.block.MeshLibrary.OcclusionFaceDirection;
+import com.minecraftclone.block.MeshLibrary.OcclusionFace;
 import com.minecraftclone.world.chunks.Chunk;
 import java.util.*;
 
@@ -80,7 +80,7 @@ public final class ChunkMeshBuilder {
      */
     private static boolean shouldRenderFace(Face face, Block[][][] blocks, int x, int y, int z) {
         // Faces with NONE direction are always rendered (internal faces like stair risers)
-        if (face.direction == OcclusionFaceDirection.NONE) {
+        if (face.direction == OcclusionFace.NONE) {
             return true;
         }
 
