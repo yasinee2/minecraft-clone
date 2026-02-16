@@ -2,6 +2,8 @@ package com.minecraftclone.gui;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
+import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Node;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
@@ -29,6 +31,8 @@ public class PlayerGUI {
     private List<Picture> hungerBars = new ArrayList<>();
     private List<Picture> hotbarList = new ArrayList<>();
     private List<Picture> inventoryList = new ArrayList<>();
+    private List<BitmapText> inventoryTextList = new ArrayList<>();
+    private List<BitmapText> hotbarTextList = new ArrayList<>();
 
     private TextureManager textureManager;
     private BitmapFont font;
@@ -147,6 +151,22 @@ public class PlayerGUI {
                     );
                     inventoryItemsNode.attachChild(slot);
                     inventoryList.add(slot);
+
+                    BitmapText text = new BitmapText(font);
+                    text.setColor(new ColorRGBA(255f, 255f, 255f, 1f));
+                    text.setText("1");
+                    text.setLocalTranslation(
+                        windowWidth / 2 - (inventory.getWidth() - 80 * scale) / 2 + 24 * scale + 18 * scale * i0 - text.getLineWidth() + 1,
+                        windowHeight / 2 +
+                            (inventory.getHeight() - 90 * scale) / 2 -
+                            100 * scale -
+                            3 * scale * 18 -
+                            4 * scale +
+                            text.getHeight(),
+                        0
+                    );
+                    inventoryItemsNode.attachChild(text);
+                    inventoryTextList.add(text);
                 } else {
                     Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
                     slot.setPosition(
