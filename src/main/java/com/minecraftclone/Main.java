@@ -2,6 +2,7 @@ package com.minecraftclone;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.block.Blocks;
@@ -57,8 +58,12 @@ public class Main extends SimpleApplication {
     }
 
     @Override
+    protected BitmapFont loadGuiFont() {
+        return this.assetManager.loadFont("font/regular.fnt");
+    }
+
+    @Override
     public void simpleInitApp() {
-        guiFont = assetManager.loadFont("font/regular.fnt");
         initialTime = System.nanoTime();
         tickTime = 1f / TICKS_PER_SECOND;
 
@@ -195,5 +200,9 @@ public class Main extends SimpleApplication {
             inputManager.setCursorVisible(false);
             initialized = true;
         }
+    }
+
+    public BitmapFont getguiFont() {
+        return guiFont;
     }
 }

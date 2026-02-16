@@ -1,6 +1,7 @@
 package com.minecraftclone.gui;
 
 import com.jme3.asset.AssetManager;
+import com.jme3.font.BitmapFont;
 import com.jme3.scene.Node;
 import com.jme3.texture.Texture2D;
 import com.jme3.ui.Picture;
@@ -30,18 +31,22 @@ public class PlayerGUI {
     private List<Picture> inventoryList = new ArrayList<>();
 
     private TextureManager textureManager;
+    private BitmapFont font;
 
     public PlayerGUI(Main game) throws IOException {
+        //Does: Gets the window resolution
         this.windowWidth = game.getViewPort().getCamera().getWidth();
         this.windowHeight = game.getViewPort().getCamera().getHeight();
         this.game = game;
 
-        //DOES: Autoscale
-        int scaleWidth = Math.round(windowWidth / 480);
-        int scaleHeight = Math.round(windowHeight / 270);
+        //DOES: Autoscale for HUD elements based on screen resolution
+        int scaleWidth = Math.round(windowWidth / 480f);
+        int scaleHeight = Math.round(windowHeight / 270f);
         scale = (scaleWidth + scaleHeight) / 2;
 
+        //Does: Gets some things from Main and initialize the Texturemanager
         guiNode = game.getGuiNode();
+        font = game.getguiFont();
         assetManager = game.getAssetManager();
         textureManager = new TextureManager(assetManager, scale);
 
@@ -53,13 +58,14 @@ public class PlayerGUI {
         hungerNode = new Node("hungerNode");
         heartNode = new Node("heartNode");
 
+        //Does: Attaches the Nodes to the guiNode so they are visible
         guiNode.attachChild(hotbarNode);
         hotbarNode.attachChild(containerNode);
         hotbarNode.attachChild(hungerNode);
         hotbarNode.attachChild(heartNode);
         inventoryItemsNode.attachChild(inventoryNode);
 
-        //Does: Create Textures
+        //Does: Create Textures variables for HUD elements
         hotbarTexture = TextureManager.getGuiTexture("sprites/hud/hotbar"); //182x22
         hotbarSelectorTexture = TextureManager.getGuiTexture("sprites/hud/hotbar_selection"); //24x23
         crosshairTexture = TextureManager.getGuiTexture("sprites/hud/crosshair"); //15x15
@@ -73,7 +79,7 @@ public class PlayerGUI {
         halfHungerTexture = TextureManager.getGuiTexture("sprites/hud/food_half"); //9x9
         blankTexture = TextureManager.getGuiTexture("blank"); //1x1
 
-        //Does: Create different Elements of the HUD
+        //Does: Create different Elements of the HUD as Picture objects
         inventory = textureManager.createPicture(inventoryTexture, "inventory");
         hotbar = textureManager.createPicture(hotbarTexture, "hotbar");
         hotbarSelector = textureManager.createPicture(hotbarSelectorTexture, "hotbarSelector");
@@ -90,14 +96,14 @@ public class PlayerGUI {
         experienceBarEmpty.setPosition(windowWidth / 2 - ((experienceBarEmpty.getWidth() / 2)), hotbar.getHeight() + scale * 2);
         crosshair.setPosition(windowWidth / 2 - ((crosshair.getWidth() / 2)), windowHeight / 2 - ((crosshair.getHeight() / 2)));
 
-        //Does: Attach HUD Elements to GUI Node
+        //Does: Attach HUD Elements to GUI Node, so they are visible
         inventoryNode.attachChild(inventory);
         hotbarNode.attachChild(hotbar);
         hotbarNode.attachChild(hotbarSelector);
         hotbarNode.attachChild(experienceBarEmpty);
         hotbarNode.attachChild(crosshair);
 
-        //Does: Create hearts and hungerbars and their containers
+        //Does: Create hearts and hungerbars and their containers, set their position and attach them to their Nodes
         for (int i = 0; i < 10; i++) {
             heartContainer = textureManager.createPicture(heartContainerTexture, "heartContainer");
             heartContainer.setPosition(
@@ -130,10 +136,11 @@ public class PlayerGUI {
             hungerNode.attachChild(hunger);
         }
 
+        //Does: Generate invisible Pictures on top of inventory slots to be replaced with visible items
         for (int i = 0; i < 4; i++) {
             for (int i0 = 0; i0 < 9; i0++) {
                 if (i == 0) {
-                    Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale);
+                    Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
                     slot.setPosition(
                         windowWidth / 2 - (inventory.getWidth() - 80 * scale) / 2 + 8 * scale + 18 * scale * i0,
                         windowHeight / 2 + (inventory.getHeight() - 90 * scale) / 2 - 100 * scale - 3 * scale * 18 - 4 * scale
@@ -152,7 +159,7 @@ public class PlayerGUI {
             }
         }
 
-        //Does: Creates invisible textures the size of an item in the hotbar to be replaced
+        //Does: Generate invisible Pictures on top of hotbar slots to be replaced with visible items
         for (int i = 0; i < 9; i++) {
             Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
             slot.setPosition(windowWidth / 2 - hotbar.getWidth() / 2 + 3 * scale + 20 * scale * i, 3 * scale);
@@ -165,7 +172,7 @@ public class PlayerGUI {
     }
 
     public void changeHotbarSlot(int slot) {
-        //Does: Change the Hotbarslot based of the int slot
+        //Does: Change the Hotbarslot based of the given int slot
         if (slot <= 9 && slot >= 1) {
             selectedSlot = slot;
             hotbarSelector.setPosition(
@@ -187,11 +194,10 @@ public class PlayerGUI {
         }
         game.getInputManager().setCursorVisible(visibility);
         game.getFlyByCamera().setEnabled(!visibility);
-        //setHotbarVisibility(!visibility);
     }
 
     public void setLife(int life) {
-        //Does: Changes the heart textures in order to display the players life
+        //Does: Changes the heart textures in order to display the players life odd numbers make half hearts
         int fullHearts = life / 2;
         boolean hasHalfHeart = (life % 2 == 1);
 
@@ -209,7 +215,7 @@ public class PlayerGUI {
     }
 
     public void setHunger(int hunger) {
-        //Does: Changes the hunger textures in order to display the players hunger
+        //Does: Changes the hunger textures in order to display the players hunger odd numbers make half hunger bars
         int fullHunger = hunger / 2;
         boolean hasHalfHunger = (hunger % 2 == 1);
 
@@ -227,6 +233,8 @@ public class PlayerGUI {
     }
 
     private void updateHotbarDisplayItem() {
+        //Info: The items displayed in the Hotbar are copied from those in the inventoryList, because the inventory also has a Hotbar
+        //Does: Checks for differences between the inventory hotbar and real hotbar and if they are not the same displays the item in the inventory hotbar in the hotbar
         for (int i = 0; i < 9; i++) {
             if (hotbarList.get(i).getMaterial() != inventoryList.get(i).getMaterial()) {
                 Picture slot = hotbarList.get(i);
@@ -236,6 +244,7 @@ public class PlayerGUI {
     }
 
     public void inventoryDisplayItem(int row, int column, ItemInstance item) {
+        //Does: Shows an item in the inventory row 1 is the hotbar
         if (row >= 1 && row <= 4) {
             if (column >= 1 && column <= 9) {
                 Picture slot = inventoryList.get(column - 1 + 9 * (row - 1));
