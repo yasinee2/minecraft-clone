@@ -59,7 +59,7 @@ public class Main extends SimpleApplication {
 
     @Override
     protected BitmapFont loadGuiFont() {
-        return this.assetManager.loadFont("font/regular.fnt");
+        return this.assetManager.loadFont("font/24px-s.fnt");
     }
 
     @Override

@@ -140,38 +140,44 @@ public class PlayerGUI {
             hungerNode.attachChild(hunger);
         }
 
-        //Does: Generate invisible Pictures on top of inventory slots to be replaced with visible items
+        //Does: Generate invisible Pictures and invisible text on top of inventory slots to be replaced with visible items
         for (int i = 0; i < 4; i++) {
             for (int i0 = 0; i0 < 9; i0++) {
                 if (i == 0) {
-                    Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
-                    slot.setPosition(
-                        windowWidth / 2 - (inventory.getWidth() - 80 * scale) / 2 + 8 * scale + 18 * scale * i0,
-                        windowHeight / 2 + (inventory.getHeight() - 90 * scale) / 2 - 100 * scale - 3 * scale * 18 - 4 * scale
-                    );
-                    inventoryItemsNode.attachChild(slot);
-                    inventoryList.add(slot);
-
                     BitmapText text = new BitmapText(font);
-                    text.setColor(new ColorRGBA(255f, 255f, 255f, 1f));
-                    text.setText("1");
+                    text.setText("12");
+                    text.setColor(new ColorRGBA(1f, 1f, 1f, 1f));
                     text.setLocalTranslation(
-                        windowWidth / 2 - (inventory.getWidth() - 80 * scale) / 2 + 24 * scale + 18 * scale * i0 - text.getLineWidth() + 1,
-                        windowHeight / 2 +
-                            (inventory.getHeight() - 90 * scale) / 2 -
-                            100 * scale -
-                            3 * scale * 18 -
-                            4 * scale +
-                            text.getHeight(),
+                        (windowWidth - inventory.getWidth()) / 2 + scale * (64 + 18 * i0) - text.getLineWidth(),
+                        (windowHeight + inventory.getHeight()) / 2 - 203 * scale + text.getHeight(),
                         0
                     );
                     inventoryItemsNode.attachChild(text);
                     inventoryTextList.add(text);
-                } else {
+
                     Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
                     slot.setPosition(
-                        windowWidth / 2 - (inventory.getWidth() - 80 * scale) / 2 + 8 * scale + 18 * scale * i0,
-                        windowHeight / 2 + (inventory.getHeight() - 90 * scale) / 2 - 100 * scale - (i - 1) * scale * 18
+                        (windowWidth - inventory.getWidth()) / 2 + scale * (48 + 18 * i0),
+                        (windowHeight + inventory.getHeight()) / 2 - 203 * scale
+                    );
+                    inventoryItemsNode.attachChild(slot);
+                    inventoryList.add(slot);
+                } else {
+                    BitmapText text = new BitmapText(font);
+                    text.setText("AB");
+                    text.setColor(new ColorRGBA(1f, 1f, 1f, 1f));
+                    text.setLocalTranslation(
+                        (windowWidth - inventory.getWidth()) / 2 + scale * (64 + 18 * i0) - text.getLineWidth(),
+                        (windowHeight + inventory.getHeight()) / 2 - scale * (127 + 18 * i) + text.getHeight(),
+                        0
+                    );
+                    inventoryItemsNode.attachChild(text);
+                    inventoryTextList.add(text);
+
+                    Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
+                    slot.setPosition(
+                        (windowWidth - inventory.getWidth()) / 2 + scale * (48 + 18 * i0),
+                        (windowHeight + inventory.getHeight()) / 2 - scale * (127 + 18 * i)
                     );
                     inventoryItemsNode.attachChild(slot);
                     inventoryList.add(slot);
@@ -181,8 +187,19 @@ public class PlayerGUI {
 
         //Does: Generate invisible Pictures on top of hotbar slots to be replaced with visible items
         for (int i = 0; i < 9; i++) {
+            BitmapText text = new BitmapText(font);
+            text.setText("09");
+            text.setColor(new ColorRGBA(1f, 1f, 1f, 1f));
+            text.setLocalTranslation(
+                (windowWidth - hotbar.getWidth()) / 2 + scale * (19 + 20 * i) - text.getLineWidth(),
+                3 * scale + text.getHeight(),
+                0
+            );
+            hotbarNode.attachChild(text);
+            hotbarTextList.add(text);
+
             Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
-            slot.setPosition(windowWidth / 2 - hotbar.getWidth() / 2 + 3 * scale + 20 * scale * i, 3 * scale);
+            slot.setPosition((windowWidth - hotbar.getWidth()) / 2 + scale * (3 + 20 * i), 3 * scale);
             hotbarNode.attachChild(slot);
             hotbarList.add(slot);
         }
