@@ -28,8 +28,8 @@ public class ItemRegistry {
             Item item = new Item(
                 key,
                 ItemType.valueOf((String) itemData.get("type")),
-                (Integer) itemData.get("maxStack"),
                 (String) itemData.get("name"),
+                (Integer) itemData.get("maxStack"),
                 (Integer) itemData.get("baseDurability"),
                 (Integer) itemData.get("baseDamage"),
                 (Integer) itemData.get("miningEfficiency")

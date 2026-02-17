@@ -2,24 +2,32 @@ package com.minecraftclone.item;
 
 public class Item {
 
-    //INFO: Simple item class with getters
-
     private String id;
     private ItemType type;
-    private int maxStack;
     private String name;
-    private int baseDamage;
-    private int durability;
-    private int miningEfficiency;
 
-    public Item(String id, ItemType type, int maxStack, String name, int baseDamage, int durability, int miningEfficiency) {
+    private int maxStack;
+    private int baseDamage;
+    private int baseDurability;
+    private int baseMiningEfficiency;
+
+    public Item(
+        String id,
+        ItemType type,
+        String name,
+        Integer maxStack,
+        Integer baseDamage,
+        Integer baseDurability,
+        Integer baseMiningEfficiency
+    ) {
         this.id = id;
         this.type = type;
-        this.maxStack = maxStack;
         this.name = name;
-        this.baseDamage = baseDamage;
-        this.durability = durability;
-        this.miningEfficiency = miningEfficiency;
+
+        this.maxStack = maxStack != null ? maxStack : 64;
+        this.baseDurability = baseDurability != null ? baseDurability : -1; //?: If value is 0 something breaks if value is -1 it does not have durability
+        this.baseDamage = baseDamage != null ? baseDamage : 1;
+        this.baseMiningEfficiency = baseMiningEfficiency != null ? baseMiningEfficiency : 1;
     }
 
     public String getId() {
@@ -30,23 +38,23 @@ public class Item {
         return type;
     }
 
-    public int getMaxStack() {
-        return maxStack;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public int getMaxStack() {
+        return maxStack;
     }
 
     public int getBaseDamage() {
         return baseDamage;
     }
 
-    public int getDurability() {
-        return durability;
+    public int getBaseDurability() {
+        return baseDurability;
     }
 
-    public int getMiningEfficiency() {
-        return miningEfficiency;
+    public int getBaseMiningEfficiency() {
+        return baseMiningEfficiency;
     }
 }

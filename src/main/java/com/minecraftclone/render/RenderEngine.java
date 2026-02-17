@@ -22,7 +22,7 @@ public class RenderEngine {
             e.printStackTrace();
         }
 
-        gui.inventoryDisplayItem(1, 9, new ItemInstance(ItemRegistry.get("iron_sword")));
+        gui.inventoryDisplayItem(1, 9, new ItemInstance(ItemRegistry.get("golden_apple")));
         gui.inventoryDisplayItem(4, 9, new ItemInstance(ItemRegistry.get("iron_sword")));
     }
 
