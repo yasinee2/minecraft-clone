@@ -9,7 +9,7 @@ public class PlayerGUI {
     private int windowWidth, windowHeight;
     private int scale; //USAGE: only even numbers
 
-    private HotbarGUI hotbarGUI;
+    private HUD hud;
     private InventoryGUI inventoryGUI;
 
     public PlayerGUI(Main main) throws IOException {
@@ -23,24 +23,24 @@ public class PlayerGUI {
         scale = (scaleWidth + scaleHeight) / 2;
 
         inventoryGUI = new InventoryGUI(main, scale);
-        hotbarGUI = new HotbarGUI(main, scale);
+        hud = new HUD(main, scale);
     }
 
     public void inventoryDisplayItem(int row, int column, ItemInstance item) {
         inventoryGUI.displayItem(row, column, item);
-        hotbarGUI.updateHotbarDisplayItem(inventoryGUI.getInventoryList(), inventoryGUI.getInventoryTextList());
+        hud.updateHotbarDisplayItem(inventoryGUI.getInventoryList(), inventoryGUI.getInventoryTextList());
     }
 
     public void setLife(int life) {
-        hotbarGUI.setLife(life);
+        hud.setLife(life);
     }
 
     public void setHunger(int hunger) {
-        hotbarGUI.setLife(hunger);
+        hud.setLife(hunger);
     }
 
     public void changeHotbarSelectedSlot(int slot) {
-        hotbarGUI.changeHotbarSelectedSlot(slot);
+        hud.changeHotbarSelectedSlot(slot);
     }
 
     public void setInventoryVisibility(boolean visible) {

@@ -12,7 +12,7 @@ import com.minecraftclone.util.TextureManager;
 import java.util.ArrayList;
 import java.util.List;
 
-class HotbarGUI {
+class HUD {
 
     private AssetManager asset;
     private Picture hotbar, experienceBarEmpty, hotbarSelector, crosshair;
@@ -30,7 +30,7 @@ class HotbarGUI {
 
     //private int selectedSlot;
 
-    HotbarGUI(Main main, int scale) {
+    HUD(Main main, int scale) {
         Node guiNode = main.getGuiNode();
         BitmapFont font = main.getguiFont();
         this.asset = main.getAssetManager();
