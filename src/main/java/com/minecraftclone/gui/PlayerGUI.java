@@ -4,24 +4,20 @@ import com.minecraftclone.Main;
 import com.minecraftclone.item.ItemInstance;
 import java.io.IOException;
 
-//Todo: Make text scalable and iprove scaling
+//Todo: Make text scalable and improve scaling
 public class PlayerGUI {
-
-    private int windowWidth, windowHeight;
-    private int scale; //USAGE: only even numbers
 
     private HUD hud;
     private InventoryGUI inventoryGUI;
 
     public PlayerGUI(Main main) throws IOException {
         //Does: Gets the window resolution
-        this.windowWidth = main.getCamera().getWidth();
-        this.windowHeight = main.getCamera().getHeight();
+        int windowWidth = main.getCamera().getWidth();
+        int windowHeight = main.getCamera().getHeight();
 
         //DOES: Autoscale for HUD elements based on screen resolution
-        int scaleWidth = Math.round(windowWidth / 480f);
-        int scaleHeight = Math.round(windowHeight / 270f);
-        scale = (scaleWidth + scaleHeight) / 2;
+        int scale = Math.min(windowWidth / 480, windowHeight / 270);
+        scale = Math.max(1, scale);
 
         inventoryGUI = new InventoryGUI(main, scale);
         hud = new HUD(main, scale);
