@@ -12,10 +12,18 @@ public class Item {
     private int durability;
     private int miningEfficiency;
 
-    public Item(String id, ItemType type, int maxStack, String name, int baseDamage, int durability, int miningEfficiency) {
+    public Item(
+        String id,
+        ItemType type,
+        int stackSize,
+        String name,
+        int baseDamage,
+        int durability,
+        int miningEfficiency
+    ) {
         this.id = id;
         this.type = type;
-        this.maxStack = maxStack;
+        this.maxStack = stackSize;
         this.name = name;
         this.baseDamage = baseDamage;
         this.durability = durability;

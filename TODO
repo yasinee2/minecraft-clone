@@ -11,10 +11,10 @@ not binding besides prio 0, just suggestions
 [[todo list]]
 
 [both] {2} add proper comments
-[filp] {1} add block selection 
-[filp] {1} comment & understand MeshLibrary (oh god) 
-[filp] {1} unload chunks 
-[filp] {2} only create meshes for chunks around Player (simulation distance) 
+[filp] {1} add block selection
+[filp] {1} improve checking for visible blocks (across chunk borders, etc.)
+[filp] {1} unload chunks
+[filp] {2} only create meshes for chunks around Player (simulation distance)
 [filp] {2} separate rendering (visual blocks, chunk meshes, RenderEngine class) from blocks in memory (Chunk class)
 [filp] {3} add non-solid blocks
 [filp] {3} dont render invisible chunks (data more separate from rendering) 

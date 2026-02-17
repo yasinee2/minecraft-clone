@@ -89,7 +89,10 @@ public class PlayerGUI {
         experienceBarEmpty.setTexture(assetManager, experienceBarEmptyTexture, true);
         experienceBarEmpty.setWidth(182 * scale);
         experienceBarEmpty.setHeight(5 * scale);
-        experienceBarEmpty.setPosition(windowWidth / 2 - ((experienceBarEmpty.getWidth() / 2)), hotbar.getHeight() + scale * 2);
+        experienceBarEmpty.setPosition(
+            windowWidth / 2 - ((experienceBarEmpty.getWidth() / 2)),
+            hotbar.getHeight() + scale * 2
+        );
         hotbarNode.attachChild(experienceBarEmpty);
 
         //Does: Create Crosshair and inventory
@@ -97,7 +100,10 @@ public class PlayerGUI {
         crosshair.setTexture(assetManager, crosshairTexture, true);
         crosshair.setWidth(15 * scale);
         crosshair.setHeight(15 * scale);
-        crosshair.setPosition(windowWidth / 2 - ((crosshair.getWidth() / 2)), windowHeight / 2 - ((crosshair.getHeight() / 2)));
+        crosshair.setPosition(
+            windowWidth / 2 - ((crosshair.getWidth() / 2)),
+            windowHeight / 2 - ((crosshair.getHeight() / 2))
+        );
         hotbarNode.attachChild(crosshair);
 
         //Does: Create Containers for Life and Hunger
