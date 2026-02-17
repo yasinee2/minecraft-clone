@@ -37,7 +37,7 @@ public class PlayerGUI {
     }
 
     public void setHunger(int hunger) {
-        hud.setLife(hunger);
+        hud.setHunger(hunger);
     }
 
     public void changeHotbarSelectedSlot(int slot) {

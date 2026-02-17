@@ -65,17 +65,6 @@ public class InventoryGUI {
         for (int i = 0; i < 4; i++) {
             for (int i0 = 0; i0 < 9; i0++) {
                 if (i == 0) {
-                    BitmapText text = new BitmapText(font);
-                    text.setLocalTranslation(
-                        (windowWidth - inventory.getWidth()) / 2 + scale * (65 + 18 * i0),
-                        (windowHeight + inventory.getHeight()) / 2 - 204 * scale + text.getHeight(),
-                        0
-                    );
-
-                    inventoryItemsNode.attachChild(text);
-                    inventoryTextList.add(text);
-                    inventoryTextAnchorList.add(text.getLocalTranslation().clone());
-
                     Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
                     slot.setPosition(
                         (windowWidth - inventory.getWidth()) / 2 + scale * (48 + 18 * i0),
@@ -83,18 +72,17 @@ public class InventoryGUI {
                     );
                     inventoryItemsNode.attachChild(slot);
                     inventoryList.add(slot);
-                } else {
+
                     BitmapText text = new BitmapText(font);
                     text.setLocalTranslation(
                         (windowWidth - inventory.getWidth()) / 2 + scale * (65 + 18 * i0),
-                        (windowHeight + inventory.getHeight()) / 2 - scale * (128 + 18 * i) + text.getHeight(),
+                        (windowHeight + inventory.getHeight()) / 2 - 204 * scale + text.getHeight(),
                         0
                     );
-
                     inventoryItemsNode.attachChild(text);
                     inventoryTextList.add(text);
                     inventoryTextAnchorList.add(text.getLocalTranslation().clone());
-
+                } else {
                     Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
                     slot.setPosition(
                         (windowWidth - inventory.getWidth()) / 2 + scale * (48 + 18 * i0),
@@ -102,6 +90,16 @@ public class InventoryGUI {
                     );
                     inventoryItemsNode.attachChild(slot);
                     inventoryList.add(slot);
+
+                    BitmapText text = new BitmapText(font);
+                    text.setLocalTranslation(
+                        (windowWidth - inventory.getWidth()) / 2 + scale * (65 + 18 * i0),
+                        (windowHeight + inventory.getHeight()) / 2 - scale * (128 + 18 * i) + text.getHeight(),
+                        0
+                    );
+                    inventoryItemsNode.attachChild(text);
+                    inventoryTextList.add(text);
+                    inventoryTextAnchorList.add(text.getLocalTranslation().clone());
                 }
             }
         }

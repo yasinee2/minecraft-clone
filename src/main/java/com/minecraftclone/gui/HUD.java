@@ -111,17 +111,17 @@ class HUD {
             hungerNode.attachChild(hunger);
         }
         for (int i = 0; i < 9; i++) {
+            Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
+            slot.setPosition((halfWidth - (hotbar.getWidth()) / 2) + scale * (3 + 20 * i), 3 * scale);
+            hotbarNode.attachChild(slot);
+            hotbarList.add(slot);
+
             BitmapText text = new BitmapText(font);
             text.setLocalTranslation((halfWidth - (hotbar.getWidth()) / 2) + scale * (20 + 20 * i), 2 * scale + text.getHeight(), 0);
 
             hotbarNode.attachChild(text);
             hotbarTextList.add(text);
             hotbarTextAnchorList.add(text.getLocalTranslation().clone());
-
-            Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
-            slot.setPosition((halfWidth - (hotbar.getWidth()) / 2) + scale * (3 + 20 * i), 3 * scale);
-            hotbarNode.attachChild(slot);
-            hotbarList.add(slot);
         }
     }
 

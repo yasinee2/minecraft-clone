@@ -29,8 +29,8 @@ public class Main extends SimpleApplication {
     //DOES: settings
     public static AppSettings settings;
     public static boolean fullscreen = false;
-    public static int screen_width = 1280;
-    public static int screen_height = 720;
+    public static int screen_width = 1920;
+    public static int screen_height = 1080;
     private boolean initialized = false;
 
     //DOES: tps stuff
@@ -204,5 +204,9 @@ public class Main extends SimpleApplication {
 
     public BitmapFont getguiFont() {
         return guiFont;
+    }
+
+    public void setPaused(boolean pause) {
+        paused = pause;
     }
 }
