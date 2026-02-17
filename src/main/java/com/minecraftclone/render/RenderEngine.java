@@ -21,6 +21,9 @@ public class RenderEngine {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        gui.inventoryDisplayItem(1, 9, new ItemInstance(ItemRegistry.get("iron_sword")));
+        gui.inventoryDisplayItem(4, 9, new ItemInstance(ItemRegistry.get("iron_sword")));
     }
 
     public void guiUpdate() {
@@ -28,8 +31,5 @@ public class RenderEngine {
         gui.setHunger(player.getHunger());
         gui.changeHotbarSlot(player.getHotbarSlot());
         gui.setInventoryVisibility(player.getinventoryVisible());
-
-        gui.inventoryDisplayItem(2, 4, new ItemInstance(ItemRegistry.get("diamond_sword"))); //Info: Row 2 first inventory row
-        gui.inventoryDisplayItem(1, 3, new ItemInstance(ItemRegistry.get("iron_sword"))); //Info: Row 1 Hotbar
     }
 }

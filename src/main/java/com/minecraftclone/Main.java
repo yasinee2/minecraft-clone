@@ -2,6 +2,7 @@ package com.minecraftclone;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
+import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
 import com.minecraftclone.block.Blocks;
@@ -28,8 +29,8 @@ public class Main extends SimpleApplication {
     //DOES: settings
     public static AppSettings settings;
     public static boolean fullscreen = false;
-    public static int screen_width = 1280;
-    public static int screen_height = 720;
+    public static int screen_width = 1920;
+    public static int screen_height = 1080;
     private boolean initialized = false;
 
     //DOES: tps stuff
@@ -57,15 +58,19 @@ public class Main extends SimpleApplication {
     }
 
     @Override
-    public void simpleInitApp() {
+    protected BitmapFont loadGuiFont() {
+        return this.assetManager.loadFont("font/32px-s.fnt");
+    }
 
+    @Override
+    public void simpleInitApp() {
         initialTime = System.nanoTime();
         tickTime = 1f / TICKS_PER_SECOND;
 
         //DOES: render tps on screen
         tpsText = new BitmapText(guiFont);
         guiNode.attachChild(tpsText);
-        tpsText.setLocalTranslation(10, settings.getHeight() - 20, 0);
+        tpsText.setLocalTranslation(0, cam.getHeight(), 0);
 
         //NOTE: physics object is bulletAppState
         var bulletAppState = new BulletAppState();
@@ -195,5 +200,9 @@ public class Main extends SimpleApplication {
             inputManager.setCursorVisible(false);
             initialized = true;
         }
+    }
+
+    public BitmapFont getguiFont() {
+        return guiFont;
     }
 }
