@@ -28,15 +28,13 @@ public class InventoryGUI {
     private Texture2D inventoryTexture, blankTexture;
     private Picture inventory;
 
-    private int scale;
-    private int halfWidth, halfHeight, halfInventoryWidth, halfInventoryHeight, windowWidth, windowHeight;
+    private int halfWidth, halfHeight, windowWidth, windowHeight;
 
     private List<Picture> inventoryList = new ArrayList<>();
     private List<BitmapText> inventoryTextList = new ArrayList<>();
     private List<Vector3f> inventoryTextAnchorList = new ArrayList<>();
 
     InventoryGUI(Main main, int scale) {
-        this.scale = scale;
         this.guiNode = main.getGuiNode();
         this.asset = main.getAssetManager();
         font = main.getguiFont();
@@ -59,14 +57,11 @@ public class InventoryGUI {
         inventoryTexture = TextureManager.getGuiTexture("container/inventory"); //256x256 (176x166) //Info: For some reason the inventory texture file is larger than it needs to be
         blankTexture = TextureManager.getGuiTexture("blank"); //1x1
 
-        halfInventoryWidth = inventoryTexture.getImage().getWidth() / 2;
-        halfInventoryHeight = inventoryTexture.getImage().getHeight() / 2;
-
         inventory = textureManager.createPicture(inventoryTexture, "inventory");
         inventory.setPosition(halfWidth - (inventory.getWidth() / 2) + 40 * scale, halfHeight - (inventory.getHeight() / 2) - 45 * scale);
         inventoryNode.attachChild(inventory);
 
-        //TODO: Remove magic Numbers
+        //TODO: Clean up magic Numbers
         for (int i = 0; i < 4; i++) {
             for (int i0 = 0; i0 < 9; i0++) {
                 if (i == 0) {

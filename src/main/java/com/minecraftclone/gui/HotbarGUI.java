@@ -14,28 +14,26 @@ import java.util.List;
 
 class HotbarGUI {
 
-    private Node guiNode;
-    private BitmapFont font;
     private AssetManager asset;
     private Picture hotbar, experienceBarEmpty, hotbarSelector, crosshair;
     private Node hotbarNode, containerNode, hungerNode, heartNode;
 
+    private int scale, halfWidth, halfHeight;
+
     private List<Picture> hearts = new ArrayList<>(),
         hungerBars = new ArrayList<>(),
         hotbarList = new ArrayList<>();
-
     private List<BitmapText> hotbarTextList = new ArrayList<>();
     private List<Vector3f> hotbarTextAnchorList = new ArrayList<>();
 
     private Texture2D fullHeartTexture, halfHeartTexture, fullHungerTexture, halfHungerTexture, blankTexture;
-    private int selectedSlot;
 
-    private int scale, halfWidth, halfHeight;
+    //private int selectedSlot;
 
     HotbarGUI(Main main, int scale) {
-        guiNode = main.getGuiNode();
-        font = main.getguiFont();
-        asset = main.getAssetManager();
+        Node guiNode = main.getGuiNode();
+        BitmapFont font = main.getguiFont();
+        this.asset = main.getAssetManager();
         this.scale = scale;
 
         halfWidth = main.getCamera().getWidth() / 2;
@@ -166,7 +164,7 @@ class HotbarGUI {
     protected void changeHotbarSelectedSlot(int slot) {
         //Does: Change the Hotbarslot based of the given int slot
         if (slot <= 9 && slot >= 1) {
-            selectedSlot = slot;
+            //selectedSlot = slot;
             hotbarSelector.setPosition(
                 halfWidth -
                     ((hotbar.getWidth() / 2) + 1 * scale) -
