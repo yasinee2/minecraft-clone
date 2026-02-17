@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class World {
 
-    private static final int RENDER_DISTANCE = 30;
+    private static final int RENDER_DISTANCE = 10;
     private final SimpleApplication app;
     private final PlayerCharacter playerCharacter;
     private final BulletAppState bulletAppState;

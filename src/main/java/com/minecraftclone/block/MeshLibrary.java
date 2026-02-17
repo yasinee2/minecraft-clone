@@ -76,7 +76,7 @@ public class MeshLibrary {
         }
     }
 
-    //DOES: Standard uv coordinates for a full face
+    //DOES: standard uv coordinates for a full face
     private static final Vector2f[] STANDARD_UVS = new Vector2f[] {
         new Vector2f(0, 0),
         new Vector2f(1, 0),
