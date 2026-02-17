@@ -71,7 +71,7 @@ public class World {
         int localY = Math.floorMod(worldY, Chunk.SIZE);
         int localZ = Math.floorMod(worldZ, Chunk.SIZE);
 
-        //TODO: figure out what ts is
+        //DOES: get chunk from map, create & attatch to root node if doesn't exist
         Chunk chunk = chunks.computeIfAbsent(key(chunkX, chunkY, chunkZ), k -> {
             Chunk c = new Chunk(chunkX, chunkY, chunkZ, app.getAssetManager());
             app.getRootNode().attachChild(c.getNode());

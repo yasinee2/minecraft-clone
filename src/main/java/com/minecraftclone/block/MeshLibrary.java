@@ -19,13 +19,17 @@ public class MeshLibrary {
         public final Vector3f[] vertices; //IS: 4 vertices in counter clockwise order
         public final Vector3f normal;
 
-        public final Vector2f[] uvs; //IS: 4 uv coordinates
-        //NOTE: a uv is a coordinate-based way to say how a texture / 2d image is pinned to the 3d object
-        //NOTE: u is horizontal, v is vertical, values are from 0 to 1
+        //IS: 4 uv coordinates (for each vertex)
+        //INFO: a uv is a coordinate-based way to say how a texture / 2d image is pinned to the 3d object
+        //INFO: u is horizontal, v is vertical, values are from 0 to 1
         //NOTE: ex. texture on the bottom right corner would be u = 0.5, v = 0, u2 = 1, v2 = 0.5
+        public final Vector2f[] uvs;
 
-        public final String textureKey; //NOTE: ex. "top", "bottom", "side"
-        public final OcclusionFace direction; //IS: Which direction this face is facing
+        //NOTE: ex. "top", "bottom", "side"
+        public final String textureKey;
+
+        //IS: Which direction this face is facing
+        public final OcclusionFace direction;
 
         public Face(Vector3f[] vertices, Vector3f normal, Vector2f[] uvs, String textureKey, OcclusionFace direction) {
             this.vertices = vertices;
@@ -40,7 +44,7 @@ public class MeshLibrary {
      * enum for face directions to check occlusion
      */
     public enum OcclusionFace {
-        //NOTE: NONE for no occlusion
+        //INFO: NONE for no occlusion
         UP,
         DOWN,
         NORTH,

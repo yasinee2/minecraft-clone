@@ -17,7 +17,7 @@ public final class BlockMaterialCache {
      * @return
      */
     public static Material get(String texture, AssetManager assetManager) {
-        //NOTE: clearing the cache to be added
+        //NOTE: cache clearing to be added
 
         //DOES: take material for the texture and name out of map or create it if absent
         return CACHE.computeIfAbsent(texture, name -> {

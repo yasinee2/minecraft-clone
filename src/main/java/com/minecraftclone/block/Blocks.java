@@ -4,7 +4,7 @@ import com.minecraftclone.block.Block.BlockType;
 
 public class Blocks {
 
-    //INFO: only pngs, no data extensions
+    //INFO: only pngs, no file name extensions
 
     public static final Block STAIRS = new Block(false, "oak_planks", BlockType.STAIRS);
     public static final Block SLAB = new Block(false, "oak_planks", BlockType.SLAB);
