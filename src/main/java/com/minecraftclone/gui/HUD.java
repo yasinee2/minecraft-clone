@@ -190,7 +190,6 @@ class HUD {
             slot.setMaterial(invPic.get(i).getMaterial());
 
             text.setText(invText.get(i).getText());
-            System.out.println(fontScale);
             text.setLocalTranslation(anchor.x - text.getLineWidth() * fontScale, anchor.y + text.getHeight() * fontScale, anchor.z);
         }
     }

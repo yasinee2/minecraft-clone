@@ -17,7 +17,6 @@ public class PlayerGUI {
         //Does: Autoscale for GUI based on screen resolution
         int scale = Math.min(windowWidth / 480, windowHeight / 270);
         scale = Math.max(1, scale);
-        System.out.println(scale);
 
         //Does: Creates GUI elements
         inventoryGUI = new InventoryGUI(main, scale);
