@@ -17,6 +17,7 @@ import java.util.List;
 
 class InventoryGUI {
 
+    //TODO: Create Blockitems
     private FlyByCamera flyByCamera;
     private InputManager inputManager;
     private AssetManager asset;
