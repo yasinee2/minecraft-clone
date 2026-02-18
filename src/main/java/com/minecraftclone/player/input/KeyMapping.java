@@ -19,6 +19,7 @@ public class KeyMapping {
         this.keys = keys;
         this.actionListener = actionListener;
         this.analogListener = analogListener;
+        //keys.deleteMapping("SIMPLEAPP_CameraPos");
 
         bindKeyAction("FORWARD", KeyInput.KEY_W);
         bindKeyAction("BACKWARD", KeyInput.KEY_S);
@@ -48,6 +49,9 @@ public class KeyMapping {
         bindMouseAxis("MouseX-", MouseInput.AXIS_X, true);
         bindMouseAxis("MouseY+", MouseInput.AXIS_Y, false);
         bindMouseAxis("MouseY-", MouseInput.AXIS_Y, true);
+
+        bindMouseAxis("INVENTORY_SLOT_UP", MouseInput.AXIS_WHEEL, false);
+        bindMouseAxis("INVENTORY_SLOT_DOWN", MouseInput.AXIS_WHEEL, true);
     }
 
     private void bindKeyAction(String name, int keyCode) {
@@ -56,7 +60,7 @@ public class KeyMapping {
     }
 
     private void bindMouseAction(String name, int buttonCode) {
-        keys.addMapping(name, new MouseButtonTrigger(buttonCode)); // Use MouseButtonTrigger for mouse events
+        keys.addMapping(name, new MouseButtonTrigger(buttonCode)); //INFO: Use MouseButtonTrigger for mouse events
         keys.addListener(actionListener, name);
     }
 

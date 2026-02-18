@@ -29,7 +29,7 @@ class HUD {
 
     private Texture2D fullHeartTexture, halfHeartTexture, fullHungerTexture, halfHungerTexture, blankTexture;
 
-    //private int selectedSlot;
+    private int selectedSlot;
 
     HUD(Main main, int scale) {
         Node guiNode = main.getGuiNode();
@@ -184,7 +184,7 @@ class HUD {
     void changeHotbarSelectedSlot(int slot) {
         //Does: Change the Hotbarslot based of the given int slot
         if (slot <= 9 && slot >= 1) {
-            //selectedSlot = slot;
+            selectedSlot = slot;
             hotbarSelector.setPosition(
                 halfWidth -
                     ((hotbar.getWidth() / 2) + 1 * scale) -
@@ -215,5 +215,9 @@ class HUD {
             text.setText(invText.get(i).getText());
             text.setLocalTranslation(anchor.x - text.getLineWidth() * fontScale, anchor.y + text.getHeight() * fontScale, anchor.z);
         }
+    }
+
+    public int getSelectedSlot() {
+        return selectedSlot;
     }
 }

@@ -76,6 +76,9 @@ public class PlayerCharacter {
         if (input.isTapped(Action.HOTBAR_8)) hotbarSlot = 8;
         if (input.isTapped(Action.HOTBAR_9)) hotbarSlot = 9;
 
+        if (input.isTapped(Action.INVENTORY_SLOT_UP)) System.out.println("crack");
+        if (input.isTapped(Action.INVENTORY_SLOT_UP)) System.out.println("crack");
+
         if (input.isTapped(Action.TOGGLE_INVENTORY)) inventoryVisible = !inventoryVisible;
     }
 
