@@ -30,7 +30,6 @@ class InventoryGUI {
     private Picture inventory;
 
     private float fontScale;
-    private int halfWidth, halfHeight, windowWidth, windowHeight;
 
     private List<Picture> inventoryList = new ArrayList<>();
     private List<BitmapText> inventoryTextList = new ArrayList<>();
@@ -47,10 +46,10 @@ class InventoryGUI {
         TextureManager textureManager = new TextureManager(asset, scale);
 
         //DOES: Create Variables for easier positioning of the HUD elements
-        windowWidth = main.getCamera().getWidth();
-        windowHeight = main.getCamera().getHeight();
-        halfWidth = main.getViewPort().getCamera().getWidth() / 2;
-        halfHeight = main.getViewPort().getCamera().getHeight() / 2;
+        int windowWidth = main.getCamera().getWidth();
+        int windowHeight = main.getCamera().getHeight();
+        int halfWidth = main.getViewPort().getCamera().getWidth() / 2;
+        int halfHeight = main.getViewPort().getCamera().getHeight() / 2;
 
         //DOES: Create Nodes for layering and attach them
         inventoryItemsNode = new Node("inventoryItemsNode");
@@ -67,7 +66,7 @@ class InventoryGUI {
         inventory.setPosition(halfWidth - (inventory.getWidth() / 2) + 40 * scale, halfHeight - (inventory.getHeight() / 2) - 45 * scale);
         inventoryNode.attachChild(inventory);
 
-        //TODO: Clean up magic Numbers
+        //TODO: Clean up magic Numbers (maybe define as constants)
         //DOES: Create invisible Textures on top of the item slots in the inventory so they can be replaced by textures of different items
         for (int i = 0; i < 4; i++) {
             for (int i0 = 0; i0 < 9; i0++) {
@@ -141,7 +140,11 @@ class InventoryGUI {
                 BitmapText text = inventoryTextList.get(column - 1 + 9 * (row - 1));
                 Vector3f anchor = inventoryTextAnchorList.get(column - 1 + 9 * (row - 1));
 
-                if (!String.valueOf(item.getStackSize()).equals("1")) text.setText(String.valueOf(item.getStackSize()));
+                if (item.getStackSize() > 1) {
+                    text.setText(String.valueOf(item.getStackSize()));
+                } else {
+                    text.setText("");
+                }
                 text.setLocalTranslation(anchor.x - text.getLineWidth() * fontScale, anchor.y + text.getHeight() * fontScale, anchor.z);
                 slot.setTexture(asset, TextureManager.getItemTexture(item.getId()), true);
             }
