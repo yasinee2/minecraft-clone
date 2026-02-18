@@ -36,13 +36,14 @@ class HUD {
         BitmapFont font = main.getguiFont();
         this.asset = main.getAssetManager();
         this.scale = scale;
-        fontScale = scale / 4f;
+        this.fontScale = scale / 4f;
 
         halfWidth = main.getCamera().getWidth() / 2;
         halfHeight = main.getCamera().getHeight() / 2;
 
         TextureManager textureManager = new TextureManager(asset, scale);
 
+        //DOES: Create Nodes for layering and attach them
         hotbarNode = new Node("hotbarNode");
         containerNode = new Node("containerNode");
         hungerNode = new Node("hungerNode");
@@ -53,6 +54,7 @@ class HUD {
         hotbarNode.attachChild(hungerNode);
         hotbarNode.attachChild(heartNode);
 
+        //DOES: Create Texture variables
         Texture2D hotbarTexture = TextureManager.getGuiTexture("sprites/hud/hotbar"); //182x22
         Texture2D hotbarSelectorTexture = TextureManager.getGuiTexture("sprites/hud/hotbar_selection"); //24x23
         Texture2D crosshairTexture = TextureManager.getGuiTexture("sprites/hud/crosshair"); //15x15
@@ -66,6 +68,7 @@ class HUD {
         halfHungerTexture = TextureManager.getGuiTexture("sprites/hud/food_half"); //9x9
         blankTexture = TextureManager.getGuiTexture("blank"); //1x1
 
+        //DOES: Create Pictures to display in the GUI, positions them and attaches them to nodes
         hotbar = textureManager.createPicture(hotbarTexture, "hotbar");
         hotbarSelector = textureManager.createPicture(hotbarSelectorTexture, "hotbarSelector");
         experienceBarEmpty = textureManager.createPicture(experienceBarEmptyTexture, "experienceBarEmpty");
@@ -81,6 +84,7 @@ class HUD {
         hotbarNode.attachChild(experienceBarEmpty);
         hotbarNode.attachChild(crosshair);
 
+        //DOES: Creates Heart containers and empty textures on top of them to be replaced by heart textures to display the players life
         for (int i = 0; i < 10; i++) {
             Picture heartContainer = textureManager.createPicture(heartContainerTexture, "heartContainer");
             heartContainer.setPosition(
@@ -112,6 +116,8 @@ class HUD {
             hungerBars.add(hunger);
             hungerNode.attachChild(hunger);
         }
+
+        //DOES: Creates empty textures and text on top of the Hotbar to display items placed there
         for (int i = 0; i < 9; i++) {
             Picture slot = textureManager.createPicture(blankTexture, "blank", 16 * scale); //Usage: Customscale needs to be multiplied by scale otherwise it breaks scalability
             slot.setPosition((halfWidth - (hotbar.getWidth()) / 2) + scale * (3 + 20 * i), 3 * scale);
@@ -128,8 +134,11 @@ class HUD {
         }
     }
 
+    /**
+     * Changes the heart textures in order to display the players life. odd numbers make half hearts
+     * @param life hearts that should be displayed in the HUD
+     */
     void setLife(int life) {
-        //Does: Changes the heart textures in order to display the players life odd numbers make half hearts
         int fullHearts = life / 2;
         boolean hasHalfHeart = (life % 2 == 1);
 
@@ -146,6 +155,10 @@ class HUD {
         }
     }
 
+    /**
+     * Changes the hunger bars textures in order to display the players hunger. odd numbers make half hearts
+     * @param huger hunger bars that should be displayed in the HUD
+     */
     void setHunger(int hunger) {
         //Does: Changes the hunger textures in order to display the players hunger odd numbers make half hunger bars
         int fullHunger = hunger / 2;
@@ -164,6 +177,10 @@ class HUD {
         }
     }
 
+    /**
+     * Changes the displayed selected slot
+     * @param slot Specifies the slot that should appear selected
+     */
     void changeHotbarSelectedSlot(int slot) {
         //Does: Change the Hotbarslot based of the given int slot
         if (slot <= 9 && slot >= 1) {
@@ -178,6 +195,11 @@ class HUD {
         }
     }
 
+    /**
+     * Updates the Hotbar items with the items displayed in the inventory
+     * @param invPic List of all Item Pictures in the inventory
+     * @param invText List of all Item Texts in the inventory
+     */
     void updateHotbarDisplayItem(List<Picture> invPic, List<BitmapText> invText) {
         //Info: The items displayed in the Hotbar are copied from those in the inventoryList, because the inventory also has a Hotbar
         //Does: Checks for differences between the inventory hotbar and real hotbar and if they are not the same displays the item in the inventory hotbar in the hotbar

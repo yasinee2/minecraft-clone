@@ -30,42 +30,45 @@ class InventoryGUI {
     private Texture2D inventoryTexture, blankTexture;
     private Picture inventory;
 
-    private int scale, halfWidth, halfHeight, windowWidth, windowHeight;
+    private int halfWidth, halfHeight, windowWidth, windowHeight;
 
     private List<Picture> inventoryList = new ArrayList<>();
     private List<BitmapText> inventoryTextList = new ArrayList<>();
     private List<Vector3f> inventoryTextAnchorList = new ArrayList<>();
 
     InventoryGUI(Main main, int scale) {
-        this.scale = scale;
         this.guiNode = main.getGuiNode();
         this.asset = main.getAssetManager();
-        font = main.getguiFont();
-        flyByCamera = main.getFlyByCamera();
-        inputManager = main.getInputManager();
-        fontScale = scale / 4f;
+        this.font = main.getguiFont();
+        this.flyByCamera = main.getFlyByCamera();
+        this.inputManager = main.getInputManager();
+        this.fontScale = scale / 4f;
 
+        //DOES: Create Variables for easier positioning of the HUD elements
         windowWidth = main.getCamera().getWidth();
         windowHeight = main.getCamera().getHeight();
-
         halfWidth = main.getViewPort().getCamera().getWidth() / 2;
         halfHeight = main.getViewPort().getCamera().getHeight() / 2;
 
         textureManager = new TextureManager(asset, scale);
 
+        //DOES: Create Nodes for layering and attach them
         inventoryItemsNode = new Node("inventoryItemsNode");
         inventoryNode = new Node("inventoryNode");
 
         inventoryItemsNode.attachChild(inventoryNode);
 
+        //DOES: Create Texture variables
         inventoryTexture = TextureManager.getGuiTexture("container/inventory"); //256x256 (176x166) //Info: For some reason the inventory texture file is larger than it needs to be
         blankTexture = TextureManager.getGuiTexture("blank"); //1x1
 
+        //DOES: Create the inventory and position it in the screens center
         inventory = textureManager.createPicture(inventoryTexture, "inventory");
         inventory.setPosition(halfWidth - (inventory.getWidth() / 2) + 40 * scale, halfHeight - (inventory.getHeight() / 2) - 45 * scale);
         inventoryNode.attachChild(inventory);
 
         //TODO: Clean up magic Numbers
+        //DOES: Create invisible Textures on top of the item slots in the inventory so they can be replaced by textures of different items
         for (int i = 0; i < 4; i++) {
             for (int i0 = 0; i0 < 9; i0++) {
                 if (i == 0) {
@@ -111,19 +114,27 @@ class InventoryGUI {
         }
     }
 
-    void setInventoryVisibility(boolean visibility) {
-        //Does: set the Visibility of the Inventory
-        if (visibility) {
+    /**
+     * Changes the visibility of the Inventory. Also makes the Cursor moveable
+     * @param visible Specifies the visibility to be either true or false
+     */
+    void setInventoryVisibility(boolean visible) {
+        if (visible) {
             guiNode.attachChild(inventoryItemsNode);
         } else {
             guiNode.detachChild(inventoryItemsNode);
         }
-        inputManager.setCursorVisible(visibility);
-        flyByCamera.setEnabled(!visibility); //Todo: nneds to be changed
+        inputManager.setCursorVisible(visible);
+        flyByCamera.setEnabled(!visible); //Todo: nneds to be changed
     }
 
+    /**
+     * Displays an item at the specified slot in the inventory
+     * @param row Specifies the row where the item should be displayed
+     * @param column Specifies the column where the item should be displayed
+     * @param item SPecifies the item that should be displayed
+     */
     void displayItem(int row, int column, ItemInstance item) {
-        //Does: Shows an item in the inventory row 1 is the hotbar
         if (row >= 1 && row <= 4) {
             if (column >= 1 && column <= 9) {
                 Picture slot = inventoryList.get(column - 1 + 9 * (row - 1));
