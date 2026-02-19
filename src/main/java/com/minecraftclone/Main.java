@@ -28,7 +28,7 @@ public class Main extends SimpleApplication {
 
     //DOES: settings
     public static AppSettings settings;
-    public static boolean fullscreen = false;
+    public static boolean fullscreen = true;
     public static int screen_width = 1920;
     public static int screen_height = 1080;
     private boolean initialized = false;
@@ -115,7 +115,6 @@ public class Main extends SimpleApplication {
         blockInteraction = new BlockInteractionSystem(world, cam, actionInput);
 
         //NOTE: will be set by hotbar later
-        //stuff den ich hinzufügen will
     }
 
     @Override
@@ -145,7 +144,10 @@ public class Main extends SimpleApplication {
 
     private void tick() {
         switch (playerCharacter.getHotbarSlot()) {
+            case 1 -> blockInteraction.setSelectedBlock(Blocks.AIR);
             case 2 -> blockInteraction.setSelectedBlock(Blocks.LAPIS_BLOCK);
+            case 3 -> blockInteraction.setSelectedBlock(Blocks.PLANK_OAK);
+            case 4 -> blockInteraction.setSelectedBlock(Blocks.OBSIDIAN);
         }
 
         //NOTE: all tickables are called here

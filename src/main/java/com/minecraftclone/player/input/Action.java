@@ -13,6 +13,7 @@ public enum Action {
     TOGGLE_INVENTORY,
     DROP,
     SNEAK,
+    SPRINT,
     PAUSE,
 
     HOTBAR_1,

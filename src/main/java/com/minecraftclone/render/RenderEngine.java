@@ -10,11 +10,12 @@ import java.io.IOException;
 public class RenderEngine {
 
     PlayerGUI gui;
-    Main app;
+    Main app10;
     PlayerCharacter player;
+    int x = 10;
 
     public RenderEngine(Main app, PlayerCharacter playerCharacter) {
-        this.app = app;
+        app10 = app;
         this.player = playerCharacter;
         try {
             this.gui = new PlayerGUI(app);
@@ -26,6 +27,8 @@ public class RenderEngine {
         gui.inventoryDisplayItem(1, 2, new ItemInstance(ItemRegistry.get("lapis_block")));
         gui.inventoryDisplayItem(1, 3, new ItemInstance(ItemRegistry.get("oak_planks")));
         gui.inventoryDisplayItem(1, 4, new ItemInstance(ItemRegistry.get("obsidian")));
+
+        System.out.println(x);
     }
 
     public void guiUpdate() {

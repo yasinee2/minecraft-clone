@@ -15,18 +15,21 @@ public class PlayerCharacter {
     public static final float STEP_HEIGHT = 0.1f;
     public static final float WIDTH = 0.7f;
     public static final float HEIGHT = 1.8f;
-    public static final float EYE_OFFSET = HEIGHT * 0.35f;
+    public static float EYE_OFFSET = HEIGHT * 0.35f;
+    //note: SNKEAKINGSPEED ändert sich
+    private float SpeedModifyer = 1f;
     private final CharacterControl playerControl;
     private final Node playerNode;
 
-    private final float speed = 0.15f;
+    public float speed = 0.15f;
     private final boolean debugEnabled = false;
     private final Vector3f walkDir = new Vector3f();
     private final ActionInput input;
     private final Camera cam;
-    private int life = 13;
-    private int hunger = 13;
+    private int life = 20;
+    private int hunger = 20;
     private int hotbarSlot = 1;
+
     private boolean inventoryVisible = false;
 
     public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, SimpleApplication app) {
@@ -52,9 +55,9 @@ public class PlayerCharacter {
 
     public void tick() {
         Vector3f forward = cam.getDirection().clone();
-        forward.setY(0).normalizeLocal().multLocal(speed);
+        forward.setY(0).normalizeLocal().multLocal(speed * SpeedModifyer);
         Vector3f left = cam.getLeft().clone();
-        left.setY(0).normalizeLocal().multLocal(speed);
+        left.setY(0).normalizeLocal().multLocal(speed * SpeedModifyer);
 
         walkDir.set(0, 0, 0);
 
@@ -62,6 +65,9 @@ public class PlayerCharacter {
         if (input.isHeld(Action.LEFT)) walkDir.addLocal(left);
         if (input.isHeld(Action.BACKWARD)) walkDir.addLocal(forward.negate());
         if (input.isHeld(Action.RIGHT)) walkDir.addLocal(left.negate());
+        if (input.isHeld(Action.SPRINT)) SpeedModifyer = 1.5f;
+        else if (input.isHeld(Action.SNEAK)) SpeedModifyer = 0.5f;
+        else SpeedModifyer = 1;
 
         playerControl.setWalkDirection(walkDir);
         if (input.isHeld(Action.JUMP) && playerControl.onGround()) playerControl.jump();
