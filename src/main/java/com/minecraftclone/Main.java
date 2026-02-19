@@ -115,7 +115,7 @@ public class Main extends SimpleApplication {
         blockInteraction = new BlockInteractionSystem(world, cam, actionInput);
 
         //NOTE: will be set by hotbar later
-        blockInteraction.setSelectedBlock(Blocks.DIAMOND_BLOCK);
+        //stuff den ich hinzufügen will
     }
 
     @Override
@@ -144,6 +144,10 @@ public class Main extends SimpleApplication {
     }
 
     private void tick() {
+        switch (playerCharacter.getHotbarSlot()) {
+            case 2 -> blockInteraction.setSelectedBlock(Blocks.LAPIS_BLOCK);
+        }
+
         //NOTE: all tickables are called here
 
         //DOES: used for tps calculation

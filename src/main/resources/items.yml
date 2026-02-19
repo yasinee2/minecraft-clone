@@ -86,3 +86,24 @@ items:
         baseDurability: 1500
         baseDamage: 5
         miningEfficiency: 8
+    oak_planks:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Oak plank"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    obsidian:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Obsidian"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    lapis_block:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Lapis Block"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0

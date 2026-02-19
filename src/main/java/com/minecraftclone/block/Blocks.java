@@ -9,7 +9,7 @@ public class Blocks {
     public static final Block GRASS_BLOCK = new Block(true, "grass_block_top", "grass_block_side", "dirt");
     public static final Block COBBLESTONE = new Block(true, "cobblestone");
     public static final Block MOSSY_COBBLESTONE = new Block(true, "mossy_cobblestone");
-    public static final Block PLANK_OAK = new Block(true, "planks_oak");
+    public static final Block PLANK_OAK = new Block(true, "oak_planks");
     public static final Block PLANK_SPRUCE = new Block(true, "planks_spruce");
     public static final Block PLANK_BIRCH = new Block(true, "planks_birch");
     public static final Block PLANK_JUNGLE = new Block(true, "planks_jungle");

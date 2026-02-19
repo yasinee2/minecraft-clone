@@ -22,8 +22,10 @@ public class RenderEngine {
             e.printStackTrace();
         }
 
-        gui.inventoryDisplayItem(1, 9, new ItemInstance(ItemRegistry.get("iron_sword")));
-        gui.inventoryDisplayItem(4, 9, new ItemInstance(ItemRegistry.get("iron_sword")));
+        gui.inventoryDisplayItem(1, 1, new ItemInstance(ItemRegistry.get("iron_sword")));
+        gui.inventoryDisplayItem(1, 2, new ItemInstance(ItemRegistry.get("lapis_block")));
+        gui.inventoryDisplayItem(1, 3, new ItemInstance(ItemRegistry.get("oak_planks")));
+        gui.inventoryDisplayItem(1, 4, new ItemInstance(ItemRegistry.get("obsidian")));
     }
 
     public void guiUpdate() {

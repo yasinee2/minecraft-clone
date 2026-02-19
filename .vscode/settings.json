@@ -1,4 +1,282 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx4G -Xms100m -Xlog:disable"
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "files.autoSave": "onFocusChange",
+    "editor.fontSize": 18,
+    "window.autoDetectHighContrast": false,
+    "explorer.confirmUndo": "verbose",
+    "workbench.preferredDarkColorTheme": "Abyss",
+    "workbench.sideBar.location": "left",
+    "workbench.colorTheme": "Aura Dark (Soft Text)",
+    "[cpp]": {
+        "editor.wordBasedSuggestions": "off",
+        "editor.suggest.insertMode": "replace",
+        "editor.semanticHighlighting.enabled": true,
+        "editor.quickSuggestions": {
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        }
+    },
+    "cmake.configureOnOpen": true,
+    "redhat.telemetry.enabled": false,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "wrapSelection.patterns": {},
+    "surround.with.arrowFunction": {
+        "label": "arrowFunction",
+        "description": "const $name = ($params) => { ... }",
+        "disabled": false,
+        "snippet": "const ${1:fnName} = (${2:params}) => {\n\t$TM_SELECTED_TEXT\n}$0"
+    },
+    "surround.with.iife": {
+        "label": "IIFE",
+        "description": "(function $name($params){ ... })($arguments);",
+        "disabled": false,
+        "snippet": "(function ${1:name}(${2:params}){\n\t$TM_SELECTED_TEXT\n})(${3:arguments});$0"
+    },
+    "surround.with.for": {
+        "label": "for",
+        "description": "for ($1) { ... }",
+        "disabled": false,
+        "snippet": "for ($1) {\n\t$TM_SELECTED_TEXT\n}$0"
+    },
+    "surround.with.fori": {
+        "label": "fori",
+        "description": "for (let i = 0; ... ; i = i + 1) { ... }",
+        "disabled": false,
+        "snippet": "for (let ${1:i} = ${2:0}; ${3:conditions}; $1 = $1 + 1) {\n\t$TM_SELECTED_TEXT\n}$0"
+    },
+    "surround.custom": {
+        "string": {
+            "label": "\" string/quotation mark",
+            "description": "wraps selected code in \"",
+            "snippet": "\"$TM_SELECTED_TEXT\"",
+            "languageIds": ["java", "python"]
+        },
+
+        "char": {
+            "label": "' char/single quotation mark",
+            "description": "wraps selected code in '",
+            "snippet": "'$TM_SELECTED_TEXT'",
+            "languageIds": ["java", "python"]
+        },
+
+        "brackets": {
+            "label": "brackets",
+            "description": "puts selected code in brackets",
+            "snippet": "($TM_SELECTED_TEXT)",
+            "languageIds": ["java", "python"]
+        },
+
+        "squareBrackets": {
+            "label": "square brackets",
+            "description": "puts selected code in square brackets",
+            "snippet": "[$TM_SELECTED_TEXT]",
+            "languageIds": ["java", "python"]
+        },
+
+        "curlyBrackets": {
+            "label": "curly brackets",
+            "description": "puts selected code in curly brackets",
+            "snippet": "{$TM_SELECTED_TEXT}",
+            "languageIds": ["java", "python"]
+        },
+
+        "curlyBracketsBlock": {
+            "label": "curly bracket code block",
+            "description": "curly bracket code block with indentation",
+            "snippet": "{\n\t$TM_SELECTED_TEXT\n}$0",
+            "languageIds": ["java", "python"]
+        },
+
+        "tripleQuotes": {
+            "label": "tripleQuotes",
+            "description": "\"\"\" triple quotes",
+            "snippet": "\"\"\"$TM_SELECTED_TEXT\"\"\"",
+            "languageIds": ["java", "python"]
+        },
+
+        "whileLoop": {
+            "label": "while",
+            "description": "java while loop",
+            "snippet": "while (condition) {\n\t$TM_SELECTED_TEXT\n}$0",
+            "languageIds": ["java"]
+        }
+    },
+    "diffEditor.ignoreTrimWhitespace": true,
+    "code-runner.runInTerminal": true,
+    "java.completion.importOrder": ["#", "java", "javax", "org", "com", ""],
+    "java.saveActions.organizeImports": true,
+    "better-comments.tags": [
+        {
+            //USAGE: when something important is to do (shown in problems)
+            "tag": "TODO:",
+            "color": "#EA580C",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: when something is broken or bugged (shown in problems)
+            "tag": "FIXME:",
+            "color": "#FF2D00",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: questions (ex. "how does this work", "what does this do") (answered by NOTE:)
+            "tag": "?:",
+            "color": "#9333ea",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: any notes, like answers to questions, personal stuff
+            //USAGE: use INFO: if should be known for user
+            "tag": "NOTE:",
+            "color": "#4f35d1",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: anything useful to the user, like how something works or what is important to know
+            "tag": "INFO:",
+            "color": "#0EA5E9",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: how something is supposed to be used, e.g. "don't use this for x", "x needs to be this arg"
+            "tag": "USAGE:",
+            "color": "#0091ff",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: what something does and how it works. use always if not immediately obvious
+            "tag": "DOES:",
+            "color": "#43A047",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: DOES: but for declarations, mainly for variables ("what is this?")
+            "tag": "IS:",
+            "color": "#1a39c5",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: what happens when a specific case is triggered, when a specific case is triggered
+            //USAGE: e.g. to clarify when a loop breaks, when a certain thing happens, when an outer line gets called
+            "tag": "CASE:",
+            "color": "#c200b9",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: any ideas, like proposed fixes or features
+            "tag": "IDEA:",
+            "color": "#FFF",
+            "strikethrough": false,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: strikes through text, use when previous comment no longer valid but not deleted or something
+            "tag": "IGNORE:",
+            "color": "#6B7280",
+            "strikethrough": true,
+            "backgroundColor": "transparent"
+        },
+        {
+            //USAGE: anything else, highlights comment with a background color
+            "tag": "HIGHLIGHT:",
+            "color": "#000000",
+            "strikethrough": false,
+            "backgroundColor": "#ffeb3b"
+        }
+    ],
+    "color-manager.autoStartIntellisense": true,
+    "color-manager.languages": ["css", "html", "javascript", "json", "scss", "toml", "java", "jsonc", "cpp"],
+    "editor.defaultColorDecorators": "always",
+    "color-manager.contextMenu": {
+        "edit": false,
+
+        "findColors": false,
+
+        "openPicker": false,
+
+        "openPalette": false
+    },
+    "http.systemCertificatesNode": true,
+    "editor.smoothScrolling": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "[java]": {
+        "editor.defaultFormatter": "RudraPatel.prettier-plugin-java-vscode"
+    },
+    "prettier.tabWidth": 4,
+    "prettier-plugin-java-vscode.prettierConfigPath": "${workspaceFolder}/.prettierrc",
+    "prettier.configPath": "${workspaceFolder}/.prettierrc",
+    "geminicodeassist.displayInlineContextHint": false,
+    "code-runner.clearPreviousOutput": true,
+    "keyword-o-mat.customKeywords": [
+        ["0", "1"],
+        ["x", "y", "z"]
+    ],
+    "editor.guides.bracketPairs": true,
+    "editor.guides.highlightActiveBracketPair": true,
+    "editor.guides.bracketPairsHorizontal": false,
+    "workbench.colorCustomizations": {
+        "editorBracketPairGuide.background1": "#a679fb80", // purple
+        "editorBracketPairGuide.background2": "#5099ff80", // blue
+        "editorBracketPairGuide.background3": "#6bcf7080", // green
+        "editorBracketPairGuide.background4": "#e0e06880", // yellow
+        "editorBracketPairGuide.background5": "#ffa56480", // orange
+        "editorBracketPairGuide.background6": "#f7768180", // red
+
+        "editorBracketPairGuide.activeBackground1": "#b289f8d2", // purple (slightly brighter)
+        "editorBracketPairGuide.activeBackground2": "#62a3ffd8", // blue (slightly brighter)
+        "editorBracketPairGuide.activeBackground3": "#7ad87fdb", // green (slightly brighter)
+        "editorBracketPairGuide.activeBackground4": "#e5e374ce", // yellow (slightly brighter)
+        "editorBracketPairGuide.activeBackground5": "#ffb17ad9", // orange (slightly brighter)
+        "editorBracketPairGuide.activeBackground6": "#f88891d2" // red (slightly brighter)
+    },
+    "discord.idleTimeout": 5000,
+    "prettier.experimentalTernaries": true,
+    "prettier.printWidth": 120,
+    "prettier.trailingComma": "none",
+    "editor.formatOnSave": true,
+    "diffEditor.codeLens": true,
+    "explorer.confirmDragAndDrop": false,
+    "git.ignoreRebaseWarning": true,
+    "[xml]": {
+        "editor.defaultFormatter": "redhat.vscode-xml"
+    },
+    "files.exclude": {
+        "**/AppData/**/Temp/**": true,
+        "**/target/classes": true,
+        "**/target/generated-sources": true,
+        "**/target/maven-archiver": true,
+        "**/target/maven-status": true,
+        "**/target/test-classes": true
+    },
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": ["${env:windir}\\Sysnative\\cmd.exe", "${env:windir}\\System32\\cmd.exe"],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+            "args": ["--login", "-i"]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.initialHint": false,
+    "workbench.activityBar.location": "top"
 }
