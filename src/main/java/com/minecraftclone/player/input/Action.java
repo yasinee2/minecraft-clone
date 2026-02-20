@@ -15,6 +15,7 @@ public enum Action {
     SNEAK,
     SPRINT,
     PAUSE,
+    TOGGLE_FLY,
 
     HOTBAR_1,
     HOTBAR_2,

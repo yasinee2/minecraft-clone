@@ -31,6 +31,7 @@ public class KeyMapping {
         bindKeyAction("SNEAK", KeyInput.KEY_LCONTROL);
         bindKeyAction("SPRINT", KeyInput.KEY_LSHIFT);
         bindKeyAction("PAUSE", KeyInput.KEY_ESCAPE);
+        bindKeyAction("TOGGLE_FLY", KeyInput.KEY_F);
 
         bindKeyAction("HOTBAR_1", KeyInput.KEY_1);
         bindKeyAction("HOTBAR_2", KeyInput.KEY_2);

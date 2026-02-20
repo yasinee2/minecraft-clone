@@ -58,7 +58,7 @@ public class Main extends SimpleApplication {
     }
 
     @Override
-    protected BitmapFont loadGuiFont() {
+    public BitmapFont loadGuiFont() {
         return this.assetManager.loadFont("font/32px-s.fnt");
     }
 

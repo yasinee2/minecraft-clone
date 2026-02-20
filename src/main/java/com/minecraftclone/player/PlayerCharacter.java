@@ -4,6 +4,8 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.collision.shapes.BoxCollisionShape;
 import com.jme3.bullet.control.CharacterControl;
+import com.jme3.font.BitmapFont;
+import com.jme3.font.BitmapText;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
@@ -16,7 +18,6 @@ public class PlayerCharacter {
     public static final float WIDTH = 0.7f;
     public static final float HEIGHT = 1.8f;
     public static float EYE_OFFSET = HEIGHT * 0.35f;
-    //note: SNKEAKINGSPEED ändert sich
     private float SpeedModifyer = 1f;
     private final CharacterControl playerControl;
     private final Node playerNode;
@@ -29,12 +30,20 @@ public class PlayerCharacter {
     private int life = 20;
     private int hunger = 20;
     private int hotbarSlot = 1;
-
+    private CharacterControl Player;
     private boolean inventoryVisible = false;
+    private boolean IsFlying = false;
+    private BitmapText FlyStateText;
+    private BitmapFont guiFont;
 
     public PlayerCharacter(BulletAppState bulletAppState, ActionInput input, SimpleApplication app) {
         this.input = input;
         cam = app.getCamera();
+        guiFont = app.getAssetManager().loadFont("font/32px-s.fnt");
+        FlyStateText = new BitmapText(guiFont);
+        FlyStateText.setText("Flying: " + IsFlying);
+        FlyStateText.setLocalTranslation(10, cam.getHeight() - 40, 0);
+        app.getGuiNode().attachChild(FlyStateText);
 
         bulletAppState.setDebugEnabled(debugEnabled);
 
@@ -43,6 +52,7 @@ public class PlayerCharacter {
         player.setJumpSpeed(10f);
         player.setFallSpeed(40f);
         player.setGravity(30f);
+        this.Player = player;
 
         Node playerNode = new Node("Player");
         playerNode.addControl(player);
@@ -65,12 +75,33 @@ public class PlayerCharacter {
         if (input.isHeld(Action.LEFT)) walkDir.addLocal(left);
         if (input.isHeld(Action.BACKWARD)) walkDir.addLocal(forward.negate());
         if (input.isHeld(Action.RIGHT)) walkDir.addLocal(left.negate());
-        if (input.isHeld(Action.SPRINT)) SpeedModifyer = 1.5f;
-        else if (input.isHeld(Action.SNEAK)) SpeedModifyer = 0.5f;
-        else SpeedModifyer = 1;
+
+        if (input.isHeld(Action.SPRINT)) {
+            SpeedModifyer = 1.5f;
+            if (IsFlying == true) SpeedModifyer = 3f;
+        } else if (input.isHeld(Action.SNEAK)) {
+            SpeedModifyer = 0.5f;
+            if (IsFlying == false) EYE_OFFSET = HEIGHT * 0.35f;
+        } else {
+            SpeedModifyer = 1;
+            if (IsFlying == false) EYE_OFFSET = HEIGHT * 0.35f;
+        }
+
+        if (IsFlying == true) {
+            if (input.isHeld(Action.SNEAK)) {
+                Player.setFallSpeed(15f);
+            } else {
+                Player.setFallSpeed(0f);
+            }
+        } else {
+            Player.setFallSpeed(40f);
+        }
 
         playerControl.setWalkDirection(walkDir);
-        if (input.isHeld(Action.JUMP) && playerControl.onGround()) playerControl.jump();
+        if (input.isHeld(Action.JUMP) && playerControl.onGround() && IsFlying == false) playerControl.jump();
+        if (input.isHeld(Action.JUMP) && IsFlying == true) {
+            playerControl.jump();
+        }
 
         if (input.isTapped(Action.HOTBAR_1)) hotbarSlot = 1;
         if (input.isTapped(Action.HOTBAR_2)) hotbarSlot = 2;
@@ -81,6 +112,13 @@ public class PlayerCharacter {
         if (input.isTapped(Action.HOTBAR_7)) hotbarSlot = 7;
         if (input.isTapped(Action.HOTBAR_8)) hotbarSlot = 8;
         if (input.isTapped(Action.HOTBAR_9)) hotbarSlot = 9;
+
+        if (input.isTapped(Action.TOGGLE_FLY)) {
+            IsFlying = !IsFlying;
+            System.out.println("Flyinge: " + IsFlying);
+            FlyStateText.setText("Flying: " + IsFlying);
+            FlyStateText.setLocalTranslation(10, cam.getHeight() - 40, 0);
+        }
 
         if (input.isTapped(Action.TOGGLE_INVENTORY)) inventoryVisible = !inventoryVisible;
     }
