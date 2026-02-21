@@ -62,9 +62,13 @@ public class PlayerCharacter {
         this.playerControl = player;
         this.playerNode = playerNode;
 
-        RenderEngine.giveItem("obsidian");
-        RenderEngine.giveItem("oak_planks");
-        RenderEngine.giveItem("lapis_block");
+        RenderEngine.giveItem("red_concrete");
+        RenderEngine.giveItem("brown_concrete");
+        RenderEngine.giveItem("black_concrete");
+        RenderEngine.giveItem("yellow_concrete");
+        RenderEngine.giveItem("cyan_concrete");
+        RenderEngine.giveItem("white_concrete");
+        RenderEngine.giveItem("sand");
     }
 
     public void tick() {
@@ -85,7 +89,7 @@ public class PlayerCharacter {
             if (IsFlying == true) SpeedModifyer = 3f;
         } else if (input.isHeld(Action.SNEAK)) {
             SpeedModifyer = 0.5f;
-            if (IsFlying == false) EYE_OFFSET = HEIGHT * 0.35f;
+            if (IsFlying == false) EYE_OFFSET = HEIGHT * 0.35f - 0.2f;
         } else {
             SpeedModifyer = 1;
             if (IsFlying == false) EYE_OFFSET = HEIGHT * 0.35f;

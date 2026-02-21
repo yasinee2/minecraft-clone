@@ -86,4 +86,20 @@ public class Blocks {
     public static final Block RED_SAND = new Block(true, "red_sand");
     public static final Block RED_SANDSTONE = new Block(true, "red_sandstone_top", "red_sandstone_normal", "red_sandstone_bottom");
     public static final Block OBSIDIAN = new Block(true, "obsidian");
+    public static final Block RED_CONCRETE = new Block(true, "red_concrete");
+    public static final Block PINK_CONCRETE = new Block(true, "pink_concrete");
+    public static final Block LIME_CONCRETE = new Block(true, "lime_concrete");
+    public static final Block GRAY_CONCRETE = new Block(true, "gray_concrete");
+    public static final Block CYAN_CONCRETE = new Block(true, "cyan_concrete");
+    public static final Block BLUE_CONCRETE = new Block(true, "blue_concrete");
+    public static final Block GREEN_CONCRETE = new Block(true, "green_concrete");
+    public static final Block BROWN_CONCRETE = new Block(true, "brown_concrete");
+    public static final Block BLACK_CONCRETE = new Block(true, "black_concrete");
+    public static final Block WHITE_CONCRETE = new Block(true, "white_concrete");
+    public static final Block PURPLE_CONCRETE = new Block(true, "purple_concrete");
+    public static final Block ORANGE_CONCRETE = new Block(true, "orange_concrete");
+    public static final Block YELLOW_CONCRETE = new Block(true, "yellow_concrete");
+    public static final Block MAGENTA_CONCRETE = new Block(true, "magenta_concrete");
+    public static final Block lIGHT_GRAY_CONCRETE = new Block(true, "light_gray_concrete");
+    public static final Block LIGHT_BLUE_CONCRETE = new Block(true, "light_blue_concrete");
 }

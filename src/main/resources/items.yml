@@ -114,3 +114,53 @@ items:
         baseDurability: 9999
         baseDamage: 0
         miningEfficiency: 0
+        #blocks for Mario
+    red_concrete:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Red concrete"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    black_concrete:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Black concrete"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    brown_concrete:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Brown concrete"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    cyan_concrete:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Cyan concrete"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    yellow_concrete:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Red concrete"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    white_concrete:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "White concrete"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    sand:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Sand"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
