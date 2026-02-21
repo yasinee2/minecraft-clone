@@ -69,6 +69,7 @@ public class PlayerCharacter {
         RenderEngine.giveItem("cyan_concrete");
         RenderEngine.giveItem("white_concrete");
         RenderEngine.giveItem("sand");
+        RenderEngine.giveItem("iron_sword_item");
     }
 
     public void tick() {
@@ -110,6 +111,9 @@ public class PlayerCharacter {
         if (input.isHeld(Action.JUMP) && IsFlying == true) {
             playerControl.jump();
         }
+
+        if (input.isHeld(Action.ZOOM)) cam.setFov(20);
+        if (!input.isHeld(Action.ZOOM)) cam.setFov(70);
 
         if (input.isTapped(Action.HOTBAR_1)) hotbarSlot = 1;
         if (input.isTapped(Action.HOTBAR_2)) hotbarSlot = 2;

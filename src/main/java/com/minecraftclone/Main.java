@@ -13,6 +13,7 @@ import com.minecraftclone.render.CustomCam;
 import com.minecraftclone.render.RenderEngine;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
+import com.minecraftclone.world.chunks.PerlinNoise;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.logging.Level;
@@ -32,6 +33,7 @@ public class Main extends SimpleApplication {
     public static int screen_width = 1920;
     public static int screen_height = 1080;
     private boolean initialized = false;
+    private static long seed = 12314; //max 999999999
 
     //DOES: tps stuff
     private static final float TICKS_PER_SECOND = 40f;
@@ -51,7 +53,7 @@ public class Main extends SimpleApplication {
 
     public static void main(String[] args) {
         setDefaultSettings();
-
+        PerlinNoise.setSeed(seed);
         Main app = new Main();
         app.setSettings(settings);
         app.start();

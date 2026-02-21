@@ -38,8 +38,15 @@ public final class TerrainGenerator {
 
     // simple & fast height function
     private static int getHeight(int x, int z) {
-        double h = Math.sin(x * HEIGHT_SCALE) * 2 + Math.cos(z * HEIGHT_SCALE) * 2;
-
+        double h =
+            PerlinNoise.octaveNoise(
+                //Note: online noise generator https://filosophy.org/projects/2d-perlin-noise-generator/
+                x * HEIGHT_SCALE,
+                z * HEIGHT_SCALE,
+                8, // octaves
+                0.3 // persistence
+            ) *
+            8; // amplitude
         return BASE_HEIGHT + (int) h;
     }
 }
