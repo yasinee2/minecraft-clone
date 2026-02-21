@@ -5,12 +5,12 @@ import com.jme3.bullet.BulletAppState;
 import com.jme3.font.BitmapFont;
 import com.jme3.font.BitmapText;
 import com.jme3.system.AppSettings;
-import com.minecraftclone.block.Blocks;
 import com.minecraftclone.player.PlayerCharacter;
 import com.minecraftclone.player.input.ActionInput;
 import com.minecraftclone.player.input.AnalogInput;
 import com.minecraftclone.player.input.KeyMapping;
 import com.minecraftclone.render.CustomCam;
+import com.minecraftclone.render.RenderEngine;
 import com.minecraftclone.world.BlockInteractionSystem;
 import com.minecraftclone.world.World;
 import java.awt.Dimension;
@@ -143,14 +143,8 @@ public class Main extends SimpleApplication {
     }
 
     private void tick() {
-        switch (playerCharacter.getHotbarSlot()) {
-            case 1 -> blockInteraction.setSelectedBlock(Blocks.AIR);
-            case 2 -> blockInteraction.setSelectedBlock(Blocks.LAPIS_BLOCK);
-            case 3 -> blockInteraction.setSelectedBlock(Blocks.PLANK_OAK);
-            case 4 -> blockInteraction.setSelectedBlock(Blocks.OBSIDIAN);
-        }
-
         //NOTE: all tickables are called here
+        MakeItemsInHotbarPlaceable();
 
         //DOES: used for tps calculation
         totalTicks++;
@@ -210,5 +204,19 @@ public class Main extends SimpleApplication {
 
     public BitmapFont getguiFont() {
         return guiFont;
+    }
+
+    private void MakeItemsInHotbarPlaceable() {
+        switch (playerCharacter.getHotbarSlot()) {
+            case 1 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[0]);
+            case 2 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[1]);
+            case 3 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[2]);
+            case 4 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[3]);
+            case 5 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[4]);
+            case 6 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[5]);
+            case 7 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[6]);
+            case 8 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[7]);
+            case 9 -> blockInteraction.setSelectedBlock(RenderEngine.MakeBlocksInHotbarPlacable()[8]);
+        }
     }
 }

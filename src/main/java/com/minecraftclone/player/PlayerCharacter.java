@@ -11,6 +11,7 @@ import com.jme3.renderer.Camera;
 import com.jme3.scene.Node;
 import com.minecraftclone.player.input.Action;
 import com.minecraftclone.player.input.ActionInput;
+import com.minecraftclone.render.RenderEngine;
 
 public class PlayerCharacter {
 
@@ -41,7 +42,6 @@ public class PlayerCharacter {
         cam = app.getCamera();
         guiFont = app.getAssetManager().loadFont("font/32px-s.fnt");
         FlyStateText = new BitmapText(guiFont);
-        FlyStateText.setText("Flying: " + IsFlying);
         FlyStateText.setLocalTranslation(10, cam.getHeight() - 40, 0);
         app.getGuiNode().attachChild(FlyStateText);
 
@@ -61,6 +61,10 @@ public class PlayerCharacter {
         player.setPhysicsLocation(new Vector3f(5, 20, 2));
         this.playerControl = player;
         this.playerNode = playerNode;
+
+        RenderEngine.giveItem("obsidian");
+        RenderEngine.giveItem("oak_planks");
+        RenderEngine.giveItem("lapis_block");
     }
 
     public void tick() {
@@ -115,7 +119,6 @@ public class PlayerCharacter {
 
         if (input.isTapped(Action.TOGGLE_FLY)) {
             IsFlying = !IsFlying;
-            System.out.println("Flyinge: " + IsFlying);
             FlyStateText.setText("Flying: " + IsFlying);
             FlyStateText.setLocalTranslation(10, cam.getHeight() - 40, 0);
         }

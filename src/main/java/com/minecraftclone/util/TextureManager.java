@@ -26,11 +26,21 @@ public class TextureManager {
             return ITEM_CACHE.get(path);
         }
 
-        String fullPath = "textures/item/" + path + ".png";
+        String fullPathItem = "textures/item/" + path + ".png";
+        String fullPathBlock = "textures/block/" + path + ".png";
 
-        try (InputStream stream = TextureManager.class.getClassLoader().getResourceAsStream(fullPath)) {
+        try (InputStream stream = TextureManager.class.getClassLoader().getResourceAsStream(fullPathItem)) {
             if (stream == null) {
-                throw new RuntimeException("Texture not found: " + fullPath);
+                try (InputStream blockStream = TextureManager.class.getClassLoader().getResourceAsStream(fullPathBlock)) {
+                    if (blockStream == null) {
+                        throw new RuntimeException("Texture not found: " + fullPathItem);
+                    }
+                    Texture2D texture = ImageLoader.loadTexture2D(blockStream);
+                    ITEM_CACHE.put(path, texture);
+                    return texture;
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to load texture: " + fullPathBlock, e);
+                }
             }
 
             Texture2D texture = ImageLoader.loadTexture2D(stream);
@@ -38,7 +48,7 @@ public class TextureManager {
             ITEM_CACHE.put(path, texture);
             return texture;
         } catch (IOException e) {
-            throw new RuntimeException("Failed to load texture: " + fullPath, e);
+            throw new RuntimeException("Failed to load texture: " + fullPathItem, e);
         }
     }
 

@@ -1,27 +1,27 @@
 items:
     #Swords
-    wooden_sword:
+    wooden_sword_item:
         type: SWORD
         maxStack: 1
         name: "Wooden Sword"
         baseDurability: 50
         baseDamage: 4
         miningEfficiency: 1
-    stone_sword:
+    stone_sword_item:
         type: SWORD
         maxStack: 1
         name: "Stone Sword"
         baseDurability: 100
         baseDamage: 5
         miningEfficiency: 1
-    iron_sword:
+    iron_sword_item:
         type: SWORD
         maxStack: 1
         name: "Iron Sword"
         baseDurability: 250
         baseDamage: 6
         miningEfficiency: 1
-    diamond_sword:
+    diamond_sword_item:
         type: SWORD
         maxStack: 1
         name: "Diamond Sword"
@@ -29,28 +29,28 @@ items:
         baseDamage: 7
         miningEfficiency: 1
     #Pickaxe
-    wooden_pickaxe:
+    wooden_pickaxe_item:
         type: PICKAXE
         maxStack: 1
         name: "Wooden Pickaxe"
         baseDurability: 50
         baseDamage: 2
         miningEfficiency: 2
-    stone_pickaxe:
+    stone_pickaxe_item:
         type: PICKAXE
         maxStack: 1
         name: "Stone Pickaxe"
         baseDurability: 100
         baseDamage: 3
         miningEfficiency: 4
-    iron_pickaxe:
+    iron_pickaxe_item:
         type: PICKAXE
         maxStack: 1
         name: "Iron Pickaxe"
         baseDurability: 250
         baseDamage: 4
         miningEfficiency: 6
-    diamond_pickaxe:
+    diamond_pickaxe_item:
         type: PICKAXE
         maxStack: 1
         name: "Diamond Pickaxe"
@@ -58,21 +58,21 @@ items:
         baseDamage: 5
         miningEfficiency: 8
     #Axe
-    wooden_axe:
+    wooden_axe_item:
         type: AXE
         maxStack: 1
         name: "Wooden Axe"
         baseDurability: 50
         baseDamage: 2
         miningEfficiency: 2
-    stone_axe:
+    stone_axe_item:
         type: AXE
         maxStack: 1
         name: "Stone Axe"
         baseDurability: 100
         baseDamage: 3
         miningEfficiency: 4
-    iron_axe:
+    iron_axe_item:
         type: AXE
         maxStack: 1
         name: "Iron Axe"
@@ -104,6 +104,13 @@ items:
         type: BLOCKITEM
         maxStack: 64
         name: "Lapis Block"
+        baseDurability: 9999
+        baseDamage: 0
+        miningEfficiency: 0
+    cherry_door_item:
+        type: BLOCKITEM
+        maxStack: 64
+        name: "Cherry door"
         baseDurability: 9999
         baseDamage: 0
         miningEfficiency: 0
